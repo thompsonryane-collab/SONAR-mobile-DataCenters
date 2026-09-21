@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BattleCat · Engineering Report BC-ENG-001 Rev A · SONAR-mobile Data Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07111f;--bg2:#0c1a2c;--panel:#0f1926;--card:#131f30;--line:#1e2d45;--line2:#2a4460;
+  --ink:#eef5fc;--ink2:rgba(255,255,255,.72);--ink3:rgba(255,255,255,.45);
+  --cyan:#3fd6ff;--green:#4fd98a;--amber:#ffb340;--red:#ff5a4e;--violet:#b39cff;--blue:#4aa3ff;--fuel:#c9a066;
+  --dsp:'Orbitron',"Share Tech Mono",Menlo,monospace;--mono:"Share Tech Mono","SF Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 16px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+/* ── frame ── */
+.frame{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+.mast{border-bottom:1px solid var(--line);padding:26px 0 22px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+.mast .brand{font-family:var(--dsp);font-weight:700;font-size:15px;letter-spacing:.06em;color:var(--ink)}
+.mast .brand b{color:var(--red);font-weight:700}
+.mast .brand small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink3);margin-top:4px;font-weight:400}
+.docid{font-family:var(--mono);font-size:12px;color:var(--ink2);text-align:right;line-height:1.7}
+.docid span{color:var(--ink3)}
+.docid .rev{color:var(--amber)}
+
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center;padding:36px 0 26px;border-bottom:1px solid var(--line)}
+.hero h1{font-family:var(--dsp);font-weight:700;font-size:44px;line-height:1.05;margin:0 0 14px;letter-spacing:.01em}
+.hero h1 small{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--cyan);margin-bottom:12px;font-weight:400}
+.hero p.lede{font-size:18px;color:var(--ink2);max-width:60ch;margin:0 0 18px}
+.hero .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:520px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.fact .n{font-family:var(--mono);font-size:20px;color:var(--cyan)}
+.fact .l{font-size:12px;color:var(--ink3);margin-top:2px}
+.hero-art{background:radial-gradient(120% 90% at 30% 0%,rgba(63,214,255,.16),rgba(63,214,255,.02) 60%),var(--bg2);border:1px solid rgba(63,214,255,.35);border-radius:18px;padding:12px;position:relative}
+.hero-art svg{width:100%;height:auto;display:block}
+.hero-art .tag{position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--cyan)}
+
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;padding-top:28px}
+nav.toc{position:sticky;top:20px;align-self:start;font-size:13px;line-height:1.5}
+nav.toc .t{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+nav.toc a{display:block;color:var(--ink2);padding:5px 0 5px 12px;border-left:2px solid var(--line)}
+nav.toc a:hover{color:var(--ink);border-color:var(--cyan);text-decoration:none}
+nav.toc a i{font-family:var(--mono);font-style:normal;color:var(--ink3);margin-right:8px;font-size:11px}
+main{min-width:0;max-width:820px}
+
+section{padding:14px 0 30px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+h2{font-family:var(--dsp);font-weight:600;font-size:22px;margin:24px 0 12px;letter-spacing:.02em;display:flex;gap:14px;align-items:baseline}
+h2 i{font-family:var(--mono);font-style:normal;font-size:13px;color:var(--cyan);letter-spacing:.1em;min-width:34px}
+h3{font-size:16px;font-weight:600;margin:26px 0 8px;color:var(--ink)}
+h3 i{font-family:var(--mono);font-style:normal;color:var(--ink3);font-size:12px;margin-right:10px}
+p{margin:0 0 12px;max-width:72ch;color:var(--ink2)}
+p strong{color:var(--ink)}
+ul,ol{margin:0 0 14px;padding-left:22px;color:var(--ink2);max-width:72ch}
+li{margin:0 0 6px}
+code,.mono{font-family:var(--mono);font-size:.92em;color:var(--cyan)}
+.callout{border:1px solid rgba(255,179,64,.45);background:rgba(255,179,64,.08);border-radius:12px;padding:12px 14px;margin:14px 0;color:var(--ink2);max-width:76ch}
+.callout.red{border-color:rgba(255,90,78,.5);background:rgba(255,90,78,.08)}
+.callout.green{border-color:rgba(79,217,138,.5);background:rgba(79,217,138,.08)}
+.callout b{color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0 18px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-weight:400;font-size:11.5px;letter-spacing:.08em;color:var(--ink3);border-bottom:1px solid var(--line2)}
+td{color:var(--ink2)}
+td:first-child{color:var(--ink)}
+td .m{font-family:var(--mono);color:var(--cyan);font-size:12.5px}
+tr.grp td{background:var(--card);color:var(--ink);font-weight:600;font-size:12.5px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);color:var(--ink2);margin-right:4px}
+.pill.g{color:var(--green);border-color:rgba(79,217,138,.5)}.pill.a{color:var(--amber);border-color:rgba(255,179,64,.5)}.pill.r{color:var(--red);border-color:rgba(255,90,78,.5)}.pill.c{color:var(--cyan);border-color:rgba(63,214,255,.5)}.pill.v{color:var(--violet);border-color:rgba(179,156,255,.5)}
+
+figure{margin:22px 0 26px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 12px 8px}
+figure svg{width:100%;height:auto;display:block;font-family:var(--mono)}
+figcaption{font-size:13px;color:var(--ink2);padding:10px 4px 4px;line-height:1.5}
+figcaption b{font-family:var(--mono);color:var(--cyan);font-weight:400;margin-right:8px}
+
+.cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 18px}
+.cap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.cap .id{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.1em}
+.cap .n{font-weight:600;color:var(--ink);margin:4px 0 6px}
+.cap .d{font-size:13.5px;color:var(--ink2)}
+.cap .d b{color:var(--ink)}
+.cap .chk{margin-top:8px;font-size:12px;color:var(--ink3)}
+
+pre{background:#050c16;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.55;color:var(--ink2);margin:8px 0 18px}
+pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
+
+.kv{display:grid;grid-template-columns:180px 1fr;gap:6px 14px;font-size:13.5px;margin:10px 0 16px}
+.kv dt{font-family:var(--mono);font-size:12px;color:var(--ink3);padding-top:2px}.kv dd{margin:0;color:var(--ink2)}
+
+.src{font-size:12.5px;color:var(--ink2)}
+.src li{margin-bottom:5px;word-break:break-word}
+.foot{margin-top:40px;font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.06em;line-height:1.8}
+
+@media (max-width:980px){.layout{grid-template-columns:1fr}nav.toc{position:static;display:flex;flex-wrap:wrap;gap:4px 10px}nav.toc .t{width:100%}nav.toc a{border:1px solid var(--line);border-radius:999px;padding:4px 10px}.hero{grid-template-columns:1fr}.hero h1{font-size:34px}}
+@media (max-width:640px){.cap-grid{grid-template-columns:1fr}.hero .facts{grid-template-columns:repeat(3,1fr)}.kv{grid-template-columns:1fr}.hero h1{font-size:30px}body{font-size:15px}}
+@media print{body{background:#fff;color:#111}nav.toc{display:none}.layout{grid-template-columns:1fr}figure,.cap,.fact,pre{border-color:#bbb;background:#fff}p,td,li,figcaption,.cap .d{color:#222}h2 i,code,.docid .rev{color:#0a6}}
+</style>
+</head>
+<body>
+<div class="frame">
+
+<header class="mast">
+  <div class="brand"><b>SONAR</b>-mob<b>i</b>le · Data Center<small>Engineering report · BattleCat autonomous assessment fleet</small></div>
+  <div class="docid">Document <span>BC-ENG-001</span> · <span class="rev">Rev A</span><br>Issued <span>20 Sep 2026</span> · Status <span>Prototype concept for review</span><br>Prepared for <span>Broad Run Data Center · LDN1 (sample site)</span></div>
+</header>
+
+<div class="hero">
+  <div>
+    <h1><small>BC-ENG-001 · Rev A</small>BattleCat<br>assessment vehicle</h1>
+    <p class="lede">A kennelled, self-charging ground robot that a SONAR alert dispatches to the failed asset. It drives the ring road, mates a probe to the asset's diagnostic port, reads the controller, looks and listens, and pushes a verdict with a revised ETR to the phone, the site channel and the console before a technician has reached the door.</p>
+    <div class="facts">
+      <div class="fact"><div class="n">3</div><div class="l">cats · 3 kennels on the gen bus</div></div>
+      <div class="fact"><div class="n">≤ 8 min</div><div class="l">alert to assessment pushed</div></div>
+      <div class="fact"><div class="n">0</div><div class="l">contacts with the live bus</div></div>
+    </div>
+  </div>
+  <div class="hero-art"><span class="tag">GENERAL ARRANGEMENT · SIDE</span>
+    <!-- Hero: side elevation of the cat, stylised -->
+    <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side elevation of the BattleCat vehicle with major subsystems called out">
+      <defs>
+        <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e4a66"/><stop offset="1" stop-color="#16263a"/></linearGradient>
+        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#3fd6ff"/></marker>
+      </defs>
+      <!-- ground -->
+      <line x1="20" y1="262" x2="500" y2="262" stroke="#243a52" stroke-width="2"/>
+      <!-- wheels -->
+      <g fill="#0b1522" stroke="#5a7898" stroke-width="2">
+        <circle cx="130" cy="236" r="26"/><circle cx="330" cy="236" r="26"/>
+      </g>
+      <g fill="none" stroke="#3fd6ff" stroke-width="1"><circle cx="130" cy="236" r="12"/><circle cx="330" cy="236" r="12"/></g>
+      <!-- chassis -->
+      <path d="M78 214 L78 176 Q78 166 88 166 L372 166 Q384 166 384 178 L384 214 Z" fill="url(#hg)" stroke="#3fd6ff" stroke-width="1.5"/>
+      <!-- body -->
+      <path d="M96 166 L96 122 Q96 110 108 110 L292 110 Q304 110 304 122 L304 166 Z" fill="#1d3148" stroke="#3fd6ff" stroke-width="1.5"/>
+      <!-- battery bay -->
+      <rect x="112" y="178" width="150" height="28" rx="4" fill="#0b1522" stroke="#4fd98a" stroke-width="1"/>
+      <rect x="118" y="184" width="138" height="16" fill="none" stroke="#4fd98a" stroke-width=".8" stroke-dasharray="3 2"/>
+      <!-- compute bay -->
+      <rect x="274" y="178" width="98" height="28" rx="4" fill="#0b1522" stroke="#b39cff" stroke-width="1"/>
+      <!-- lidar mast -->
+      <rect x="230" y="80" width="10" height="30" fill="#2a4460" stroke="#3fd6ff" stroke-width="1"/>
+      <ellipse cx="235" cy="76" rx="18" ry="6" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.5"/>
+      <rect x="217" y="62" width="36" height="14" rx="3" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.5"/>
+      <!-- sensor head (pan-tilt) -->
+      <rect x="112" y="92" width="52" height="18" rx="3" fill="#0b1522" stroke="#ffb340" stroke-width="1.5"/>
+      <circle cx="126" cy="101" r="4" fill="#ffb340"/><circle cx="150" cy="101" r="4" fill="#3fd6ff"/>
+      <!-- arm: stowed on top, reaching forward -->
+      <g stroke="#3fd6ff" stroke-width="3" fill="none" stroke-linecap="round">
+        <path d="M268 110 L268 86 L332 66 L400 96"/>
+      </g>
+      <circle cx="268" cy="86" r="5" fill="#0b1522" stroke="#3fd6ff" stroke-width="2"/>
+      <circle cx="332" cy="66" r="5" fill="#0b1522" stroke="#3fd6ff" stroke-width="2"/>
+      <!-- probe head -->
+      <g transform="translate(400 96)">
+        <rect x="-4" y="-9" width="22" height="18" rx="3" fill="#0b1522" stroke="#4fd98a" stroke-width="1.5"/>
+        <line x1="18" y1="-4" x2="30" y2="-4" stroke="#4fd98a" stroke-width="2"/><line x1="18" y1="0" x2="30" y2="0" stroke="#4fd98a" stroke-width="2"/><line x1="18" y1="4" x2="30" y2="4" stroke="#4fd98a" stroke-width="2"/>
+      </g>
+      <!-- asset port faceplate -->
+      <rect x="452" y="70" width="40" height="52" rx="3" fill="#15202e" stroke="#c07060" stroke-width="1.5"/>
+      <rect x="460" y="86" width="24" height="20" rx="2" fill="#0b1522" stroke="#4fd98a" stroke-width="1"/>
+      <text x="472" y="80" text-anchor="middle" font-size="7" fill="#c07060">BC-PORT</text>
+      <!-- WPT pad under chassis -->
+      <rect x="150" y="214" width="80" height="6" fill="#4fd98a" opacity=".8"/>
+      <!-- safety lidar / bumper -->
+      <path d="M78 200 Q66 200 66 212 L66 214 L78 214Z" fill="#ff5a4e" opacity=".85"/>
+      <path d="M384 200 Q396 200 396 212 L396 214 L384 214Z" fill="#ff5a4e" opacity=".85"/>
+      <!-- callouts -->
+      <g font-size="9" fill="#9fb6cc">
+        <g stroke="#3fd6ff" stroke-width=".8" fill="none">
+          <line x1="235" y1="60" x2="235" y2="34"/><line x1="138" y1="90" x2="138" y2="40"/><line x1="332" y1="60" x2="332" y2="34"/>
+          <line x1="187" y1="206" x2="187" y2="270"/><line x1="323" y1="206" x2="323" y2="270"/><line x1="410" y1="106" x2="430" y2="146"/>
+          <line x1="190" y1="220" x2="60" y2="240"/>
+        </g>
+        <text x="235" y="28" text-anchor="middle" fill="#3fd6ff">3D lidar · 360°</text>
+        <text x="138" y="34" text-anchor="middle" fill="#ffb340">thermal + HMI camera · pan-tilt</text>
+        <text x="332" y="28" text-anchor="middle" fill="#3fd6ff">6-axis arm · F/T wrist</text>
+        <text x="187" y="280" text-anchor="middle" fill="#4fd98a">48 V LiFePO₄ · 1.5 kWh</text>
+        <text x="323" y="280" text-anchor="middle" fill="#b39cff">edge compute · Orin class</text>
+        <text x="430" y="158" text-anchor="middle" fill="#4fd98a">probe head → diagnostic port</text>
+        <text x="60" y="252" text-anchor="middle" fill="#4fd98a">wireless charge pad</text>
+      </g>
+      <text x="26" y="297" font-size="8" fill="#5a7898">Length ≈ 0.95 m · height ≈ 0.62 m (mast down) · mass ≈ 65 kg</text>
+    </svg>
+  </div>
+</div>
+
+<div class="layout">
+<nav class="toc" aria-label="Contents">
+  <div class="t">CONTENTS</div>
+  <a href="#s1"><i>1</i>Summary</a>
+  <a href="#s2"><i>2</i>What the tile commits to</a>
+  <a href="#s3"><i>3</i>Mission and CONOPS</a>
+  <a href="#s4"><i>4</i>Capabilities to run the assessment</a>
+  <a href="#s5"><i>5</i>Vehicle design and attributes</a>
+  <a href="#s6"><i>6</i>Docking and the diagnostic port</a>
+  <a href="#s7"><i>7</i>Kennel and energy</a>
+  <a href="#s8"><i>8</i>Sensing and data acquisition</a>
+  <a href="#s9"><i>9</i>Assessment logic and confidence</a>
+  <a href="#s10"><i>10</i>SONAR integration and wire schema</a>
+  <a href="#s11"><i>11</i>Safety and compliance</a>
+  <a href="#s12"><i>12</i>Prototype plan, BOM and tests</a>
+  <a href="#s13"><i>13</i>Risks and open questions</a>
+  <a href="#s14"><i>14</i>Sources</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════ 1 ═══════════════════════════ -->
+<section id="s1">
+<h2><i>1</i>Summary</h2>
+<p>The BattleCat tile in <code>cmdr/datacenter.html</code> already specifies a complete operational behaviour: three cats in three kennels on the generator bus, auto-dispatch on a SONAR alert, a ring-road sortie, arm-to-diagnostic-port docking, a five-item checklist, and a pushed assessment carrying a verdict, a confidence figure, an original-versus-revised ETR and a recommendation. This report turns that behaviour into an engineering specification for a physical prototype: what the vehicle must be able to do, what it must be built from, how it docks without ever touching a live conductor, how it is powered when the site is dark, how it talks to SONAR-mobile, and how it stays inside the safety envelope of an energized electrical campus.</p>
+<p>The design decision that shapes everything else is <strong>read-only, port-mediated diagnosis</strong>. The cat never opens a door, never operates a breaker and never enters a shock-protection boundary. It reaches a standard faceplate (the <em>BC-PORT</em>) on the outside of the asset's control enclosure, reads the controller over the asset's own service protocol, and confirms what it reads with a thermal image, an HMI photograph and an acoustic sweep. Everything it produces is evidence for a person; the tile's <code>rec</code> field is a recommendation, not a command.</p>
+<div class="callout green"><b>Why this is worth building.</b> Uptime Institute's 2026 outage analysis again finds power the leading cause of impactful outages, with UPS, transfer-switch and generator failures dominant, and notes operators shifting investment toward automation and control systems. The three demo outages in the tile (utility feed lost, UPS on battery with a slow generator, a cooling-loop VFD fault) are exactly that failure set. Robots already walk data halls on scheduled rounds — Digital Realty's ANYmal in Zurich runs nine missions a day over roughly 70 monitored elements; Novva runs Spot fleets in Utah. What none of them do today is <em>respond to an alert</em>, dock to the asset and return a decision. That gap is BattleCat.</div>
+<h3>Headline requirements</h3>
+<div class="tw"><table>
+<tr><th>Requirement</th><th>Target</th><th>Derived from</th></tr>
+<tr><td>Alert-to-assessment latency</td><td>≤ 8 min for any pinned target on the sample campus</td><td>Tile sortie model; P1 ETR of 45 min must be revised early enough to matter</td></tr>
+<tr><td>Sortie endurance</td><td>≥ 90 min continuous, two sorties without recharge</td><td>Tile drains ~0.03 %/step en route and 2 % per check</td></tr>
+<tr><td>Dark-site operation</td><td>Kennel powered from the gen bus, with ≥ 6 h local battery bridging generator start and a total loss of the bus</td><td>Tile: "kennels on the gen bus · 6 h battery each"</td></tr>
+<tr><td>Diagnostic reach</td><td>Read the switchgear IED / ATS controller, UPS management card, generator controller, VFD and BMS through one standard faceplate</td><td>Tile check lists for u1, u2, u3</td></tr>
+<tr><td>Electrical safety</td><td>Vehicle envelope stays outside the NFPA 70E limited approach boundary of every exposed part; port faceplate is on a Class 2 / SELV control surface</td><td>"Never the live bus" framing</td></tr>
+<tr><td>Autonomy</td><td>Ring road plus indoor corridors, lights on or off, no beacons required; people and vehicles on the road</td><td>Ring-road path model; ISO 3691-4 / R15.08</td></tr>
+<tr><td>SONAR wire protocol</td><td>Publish <code>BC_EVENT</code> and <code>BC_ASSESS</code> on the site channel exactly as the tile does today, so the phone, console and audit need no change</td><td>Tile <code>bus.publish</code> calls; console audits BC_ASSESS / BC_EVENT</td></tr>
+</table></div>
+</section>
+
+<!-- ═══════════════════════════ 2 ═══════════════════════════ -->
+<section id="s2">
+<h2><i>2</i>What the tile commits to</h2>
+<p>The <code>BATTLECAT</code> module (about 95 lines of the phone edition) is the behavioural contract. A physical prototype has to honour it, because the phone, the Guide lessons and the desktop console already depend on it.</p>
+<div class="kv">
+  <dt>Fleet</dt><dd>Three cats <code>BC-1</code>, <code>BC-2</code>, <code>BC-3</code>, one per kennel, each with a battery percentage and a sortie count. A cat is only eligible when <code>state === 'ready'</code> and battery ≥ 25 %.</dd>
+  <dt>Kennels</dt><dd><code>K-N</code> Kennel North (ring top, x 162–182), <code>K-E</code> Kennel East (ring right, y 212–232), <code>K-S</code> Kennel South (ring bottom, x 290–310). Each has a dock point on the ring road and a status LED. The note under the fleet list reads "on the generator bus with its own 6 h battery, so cats recharge when the site is dark."</dd>
+  <dt>Route</dt><dd>A rectangular ring road from (20,20) to (500,400) in scene units; the campus scene is 520 × 420 units, so a unit is on the order of a metre. Path length ≈ 1,720 units. The cat picks the shorter direction around the ring and leaves the road only for the final approach to the target.</dd>
+  <dt>Dispatch</dt><dd>Nearest ready cat by ring-road distance. Only one sortie at a time (the module guards with <code>if(sortie)</code>). A live SONAR alert with <code>auto</code> on dispatches to the generic Hall 2 target 900 ms after the alert lands.</dd>
+  <dt>Sortie phases</dt><dd><code>out → dock → scan → back</code>, then <code>charging</code> until 100 %, then <code>ready</code>. Docking is announced as "arm on diagnostic port". Every completed check costs 2 % battery; driving costs 0.03 % per animation step.</dd>
+  <dt>Targets</dt><dd><code>u1</code> Service entrance · Feed A (z 0), <code>u2</code> UPS-2B · Hall 2 (z 0), <code>u3</code> CRAH-14 · Hall 1 roof (z 44), plus generic hall / yard / road targets <code>w0–w3</code>.</dd>
+  <dt>Checklists</dt><dd>Five checks per target class, each a triple <code>[name, reading, status]</code> with status <code>on / warn / bad</code>. The generic list is panel indication read via HMI camera, thermal sweep, breaker states, local alarms and access route.</dd>
+  <dt>Verdict</dt><dd><code>{v, c, etr:[original, revised], rec}</code> — a sentence, a confidence percentage (80–92 in the demo), the ETR pair and a recommendation. Pushed as <code>BC_ASSESS</code> with the check triples attached, echoed as a system <code>MSG</code> on <code>site:&lt;site&gt;</code>, kept in a 20-deep history.</dd>
+  <dt>Events</dt><dd><code>BC_EVENT {cat, ev:'dispatch', target, site}</code> on dispatch. Recall sends the cat straight back. Console audits both message types.</dd>
+</div>
+<h3>Reading the tile as requirements</h3>
+<p>Three things in the tile are aspirational for a first prototype and are called out as such rather than quietly dropped. <strong>Roof access</strong>: target <code>u3</code> is on the Hall 1 roof (z 44). A ground vehicle needs a rooftop ramp or an elevator; Rev A specifies an elevator-capable cat and a fallback ground-level CRAH port in the mechanical gallery, and treats true roof-top work as a Rev B tethered-drone payload. <strong>Single-sortie fleet</strong>: the tile allows one sortie at a time; the hardware supports three concurrent sorties, and the tile guard becomes a policy switch. <strong>Zero-metre ring road</strong>: scene units are treated as metres for this report (ring ≈ 480 × 380 m, perimeter ≈ 1.7 km), which sets the drive-time budget in §3.</p>
+</section>
+
+<!-- ═══════════════════════════ 3 ═══════════════════════════ -->
+<section id="s3">
+<h2><i>3</i>Mission and CONOPS</h2>
+<p>A sortie is one alert, one asset, one verdict. The cat is not a patrol robot between alerts; it is a first responder that arrives before people can and returns evidence people can act on. Scheduled rounds (thermal baselines, gauge reads) are a secondary mission that keeps baselines fresh for the confidence model in §9.</p>
+<figure>
+<svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sortie timeline from alert to assessment pushed">
+  <defs><marker id="ar2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5a7898"/></marker></defs>
+  <line x1="40" y1="150" x2="790" y2="150" stroke="#5a7898" stroke-width="2" marker-end="url(#ar2)"/>
+  <g font-size="11" fill="#9fb6cc" text-anchor="middle">
+    <g><circle cx="60" cy="150" r="7" fill="#ff5a4e"/><text x="60" y="125" fill="#ff5a4e">T+0</text><text x="60" y="180">SONAR alert</text><text x="60" y="194" font-size="9" fill="#5a7898">BC_EVENT dispatch</text></g>
+    <g><circle cx="160" cy="150" r="7" fill="#3fd6ff"/><text x="160" y="125" fill="#3fd6ff">T+20 s</text><text x="160" y="180">door up · roll</text><text x="160" y="194" font-size="9" fill="#5a7898">kennel releases dock</text></g>
+    <g><circle cx="290" cy="150" r="7" fill="#3fd6ff"/><text x="290" y="125" fill="#3fd6ff">≤ T+4 min</text><text x="290" y="180">arrive · find port</text><text x="290" y="194" font-size="9" fill="#5a7898">≤ 350 m at 1.5 m/s</text></g>
+    <g><circle cx="410" cy="150" r="7" fill="#ffb340"/><text x="410" y="125" fill="#ffb340">≤ T+5.5 min</text><text x="410" y="180">docked</text><text x="410" y="194" font-size="9" fill="#5a7898">fiducial · F/T · mate</text></g>
+    <g><circle cx="530" cy="150" r="7" fill="#ffb340"/><text x="530" y="125" fill="#ffb340">≤ T+8 min</text><text x="530" y="180">5 checks · verdict</text><text x="530" y="194" font-size="9" fill="#5a7898">read · look · listen</text></g>
+    <g><circle cx="650" cy="150" r="7" fill="#4fd98a"/><text x="650" y="125" fill="#4fd98a">T+8 min</text><text x="650" y="180">assessment pushed</text><text x="650" y="194" font-size="9" fill="#5a7898">phone · channel · console</text></g>
+    <g><circle cx="760" cy="150" r="7" fill="#b39cff"/><text x="760" y="125" fill="#b39cff">≤ T+13 min</text><text x="760" y="180">back · charging</text><text x="760" y="194" font-size="9" fill="#5a7898">or hold on station</text></g>
+  </g>
+  <g font-size="10" fill="#5a7898">
+    <rect x="40" y="40" width="750" height="60" rx="8" fill="none" stroke="#1e2d45"/>
+    <text x="56" y="60" fill="#9fb6cc">Budget by phase</text>
+    <text x="56" y="80">dispatch 20 s · transit ≤ 220 s · dock ≤ 90 s · checklist ≤ 150 s · push ≤ 5 s · return ≤ 300 s</text>
+    <text x="56" y="94">Tile animation runs the same phases at 100 ms per step; the physical budget is what the animation stands for.</text>
+  </g>
+  <text x="40" y="240" font-size="10" fill="#5a7898">Hold-on-station: on a P1 the cat stays docked and re-reads every 60 s until released by ACK,</text>
+  <text x="40" y="256" font-size="10" fill="#5a7898">publishing a delta BC_ASSESS only when a reading changes state.</text>
+  <text x="40" y="276" font-size="10" fill="#5a7898">Recall: at any phase, the console or the phone sends recall; the cat unmates, retracts and returns.</text>
+  <text x="40" y="292" font-size="10" fill="#5a7898">A cat below 25 % on arrival still completes the checklist, then returns on reserve.</text>
+</svg>
+<figcaption><b>Fig 1</b>Sortie timeline. The eight-minute alert-to-assessment target is the driving requirement for speed, docking time and checklist duration.</figcaption>
+</figure>
+<h3>Operating modes</h3>
+<ul>
+  <li><strong>Respond</strong> — auto-dispatch on a SONAR alert (the tile's default). One cat per alert; the console can retarget.</li>
+  <li><strong>Deploy</strong> — an operator taps a listed outage on the phone or console; identical to Respond but the target is explicit.</li>
+  <li><strong>Hold</strong> — remain docked on a P1 asset, re-reading on a cadence until acknowledged.</li>
+  <li><strong>Rounds</strong> — scheduled thermal/acoustic baselines of the gen yard, switchgear and UPS rooms between alerts, so the confidence model has a "normal" to compare against. This is the mission the industry already runs with quadrupeds and is the lowest-risk way to log hours on the platform.</li>
+  <li><strong>Drill</strong> — the phone's Drill Builder releases EXERCISE alerts; the cat sorties for real but every message is tagged <code>test:true</code> and the verdict is suffixed EXERCISE.</li>
+</ul>
+</section>
+
+<!-- ═══════════════════════════ 4 ═══════════════════════════ -->
+<section id="s4">
+<h2><i>4</i>Capabilities required to run the assessment</h2>
+<p>Ten capabilities, each with a threshold and the tile check it enables. A prototype that cannot meet a threshold should say so in its <code>BC_ASSESS</code> rather than guess; the confidence figure in §9 is where that honesty is scored.</p>
+<div class="cap-grid">
+  <div class="cap"><div class="id">C1 · MOBILITY</div><div class="n">Drive the ring road and the halls</div><div class="d">Outdoor asphalt and concrete with 8 % ramps, kerb cuts, wet surfaces; indoor raised floor and epoxy. <b>1.5 m/s</b> cruise outdoors, 0.8 m/s indoors, 0.3 m/s within 3 m of a person. Doors: card-reader-actuated automatic doors on the cat's route; no door manipulation in Rev A.</div><div class="chk">Enables: reaching every target in ≤ 4 min; "Access route · clear".</div></div>
+  <div class="cap"><div class="id">C2 · LOCALISATION</div><div class="n">Know where it is on the campus map without beacons</div><div class="d">3D-lidar SLAM against a surveyed campus map, <b>±10 cm</b> on the ring road, <b>±3 cm</b> at the port approach using the port fiducial. GNSS is a sanity check outdoors only; the halls have none. Works with lights off (lidar is active; cameras carry their own illumination).</div><div class="chk">Enables: the tile's x/y cat position on the ISO map; docking search start pose.</div></div>
+  <div class="cap"><div class="id">C3 · PERCEPTION</div><div class="n">See heat, read displays, hear discharge</div><div class="d">Radiometric LWIR 640 × 512, <b>±2 °C or ±2 %</b>, 2–20 m stand-off; 4K visible with 20× optical zoom and a 3,000+ lm spotlight to read HMI screens, breaker flags and gauges; an acoustic array covering <b>2–100 kHz</b> for partial discharge, corona, and a failed fan's bearing note.</div><div class="chk">Enables: "Thermal · xfmr A bushings", "Panel indication · read via HMI camera", "CRAH-14 fan · stopped".</div></div>
+  <div class="cap"><div class="id">C4 · MANIPULATION</div><div class="n">Mate a probe to the BC-PORT</div><div class="d">6-axis arm, <b>≥ 0.9 m</b> reach, 3 kg tool, 6-axis force/torque sensing with a compliant wrist; fiducial-guided approach then force-controlled spiral search and insertion under <b>15 N</b>. Port height 0.9–1.2 m above floor. Mate/unmate cycle ≤ 60 s. Retract on any fault.</div><div class="chk">Enables: the whole "docked · arm on diagnostic port" phase.</div></div>
+  <div class="cap"><div class="id">C5 · DATA ACQUISITION</div><div class="n">Read the controller in its own language</div><div class="d">Modbus RTU over RS-485 and Modbus TCP, SNMP (RFC 1628 UPS MIB), BACnet/IP and MS/TP, and a DNP3/IEC 61850 MMS client for switchgear IEDs. <b>Read-only</b>: only FC 01–04 on Modbus, GET on SNMP, ReadProperty on BACnet. Per-asset register maps loaded from the site's asset library.</div><div class="chk">Enables: "Feed A breaker 52-A", "ATS-1 position", "String voltage", "G3 starter battery", "VFD fault F07".</div></div>
+  <div class="cap"><div class="id">C6 · REASONING</div><div class="n">Turn readings into a verdict with a confidence</div><div class="d">A checklist engine executes the target class's checks, tags each <code>on / warn / bad</code> against thresholds and baselines, and a rules-plus-model scorer produces the verdict sentence, the revised ETR and the recommendation. Runs <b>on the cat</b>; no cloud dependency during an outage.</div><div class="chk">Enables: <code>v, c, etr, rec</code>.</div></div>
+  <div class="cap"><div class="id">C7 · COMMS</div><div class="n">Stay connected when the site is dark</div><div class="d">Wi-Fi 6 on the OT network as primary, private LTE/5G as secondary, and a kennel-relayed <b>LoRa/900 MHz</b> telemetry channel that carries the compact <code>BC_ASSESS</code> even when both are down. Store-and-forward for full evidence (images, audio).</div><div class="chk">Enables: the push to phone, site channel and console.</div></div>
+  <div class="cap"><div class="id">C8 · ENERGY</div><div class="n">Charge from a kennel that has power when nothing else does</div><div class="d">Kennel on the generator bus through its own ATS, with a <b>6 h</b> local battery. Wireless charging pad, ≥ <b>300 W</b> nominal, 1 kW option, so the cat docks without contacts to corrode. Cat pack sized for two sorties plus 30 % reserve.</div><div class="chk">Enables: "Kennels on the gen bus · 6 h battery each".</div></div>
+  <div class="cap"><div class="id">C9 · SAFETY</div><div class="n">Share the road and respect the boundaries</div><div class="d">PLd safety functions per ISO 13849 (personnel detection, speed limiting, e-stop); ANSI/A3 R15.08-1 and ISO 3691-4 conformance; geo-fenced exclusion inside NFPA 70E limited-approach boundaries for every exposed energized part on the site's arc-flash study.</div><div class="chk">Enables: "never the live bus" as a hard, testable rule.</div></div>
+  <div class="cap"><div class="id">C10 · CYBER</div><div class="n">Be a reader, never a path</div><div class="d">Diagnostic traffic on an isolated, read-only diagnostics VLAN presented at the BC-PORT through a one-way gateway; no write function codes in firmware; signed firmware; the cat's own radios never bridge to the OT network. Every read is logged with asset id, register and timestamp.</div><div class="chk">Enables: an ATO/OT-security story a data-center operator can accept.</div></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════ 5 ═══════════════════════════ -->
+<section id="s5">
+<h2><i>5</i>Vehicle design and attributes</h2>
+<p>The tile draws the cat as a wheeled body with two eyes and an arm, and the mission is a road with a short indoor tail. A wheeled skid-steer chassis is the right prototype answer: it is fast on the ring road, carries a heavier arm and battery than a quadruped, is cheaper, and the campus has ramps rather than stairs. Legged platforms remain the reference for stair-bound halls and are noted in §13.</p>
+<figure>
+<svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plan view of the BattleCat vehicle with subsystem placement">
+  <text x="20" y="24" font-size="11" fill="#3fd6ff">PLAN VIEW · MAST AND ARM STOWED</text>
+  <!-- outline -->
+  <rect x="120" y="70" width="440" height="300" rx="26" fill="#111f30" stroke="#3fd6ff" stroke-width="1.5"/>
+  <!-- wheels -->
+  <g fill="#0b1522" stroke="#5a7898" stroke-width="2">
+    <rect x="98" y="90" width="30" height="70" rx="6"/><rect x="552" y="90" width="30" height="70" rx="6"/>
+    <rect x="98" y="280" width="30" height="70" rx="6"/><rect x="552" y="280" width="30" height="70" rx="6"/>
+  </g>
+  <!-- battery -->
+  <rect x="150" y="250" width="200" height="90" rx="6" fill="#0b1522" stroke="#4fd98a" stroke-width="1.2"/>
+  <text x="250" y="290" text-anchor="middle" font-size="11" fill="#4fd98a">48 V LiFePO₄ pack</text>
+  <text x="250" y="306" text-anchor="middle" font-size="9" fill="#9fb6cc">1.5 kWh · 32 Ah · swappable</text>
+  <!-- WPT receiver -->
+  <rect x="380" y="255" width="150" height="80" rx="6" fill="#0b1522" stroke="#4fd98a" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="455" y="290" text-anchor="middle" font-size="11" fill="#4fd98a">WPT receiver coil</text>
+  <text x="455" y="306" text-anchor="middle" font-size="8" fill="#9fb6cc">under-chassis · 300 W / 1 kW</text>
+  <!-- compute -->
+  <rect x="380" y="100" width="150" height="70" rx="6" fill="#0b1522" stroke="#b39cff" stroke-width="1.2"/>
+  <text x="455" y="130" text-anchor="middle" font-size="11" fill="#b39cff">Edge compute</text>
+  <text x="455" y="146" text-anchor="middle" font-size="9" fill="#9fb6cc">Orin-class · 200+ TOPS · 15–60 W</text>
+  <!-- radios -->
+  <rect x="380" y="180" width="150" height="55" rx="6" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.2"/>
+  <text x="455" y="203" text-anchor="middle" font-size="11" fill="#3fd6ff">Radios</text>
+  <text x="455" y="219" text-anchor="middle" font-size="9" fill="#9fb6cc">Wi-Fi 6 · LTE/5G · LoRa 900</text>
+  <!-- arm base -->
+  <circle cx="290" cy="130" r="40" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.5"/>
+  <circle cx="290" cy="130" r="14" fill="#1d3148" stroke="#3fd6ff"/>
+  <text x="290" y="188" text-anchor="middle" font-size="11" fill="#3fd6ff">Arm turret</text>
+  <text x="290" y="202" text-anchor="middle" font-size="9" fill="#9fb6cc">6-DoF · 0.9 m · F/T wrist</text>
+  <!-- stowed arm -->
+  <path d="M290 130 L200 130 L150 175" stroke="#3fd6ff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/>
+  <rect x="136" y="166" width="24" height="18" rx="3" fill="#0b1522" stroke="#4fd98a"/>
+  <!-- lidar -->
+  <circle cx="200" cy="90" r="14" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.5"/>
+  <text x="200" y="54" text-anchor="middle" font-size="9" fill="#3fd6ff">3D lidar mast (raises 0.4 m)</text>
+  <!-- sensor head -->
+  <rect x="140" y="95" width="46" height="26" rx="4" fill="#0b1522" stroke="#ffb340" stroke-width="1.5"/>
+  <text x="92" y="112" text-anchor="end" font-size="9" fill="#ffb340">pan-tilt head →</text>
+  <!-- acoustic array -->
+  <g fill="#ffb340"><circle cx="150" cy="220" r="2.5"/><circle cx="162" cy="214" r="2.5"/><circle cx="174" cy="220" r="2.5"/><circle cx="156" cy="232" r="2.5"/><circle cx="168" cy="232" r="2.5"/><circle cx="162" cy="224" r="2.5"/></g>
+  <text x="148" y="206" text-anchor="middle" font-size="9" fill="#ffb340">acoustic array 2–100 kHz</text>
+  <!-- safety lidars corner -->
+  <g fill="#ff5a4e"><circle cx="130" cy="80" r="5"/><circle cx="550" cy="360" r="5"/></g>
+  <text x="460" y="392" font-size="9" fill="#ff5a4e" text-anchor="start">safety scanner (PLd) ×2 diagonal</text>
+  <!-- e-stops -->
+  <g fill="#ff5a4e" stroke="#fff" stroke-width="1"><circle cx="340" cy="360" r="7"/><circle cx="340" cy="80" r="7"/></g>
+  <text x="340" y="392" font-size="9" fill="#ff5a4e" text-anchor="middle">e-stop ×2 + wireless e-stop</text>
+  <!-- strobe -->
+  <circle cx="540" cy="80" r="6" fill="#ffb340"/><text x="540" y="62" font-size="9" fill="#ffb340" text-anchor="middle">strobe · speaker</text>
+  <!-- dims -->
+  <g stroke="#5a7898" stroke-width="1" fill="none"><line x1="120" y1="405" x2="560" y2="405"/><line x1="120" y1="398" x2="120" y2="412"/><line x1="560" y1="398" x2="560" y2="412"/><line x1="600" y1="70" x2="600" y2="370"/><line x1="593" y1="70" x2="607" y2="70"/><line x1="593" y1="370" x2="607" y2="370"/></g>
+  <text x="340" y="426" text-anchor="middle" font-size="10" fill="#9fb6cc">0.95 m</text>
+  <text x="620" y="224" font-size="10" fill="#9fb6cc">0.62 m</text>
+</svg>
+<figcaption><b>Fig 2</b>Plan view. The arm turret sits forward of centre so the stowed arm and probe head are protected inside the body outline; the battery and charge coil sit aft and low for stability with the arm extended.</figcaption>
+</figure>
+<h3>Attributes and specifications</h3>
+<div class="tw"><table>
+<tr><th>Attribute</th><th>Specification</th><th>Note</th></tr>
+<tr class="grp"><td colspan="3">Platform</td></tr>
+<tr><td>Form factor</td><td>4-wheel skid-steer, 250 mm pneumatic tyres, independent hub motors</td><td>Kerb cuts to 60 mm, 8 % ramp at 65 kg + 15 kg payload</td></tr>
+<tr><td>Dimensions</td><td>0.95 × 0.62 × 0.62 m stowed; mast to 1.0 m; arm reach envelope 0.9 m radius, 1.5 m high</td><td>Fits a 0.9 m door and a passenger elevator</td></tr>
+<tr><td>Mass</td><td>≈ 65 kg with battery; ≤ 80 kg fully equipped</td><td>Under the 100 kg threshold some floors and lifts assume</td></tr>
+<tr><td>Speed</td><td>1.5 m/s outdoors, 0.8 indoors, 0.3 near people</td><td>Ring road half-perimeter ≈ 850 m in ≈ 9.5 min at 1.5 m/s; the ≤ 4 min transit target assumes the nearest kennel is ≤ 350 m by road — kennel spacing in §7</td></tr>
+<tr><td>Ingress protection</td><td>IP54 body, IP65 sensor head, −10 to +45 °C</td><td>Loudoun winters and gen-yard heat</td></tr>
+<tr class="grp"><td colspan="3">Energy</td></tr>
+<tr><td>Battery</td><td>48 V LiFePO₄, 1.5 kWh, swappable, BMS with CAN reporting</td><td>LiFePO₄ chosen over NMC for thermal stability inside a facility that already worries about lithium fires</td></tr>
+<tr><td>Endurance</td><td>≥ 90 min drive, ≥ 4 h docked-and-reading; two sorties per charge</td><td>Nominal draw ≈ 400 W driving, ≈ 120 W docked</td></tr>
+<tr><td>Charging</td><td>Wireless resonant pad in the kennel, 300 W nominal (1 kW option), full in ≈ 3 h at 300 W</td><td>Tile recharge rate of 1.5 %/s is compressed for the demo; a 1 kW pad reaches ≈ 1 %/min</td></tr>
+<tr class="grp"><td colspan="3">Compute and software</td></tr>
+<tr><td>Edge computer</td><td>Jetson AGX Orin class (200–275 TOPS, 15–60 W) or successor; industrial variant for the −10 °C floor</td><td>Runs SLAM, Nav2, perception models and the checklist engine on the vehicle</td></tr>
+<tr><td>Software stack</td><td>ROS 2, Nav2, SLAM Toolbox / lidar-inertial odometry, behaviour-tree mission executive, containerised</td><td>Mission executive states mirror the tile: ready · out · dock · scan · back · charging</td></tr>
+<tr><td>Safety controller</td><td>Separate safety PLC / safety-rated controller wired to scanners, e-stops, bumpers and motor STO</td><td>Not on the Orin; PLd per ISO 13849-1</td></tr>
+<tr class="grp"><td colspan="3">Sensing</td></tr>
+<tr><td>3D lidar</td><td>32–128 channel spinning lidar, ≥ 100 m range on 80 % targets, on a mast that raises for the yard and lowers for doors</td><td>e.g. Ouster OS1 class</td></tr>
+<tr><td>Thermal</td><td>Radiometric LWIR 640 × 512, 12 µm, 60 Hz; 18° lens for switchgear/bushings at 3–10 m, 6° option for the yard</td><td>e.g. Boson+ 640R class; NDAA-compliant</td></tr>
+<tr><td>Visible</td><td>4K PTZ with 20× optical zoom; 3,000+ lm LED; on-board OCR for HMI screens and breaker flags</td><td>Reads a UPS front panel from 2 m in the dark</td></tr>
+<tr><td>Acoustic</td><td>MEMS array, 2–100 kHz, beamformed to an image overlay</td><td>Partial discharge on MV gear; bearings and fans on CRAHs</td></tr>
+<tr><td>Depth / docking cameras</td><td>Stereo depth on the head; a wrist camera on the arm for the fiducial and the port shutter</td><td>Docking loop runs on the wrist camera</td></tr>
+<tr><td>Environmental</td><td>Temperature, humidity, CO, H₂ (battery rooms), smoke</td><td>Logged with every check; H₂ &gt; 1 % vol aborts docking in a battery room</td></tr>
+<tr class="grp"><td colspan="3">Manipulation</td></tr>
+<tr><td>Arm</td><td>6-DoF collaborative-class arm, 0.9 m reach, 3–5 kg payload, ±0.1 mm repeatability, ISO 10218 / TS 15066 power-and-force limiting</td><td>Cobot class keeps the moving mass and pinch forces low around people</td></tr>
+<tr><td>Wrist</td><td>6-axis F/T sensor + passive compliant wrist (±2 mm, ±3°)</td><td>Absorbs the residual misalignment vision cannot remove</td></tr>
+<tr><td>Probe head</td><td>Quick-change; keyed to the BC-PORT; carries RS-485, RJ45, 24 V sense pins and the fiducial camera</td><td>§6</td></tr>
+<tr class="grp"><td colspan="3">Communications</td></tr>
+<tr><td>Primary</td><td>Wi-Fi 6 on the OT/facilities SSID</td><td>Roams across the campus; images and audio</td></tr>
+<tr><td>Secondary</td><td>Private LTE / 5G (CBRS) or carrier</td><td>Survives a Wi-Fi core loss</td></tr>
+<tr><td>Tertiary</td><td>LoRa / 900 MHz to the kennel gateway, ≤ 2 kB messages</td><td>Enough for <code>BC_ASSESS</code> without attachments</td></tr>
+</table></div>
+</section>
+
+<!-- ═══════════════════════════ 6 ═══════════════════════════ -->
+<section id="s6">
+<h2><i>6</i>Docking and the diagnostic port</h2>
+<p>Docking is where the agreed framing — <strong>never the live bus</strong> — becomes hardware. The cat does not open any enclosure. Each assessable asset gets a <em>BC-PORT</em>: a keyed, shuttered faceplate on the outside of the control section of the enclosure, wired only to the controller's service interface through a read-only gateway. The faceplate carries a fiducial that tells the cat which asset it is and where the socket is to a few millimetres.</p>
+<figure>
+<svg viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagnostic port faceplate and probe head interface drawing">
+  <!-- faceplate front -->
+  <g transform="translate(40 40)">
+    <text x="0" y="-10" font-size="11" fill="#3fd6ff">BC-PORT FACEPLATE · FRONT</text><text x="0" y="252" font-size="8" fill="#5a7898">120 × 160 mm · 0.9–1.2 m AFF</text>
+    <rect x="0" y="0" width="180" height="240" rx="8" fill="#15202e" stroke="#c07060" stroke-width="1.5"/>
+    <!-- fiducial -->
+    <g transform="translate(20 20)"><rect width="50" height="50" fill="#fff"/><g fill="#000"><rect x="5" y="5" width="40" height="40"/><rect x="10" y="10" width="10" height="10" fill="#fff"/><rect x="30" y="10" width="10" height="10" fill="#fff"/><rect x="10" y="30" width="10" height="10" fill="#fff"/><rect x="25" y="25" width="10" height="10" fill="#fff"/></g></g>
+    <text x="45" y="86" text-anchor="middle" font-size="8" fill="#9fb6cc">AprilTag 36h11</text>
+    <text x="45" y="96" text-anchor="middle" font-size="8" fill="#9fb6cc">id = asset id</text>
+    <!-- status LEDs -->
+    <circle cx="120" cy="30" r="5" fill="#4fd98a"/><circle cx="140" cy="30" r="5" fill="#ffb340"/><circle cx="160" cy="30" r="5" fill="#ff5a4e"/>
+    <text x="140" y="48" text-anchor="middle" font-size="8" fill="#9fb6cc">port ok · busy · lockout</text>
+    <!-- shutter socket -->
+    <rect x="30" y="110" width="120" height="70" rx="6" fill="#0b1522" stroke="#4fd98a" stroke-width="1.5"/>
+    <line x1="30" y1="145" x2="150" y2="145" stroke="#4fd98a" stroke-dasharray="4 3"/>
+    <text x="90" y="130" text-anchor="middle" font-size="8" fill="#4fd98a">spring shutter (opens on key)</text>
+    <text x="90" y="166" text-anchor="middle" font-size="7" fill="#4fd98a">keyed · RS-485 · RJ45 · 24 V sense</text>
+    <!-- guide cones -->
+    <circle cx="22" cy="200" r="7" fill="none" stroke="#3fd6ff"/><circle cx="158" cy="200" r="7" fill="none" stroke="#3fd6ff"/>
+    <text x="90" y="204" text-anchor="middle" font-size="8" fill="#3fd6ff">alignment cones ×2</text>
+    <text x="90" y="226" text-anchor="middle" font-size="7" fill="#c07060">enclosure exterior · control section only</text>
+  </g>
+  <!-- probe head side -->
+  <g transform="translate(300 40)">
+    <text x="0" y="-10" font-size="11" fill="#3fd6ff">PROBE HEAD · SIDE · ON ARM</text>
+    <!-- arm link -->
+    <rect x="0" y="100" width="70" height="30" rx="6" fill="#1d3148" stroke="#3fd6ff"/>
+    <text x="35" y="119" text-anchor="middle" font-size="8" fill="#9fb6cc">wrist</text>
+    <!-- FT sensor -->
+    <rect x="70" y="95" width="26" height="40" rx="4" fill="#0b1522" stroke="#ffb340"/>
+    <text x="83" y="90" text-anchor="middle" font-size="8" fill="#ffb340">6-axis F/T</text>
+    <!-- compliant element -->
+    <path d="M96 100 q6 8 0 16 q-6 8 0 16 q6 8 0 16" fill="none" stroke="#b39cff" stroke-width="2"/>
+    <rect x="102" y="96" width="14" height="38" fill="#0b1522" stroke="#b39cff"/>
+    <text x="109" y="150" text-anchor="middle" font-size="8" fill="#b39cff">compliant</text><text x="109" y="160" text-anchor="middle" font-size="8" fill="#b39cff">±2 mm ±3°</text>
+    <!-- head body -->
+    <rect x="116" y="88" width="90" height="54" rx="6" fill="#0b1522" stroke="#4fd98a" stroke-width="1.5"/>
+    <text x="161" y="108" text-anchor="middle" font-size="8" fill="#4fd98a">isolated</text><text x="161" y="120" text-anchor="middle" font-size="8" fill="#4fd98a">Modbus / SNMP / BACnet</text><text x="161" y="132" text-anchor="middle" font-size="8" fill="#4fd98a">client · read-only</text>
+    <!-- wrist cam -->
+    <rect x="184" y="76" width="22" height="12" rx="2" fill="#0b1522" stroke="#3fd6ff"/>
+    <text x="195" y="70" text-anchor="middle" font-size="8" fill="#3fd6ff">fiducial cam</text>
+    <!-- key + pins -->
+    <rect x="206" y="104" width="20" height="22" fill="#4fd98a" opacity=".8"/>
+    <g stroke="#4fd98a" stroke-width="2"><line x1="226" y1="108" x2="252" y2="108"/><line x1="226" y1="115" x2="252" y2="115"/><line x1="226" y1="122" x2="252" y2="122"/></g>
+    <text x="238" y="152" text-anchor="middle" font-size="8" fill="#4fd98a">pogo pins · key</text>
+    <!-- guide pins -->
+    <line x1="206" y1="94" x2="262" y2="94" stroke="#3fd6ff" stroke-width="3"/><line x1="206" y1="136" x2="262" y2="136" stroke="#3fd6ff" stroke-width="3"/>
+    <text x="262" y="86" font-size="8" fill="#3fd6ff">guide pins → cones</text>
+    <!-- insertion sequence -->
+    <g transform="translate(0 200)" font-size="9" fill="#9fb6cc">
+      <text x="0" y="0" fill="#3fd6ff" font-size="10">INSERTION SEQUENCE</text>
+      <text x="0" y="20">1 · Approach pose from fiducial (±3 mm, ±1°) at 60 mm stand-off</text>
+      <text x="0" y="36">2 · Guide pins enter cones; F/T reads contact &lt; 5 N</text>
+      <text x="0" y="52">3 · Spiral search ±3 mm if pins do not seat; abort at 15 N or 20 s</text>
+      <text x="0" y="68">4 · Key opens shutter; pogo pins seat; 24 V sense confirms mate</text>
+      <text x="0" y="84">5 · Port LED → busy; gateway session opens; checklist runs</text>
+      <text x="0" y="100">6 · Unmate on completion, recall, fault, or any F/T excursion &gt; 25 N</text>
+      <text x="0" y="122" fill="#ff5a4e">Any lockout LED = no mate. Any H₂/smoke alarm = retract and stand off.</text>
+    </g>
+  </g>
+  <!-- port to controller wiring -->
+  <g transform="translate(40 400)" font-size="9" fill="#9fb6cc">
+    <text x="0" y="0" fill="#3fd6ff" font-size="10">BEHIND THE FACEPLATE</text>
+    <rect x="0" y="12" width="90" height="34" rx="4" fill="#0b1522" stroke="#c07060"/><text x="45" y="33" text-anchor="middle">BC-PORT</text>
+    <line x1="90" y1="29" x2="130" y2="29" stroke="#4fd98a" stroke-width="2"/>
+    <rect x="130" y="8" width="110" height="42" rx="4" fill="#0b1522" stroke="#4fd98a"/><text x="185" y="26" text-anchor="middle">read-only gateway</text><text x="185" y="40" text-anchor="middle" font-size="8">FC 01–04 only · isolated</text>
+    <line x1="240" y1="29" x2="280" y2="29" stroke="#4fd98a" stroke-width="2"/>
+    <rect x="280" y="12" width="150" height="34" rx="4" fill="#0b1522" stroke="#9fb6cc"/><text x="355" y="33" text-anchor="middle">controller service port</text>
+    <text x="0" y="76" font-size="8" fill="#5a7898">Genset: RS-485 Modbus RTU (PCC / EMCP / DSE) · UPS: NMC Modbus/SNMP · ATS: controller Modbus · VFD: Modbus RTU · BMS: BACnet · IED: IEC 61850 / DNP3 via gateway</text>
+    <text x="0" y="90" font-size="8" fill="#5a7898">The gateway is powered from the asset's 24 V control supply and drops the link if the asset's own service-mode lockout is active.</text>
+  </g>
+</svg>
+<figcaption><b>Fig 3</b>BC-PORT faceplate and probe head. Vision gets the head to within a few millimetres; guide cones, a compliant wrist and force control finish the last few. The gateway behind the plate is the physical guarantee that only reads are possible.</figcaption>
+</figure>
+<h3>Port placement rules</h3>
+<ul>
+  <li>On the <strong>control section</strong> of the enclosure (Class 2 / SELV wiring only), never on a power section door.</li>
+  <li>Outside the NFPA 70E limited approach boundary of any exposed energized part when doors are closed — which is the normal state; the cat never mates to an enclosure with a door open (the port LED reads lockout from the door switch).</li>
+  <li>0.9–1.2 m above finished floor, ≥ 1.2 m clear floor in front, no cable trays below knee height on the approach.</li>
+  <li>One port per assessable asset; the site library maps port id → asset → register map → checklist.</li>
+  <li>For the 34.5 kV service entrance the port goes on the low-voltage relay / ATS control cabinet; the medium-voltage gear is assessed by thermal and acoustic from ≥ 2 m only.</li>
+</ul>
+<p>Retrofit cost per asset is dominated by the gateway and the electrician's hour, not the plate. A site of 40 assessable assets is a one-week retrofit alongside a normal maintenance window.</p>
+</section>
+
+<!-- ═══════════════════════════ 7 ═══════════════════════════ -->
+<section id="s7">
+<h2><i>7</i>Kennel and energy</h2>
+<p>The kennel is the reason the fleet still works when the site is on generator, on battery, or dark. Each kennel is a weatherproof shelter with a roll-up door on the ring road, a wireless charge pad, a small ATS, a 6 h battery and a gateway radio. It is fed from the generator-backed distribution, so it is live within seconds of an outage, and bridges the gap if the generators fail to start — the exact scenario in demo outage <code>u2</code>.</p>
+<figure>
+<svg viewBox="0 0 820 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kennel electrical one-line diagram">
+  <text x="20" y="24" font-size="11" fill="#3fd6ff">KENNEL ONE-LINE · TYPICAL OF 3</text>
+  <!-- utility -->
+  <g font-size="10" fill="#9fb6cc">
+    <rect x="30" y="60" width="120" height="40" rx="6" fill="#0b1522" stroke="#ff5a4e"/><text x="90" y="78" text-anchor="middle" fill="#ff5a4e">Utility feed A/B</text><text x="90" y="92" text-anchor="middle" font-size="8">34.5 kV → 480 V</text>
+    <rect x="30" y="140" width="120" height="40" rx="6" fill="#0b1522" stroke="#4fd98a"/><text x="90" y="158" text-anchor="middle" fill="#4fd98a">Gen bus G1–G6</text><text x="90" y="172" text-anchor="middle" font-size="8">480 V · paralleled</text>
+    <rect x="200" y="100" width="90" height="40" rx="6" fill="#0b1522" stroke="#9fb6cc"/><text x="245" y="118" text-anchor="middle">Site ATS-1</text><text x="245" y="132" text-anchor="middle" font-size="8">utility ⇄ gen</text>
+    <line x1="150" y1="80" x2="200" y2="112" stroke="#ff5a4e" stroke-width="2"/><line x1="150" y1="160" x2="200" y2="128" stroke="#4fd98a" stroke-width="2"/>
+    <rect x="330" y="100" width="110" height="40" rx="6" fill="#0b1522" stroke="#9fb6cc"/><text x="385" y="118" text-anchor="middle">Life-safety /</text><text x="385" y="132" text-anchor="middle">facilities panel</text>
+    <line x1="290" y1="120" x2="330" y2="120" stroke="#9fb6cc" stroke-width="2"/>
+    <!-- kennel boundary -->
+    <rect x="480" y="50" width="320" height="330" rx="12" fill="none" stroke="#3fd6ff" stroke-dasharray="6 4"/>
+    <text x="500" y="72" fill="#3fd6ff" font-size="10">KENNEL K-N · 480/208 V feeder · 30 A</text>
+    <line x1="440" y1="120" x2="520" y2="120" stroke="#9fb6cc" stroke-width="2"/>
+    <!-- kennel ATS -->
+    <rect x="520" y="100" width="90" height="40" rx="6" fill="#0b1522" stroke="#3fd6ff"/><text x="565" y="118" text-anchor="middle">Kennel ATS</text><text x="565" y="132" text-anchor="middle" font-size="8">feeder ⇄ battery</text>
+    <!-- battery inverter -->
+    <rect x="520" y="180" width="90" height="46" rx="6" fill="#0b1522" stroke="#4fd98a"/><text x="565" y="198" text-anchor="middle" fill="#4fd98a">Battery + inv.</text><text x="565" y="212" text-anchor="middle" font-size="8">5 kWh LiFePO₄ · 6 h</text>
+    <line x1="565" y1="140" x2="565" y2="180" stroke="#4fd98a" stroke-width="2"/>
+    <!-- loads -->
+    <line x1="610" y1="120" x2="660" y2="120" stroke="#3fd6ff" stroke-width="2"/>
+    <rect x="660" y="90" width="120" height="34" rx="6" fill="#0b1522" stroke="#4fd98a"/><text x="720" y="111" text-anchor="middle" fill="#4fd98a">WPT transmitter 1 kW</text>
+    <rect x="660" y="140" width="120" height="34" rx="6" fill="#0b1522" stroke="#9fb6cc"/><text x="720" y="161" text-anchor="middle">Door · heater · light</text>
+    <rect x="660" y="190" width="120" height="34" rx="6" fill="#0b1522" stroke="#3fd6ff"/><text x="720" y="211" text-anchor="middle" fill="#3fd6ff">Gateway · LoRa · Wi-Fi</text>
+    <line x1="660" y1="157" x2="640" y2="157" stroke="#9fb6cc" stroke-width="2"/><line x1="640" y1="120" x2="640" y2="207" stroke="#3fd6ff" stroke-width="2"/><line x1="660" y1="207" x2="640" y2="207" stroke="#3fd6ff" stroke-width="2"/>
+    <!-- cat -->
+    <rect x="520" y="270" width="260" height="80" rx="10" fill="#111f30" stroke="#3fd6ff" stroke-width="1.5"/>
+    <text x="650" y="296" text-anchor="middle" fill="#3fd6ff">Cat BC-1 on pad</text>
+    <text x="650" y="312" text-anchor="middle" font-size="9">48 V · 1.5 kWh · charges wirelessly · reports SoC to kennel</text>
+    <text x="650" y="330" text-anchor="middle" font-size="9" fill="#5a7898">kennel publishes cat SoC + kennel power source over the bus</text>
+    <path d="M720 124 L720 140" stroke="#4fd98a" stroke-width="0" /><path d="M700 230 q20 10 0 20 q-20 10 0 20" stroke="#4fd98a" stroke-width="2" fill="none"/><path d="M730 230 q20 10 0 20 q-20 10 0 20" stroke="#4fd98a" stroke-width="2" fill="none"/>
+  </g>
+  <g font-size="9" fill="#5a7898">
+    <text x="30" y="410">Power priority: utility → gen bus (via site ATS) → kennel battery. A kennel on battery still charges a cat at reduced rate.</text>
+    <text x="30" y="426">6 h at 300 W pad + 60 W house load ≈ 2.2 kWh; a 5 kWh kennel battery gives margin for two cats cycling through one kennel.</text>
+    <text x="30" y="442">Kennel state (source, SoC, door, temperature) is published as a BC_EVENT so the tile's kennel LED can be real.</text>
+    <text x="30" y="458">The kennel's gateway is the tertiary comms path for every cat within ~1 km, not only its own.</text>
+  </g>
+</svg>
+<figcaption><b>Fig 4</b>Kennel one-line. The kennel is a small microgrid node: generator-backed feeder, its own transfer switch, a 6 h battery and the charge pad. It is deliberately not fed from the UPS output, so a UPS failure does not take the fleet with it.</figcaption>
+</figure>
+<h3>Placement and coverage on the sample campus</h3>
+<p>The tile places the kennels at the top, right and bottom of the ring. Treating scene units as metres, the ring is roughly 480 × 380 m and the three kennels sit at the mid-top, mid-right and mid-bottom, so the worst-case road distance from the nearest kennel to any point on the ring is about 400 m — under five minutes at 1.5 m/s. Adding a fourth kennel at the mid-left (by the service entrance and Hall 1) brings the worst case under 300 m and puts a cat beside the highest-consequence asset. Rev A keeps three to match the tile; the fourth is a recommendation.</p>
+<figure>
+<svg viewBox="-70 0 700 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Campus plan with ring road, kennels, coverage and targets">
+  <rect x="20" y="20" width="520" height="420" fill="#0f1f31" stroke="#2a4a6a"/>
+  <!-- ring road -->
+  <rect x="40" y="40" width="480" height="380" fill="none" stroke="#243a52" stroke-width="10"/>
+  <rect x="40" y="40" width="480" height="380" fill="none" stroke="#5a7898" stroke-width="1" stroke-dasharray="8 8"/>
+  <!-- buildings (from ISO scene, offset +20) -->
+  <g stroke="#3d5a78" fill="#182634">
+    <rect x="60" y="170" width="170" height="200"/><rect x="270" y="170" width="250" height="200"/>
+    <rect x="80" y="80" width="60" height="60" fill="#15202e" stroke="#8a7a4a"/>
+    <rect x="220" y="60" width="290" height="60" fill="#15202e" stroke="#4a6a8a"/>
+    <rect x="460" y="372" width="60" height="40" fill="#8a6a30"/><rect x="60" y="372" width="60" height="40"/>
+  </g>
+  <g font-size="9" fill="#9fb6cc" text-anchor="middle">
+    <text x="145" y="275">HALL 1</text><text x="395" y="275">HALL 2</text><text x="365" y="95">GENERATOR YARD G1–G6</text><text x="110" y="113">SERVICE</text><text x="110" y="124">ENTRANCE</text><text x="490" y="396">UPS-2B</text>
+  </g>
+  <!-- coverage circles (radius 175 units ≈ 350 m by road, drawn as proxy) -->
+  <g fill="rgba(63,214,255,.05)" stroke="rgba(63,214,255,.35)" stroke-dasharray="3 3">
+    <circle cx="192" cy="29" r="175"/><circle cx="535" cy="242" r="175"/><circle cx="320" cy="433" r="175"/>
+  </g>
+  <circle cx="40" cy="230" r="175" fill="rgba(255,179,64,.05)" stroke="rgba(255,179,64,.5)" stroke-dasharray="3 3"/>
+  <!-- kennels -->
+  <g font-size="9" fill="#3fd6ff" text-anchor="middle">
+    <rect x="182" y="22" width="20" height="14" fill="#2a4460" stroke="#3fd6ff"/><text x="192" y="16">K-N</text>
+    <rect x="528" y="232" width="14" height="20" fill="#2a4460" stroke="#3fd6ff"/><text x="552" y="246">K-E</text>
+    <rect x="310" y="426" width="20" height="14" fill="#2a4460" stroke="#3fd6ff"/><text x="320" y="454">K-S</text>
+  </g>
+  <rect x="26" y="222" width="14" height="20" fill="#3a2e1a" stroke="#ffb340"/><text x="20" y="236" font-size="9" fill="#ffb340" text-anchor="end">K-W (rec.)</text>
+  <!-- targets -->
+  <g font-size="9">
+    <circle cx="148" cy="80" r="6" fill="#ff5a4e"/><text x="160" y="84" fill="#ff5a4e">u1 · Feed A</text>
+    <circle cx="490" cy="392" r="6" fill="#ffb340"/><text x="478" y="380" fill="#ffb340" text-anchor="end">u2 · UPS-2B</text>
+    <circle cx="200" cy="188" r="6" fill="#ffb340"/><text x="212" y="192" fill="#ffb340">u3 · CRAH-14 (roof)</text>
+    <circle cx="350" cy="300" r="6" fill="#3fd6ff"/><text x="362" y="304" fill="#3fd6ff">w0 · Hall 2 (generic)</text>
+  </g>
+  <text x="-60" y="466" font-size="9" fill="#5a7898">scene units ≈ metres · dashed circles ≈ 350 m road reach</text>
+</svg>
+<figcaption><b>Fig 5</b>Kennel placement on the tile's campus geometry. The service entrance is the one high-consequence target not inside a 350 m reach from the three tile kennels; a west kennel fixes that.</figcaption>
+</figure>
+</section>
+
+<!-- ═══════════════════════════ 8 ═══════════════════════════ -->
+<section id="s8">
+<h2><i>8</i>Sensing and data acquisition</h2>
+<p>Every tile check maps to one primary source and at least one corroborating source. The primary source is nearly always the controller behind the port; the corroboration is what the cat can see or hear from outside. A verdict built on both is what earns a high confidence.</p>
+<div class="tw"><table>
+<tr><th>Tile check</th><th>Primary source (via BC-PORT)</th><th>Corroboration (from stand-off)</th><th>Status rule</th></tr>
+<tr class="grp"><td colspan="4">u1 · Service entrance · Feed A</td></tr>
+<tr><td>Feed A breaker 52-A</td><td>Switchgear IED / relay status via IEC 61850 or Modbus map: breaker position, trip target, lockout flag</td><td>PTZ read of breaker flag and lockout tag; thermal of the cubicle door</td><td><span class="pill g">on</span> open with lockout confirmed; <span class="pill r">bad</span> open with a trip target on-site</td></tr>
+<tr><td>ATS-1 position</td><td>ATS controller: source selected, transfer time, retransfer timer</td><td>HMI photo of ATS display</td><td><span class="pill a">warn</span> on GEN (expected); <span class="pill r">bad</span> in transition &gt; 10 s</td></tr>
+<tr><td>Thermal · xfmr A bushings</td><td>—</td><td>Radiometric LWIR at ≥ 2 m outside the boundary; compare to yard baseline</td><td><span class="pill g">on</span> within 5 °C of ambient-adjusted baseline; <span class="pill r">bad</span> &gt; 20 °C over or phase imbalance &gt; 10 °C</td></tr>
+<tr><td>Bus voltage</td><td>Relay / power meter registers, each feed</td><td>—</td><td>Feed dead + other feed nominal ⇒ upstream fault, <span class="pill g">on</span></td></tr>
+<tr><td>Gen bus</td><td>Genset controllers (PCC / EMCP / DSE) via RS-485 Modbus: online units, Hz, kW, alarms</td><td>Acoustic count of running engines; thermal of exhaust stacks</td><td><span class="pill g">on</span> at 60.00 ± 0.05 Hz with reserve ≥ 1 unit</td></tr>
+<tr class="grp"><td colspan="4">u2 · UPS-2B · battery discharge</td></tr>
+<tr><td>String voltage</td><td>UPS network card (RFC 1628 MIB / Modbus): battery voltage, runtime remaining, current</td><td>—</td><td><span class="pill a">warn</span> &lt; 15 min runtime; <span class="pill r">bad</span> &lt; 5 min</td></tr>
+<tr><td>Battery temp</td><td>Per-string temperature from the battery monitor / UPS card</td><td>Thermal of the string cabinet vents; H₂ sensor</td><td><span class="pill a">warn</span> any string &gt; 30 °C; <span class="pill r">bad</span> spread &gt; 5 °C or H₂ rising</td></tr>
+<tr><td>Static switch</td><td>UPS output source: inverter / bypass / battery</td><td>HMI photo</td><td><span class="pill g">on</span> on battery while input absent</td></tr>
+<tr><td>G3 starter battery</td><td>Genset controller: crank attempts, starter battery volts, fail-to-start alarm</td><td>Acoustic: no engine note from G3; thermal: cold block</td><td><span class="pill r">bad</span> crank fail or &lt; 11.5 V on a 12 V system</td></tr>
+<tr><td>Rectifier input</td><td>UPS input voltage / frequency present</td><td>—</td><td><span class="pill g">on</span> gen bus present at input</td></tr>
+<tr class="grp"><td colspan="4">u3 · CRAH-14 · cooling loop</td></tr>
+<tr><td>CRAH-14 fan</td><td>VFD via Modbus RTU: run state, fault code, output Hz</td><td>Acoustic: no fan note; thermal: motor cold</td><td><span class="pill r">bad</span> any active fault code</td></tr>
+<tr><td>Chilled water</td><td>BMS BACnet: supply temp, valve position, flow</td><td>Thermal of supply/return pipes</td><td><span class="pill g">on</span> supply within setpoint band with valve command sensible</td></tr>
+<tr><td>Cold aisle rows K–P</td><td>BMS / DCIM aisle sensors</td><td>Thermal sweep of rack inlets from the aisle</td><td><span class="pill a">warn</span> &gt; 27 °C rising; <span class="pill r">bad</span> &gt; 32 °C (ASHRAE A1 allowable)</td></tr>
+<tr><td>CRAH-13 / 15</td><td>Neighbouring VFD load %</td><td>Acoustic level of neighbours</td><td><span class="pill a">warn</span> &gt; 110 % sustained</td></tr>
+<tr><td>BMS auto-restart</td><td>BMS point: auto-restart enable</td><td>—</td><td><span class="pill r">bad</span> disabled while a unit is down</td></tr>
+</table></div>
+<p>Register maps are per-vendor and per-firmware; the site library holds them as versioned files and the cat refuses a check whose map is missing rather than reading the wrong register. Read-only is enforced twice: in the probe head firmware (no write function codes compiled in) and in the port gateway.</p>
+</section>
+
+<!-- ═══════════════════════════ 9 ═══════════════════════════ -->
+<section id="s9">
+<h2><i>9</i>Assessment logic and confidence</h2>
+<p>The tile returns a verdict, a confidence and a revised ETR for each target. On the prototype these come from a deterministic checklist engine plus a scoring layer, so that every number in a <code>BC_ASSESS</code> can be traced to the readings that produced it.</p>
+<figure>
+<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Assessment pipeline from readings to pushed verdict">
+  <defs><marker id="ar3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#3fd6ff"/></marker></defs>
+  <g font-size="10" fill="#9fb6cc" text-anchor="middle">
+    <rect x="20" y="60" width="130" height="70" rx="8" fill="#0b1522" stroke="#4fd98a"/><text x="85" y="88" fill="#4fd98a">Port reads</text><text x="85" y="104" font-size="9">registers · MIB · points</text>
+    <rect x="20" y="150" width="130" height="70" rx="8" fill="#0b1522" stroke="#ffb340"/><text x="85" y="178" fill="#ffb340">Stand-off sensing</text><text x="85" y="194" font-size="9">thermal · HMI OCR · acoustic</text>
+    <rect x="200" y="100" width="140" height="80" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="270" y="130" fill="#3fd6ff">Checklist engine</text><text x="270" y="146" font-size="9">5 checks · thresholds</text><text x="270" y="160" font-size="9">baselines · on/warn/bad</text>
+    <rect x="390" y="100" width="140" height="80" rx="8" fill="#0b1522" stroke="#b39cff"/><text x="460" y="130" fill="#b39cff">Diagnosis rules</text><text x="460" y="146" font-size="9">fault-tree per class</text><text x="460" y="160" font-size="9">→ verdict · rec · ETR</text>
+    <rect x="580" y="100" width="120" height="80" rx="8" fill="#0b1522" stroke="#4fd98a"/><text x="640" y="130" fill="#4fd98a">Confidence</text><text x="640" y="146" font-size="9">evidence-weighted</text><text x="640" y="160" font-size="9">0–100</text>
+    <rect x="730" y="110" width="70" height="60" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="765" y="136" fill="#3fd6ff">BC_</text><text x="765" y="150" fill="#3fd6ff">ASSESS</text>
+  </g>
+  <g stroke="#3fd6ff" stroke-width="1.5" fill="none" marker-end="url(#ar3)">
+    <path d="M150 95 L200 125"/><path d="M150 185 L200 155"/><line x1="340" y1="140" x2="390" y2="140"/><line x1="530" y1="140" x2="580" y2="140"/><line x1="700" y1="140" x2="730" y2="140"/>
+  </g>
+  <g font-size="9" fill="#5a7898">
+    <text x="20" y="230">confidence = Σ wᵢ·eᵢ over the class's evidence items,</text>
+    <text x="20" y="246">where eᵢ = 1 if read and corroborated · 0.6 if read only · 0.4 if sensed only · 0 if missing; weights per class sum to 100.</text>
+    <text x="20" y="266">Caps: missing primary source → 70 · stale register map → 50 · EXERCISE alert reported as-is but tagged.</text>
+    <text x="20" y="286">Revised ETR = class base ETR × verdict multiplier (e.g. "VFD fault, manual reset" → 15 min),</text>
+    <text x="20" y="302">never shorter than the time for a technician to reach the asset.</text>
+  </g>
+</svg>
+<figcaption><b>Fig 6</b>Assessment pipeline. The confidence figure rewards corroboration and penalises missing evidence, so the same tile number becomes a statement about how much the cat actually saw.</figcaption>
+</figure>
+<h3>Fault trees for the three demo classes</h3>
+<ul>
+  <li><strong>Feed loss (u1)</strong>: feed dead <em>and</em> other feed nominal <em>and</em> 52-A open with lockout <em>and</em> no trip target <em>and</em> bushings at baseline ⇒ "upstream on the utility side, no on-site damage, safe to hold on generator" — the tile's verdict at 92. Any trip target or bushing hot-spot flips to "on-site fault, do not attempt re-close, dispatch electrician" with a longer ETR.</li>
+  <li><strong>UPS on battery (u2)</strong>: static switch on battery <em>and</em> input absent <em>and</em> a genset with crank-fail ⇒ the root cause is the generator, not the UPS; recommend paralleling a spare unit and swapping the starter battery. If the input is present and the UPS is still on battery, the verdict becomes a UPS fault and the recommendation is bypass-to-maintenance.</li>
+  <li><strong>CRAH down (u3)</strong>: VFD fault code present <em>and</em> chilled water nominal ⇒ VFD, not the loop; manual reset restores the unit. If chilled-water supply is off-band the verdict escalates to the plant.</li>
+</ul>
+<p>Each rule is a readable file in the site library; adding an asset class is adding a checklist, a fault tree and a register map, not retraining anything. A learned anomaly model over the rounds baselines is a Rev B addition that can only raise a <code>warn</code>, never clear one.</p>
+</section>
+
+<!-- ═══════════════════════════ 10 ═══════════════════════════ -->
+<section id="s10">
+<h2><i>10</i>SONAR integration and wire schema</h2>
+<p>The prototype speaks the same two message types the tile publishes today, over the same site channel, so the phone, the desktop console's audit and the Guide's live copy work unchanged. A fleet controller in the kennel gateway (or, later, in the console) replaces the JavaScript sortie loop; the tile's <code>BATTLECAT</code> module becomes a renderer of real state instead of a simulator.</p>
+<figure>
+<svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="System architecture and data flow between the cat, kennel, bus, phone and console">
+  <defs><marker id="ar4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#5a7898"/></marker></defs>
+  <g font-size="10" fill="#9fb6cc" text-anchor="middle">
+    <!-- asset domain -->
+    <rect x="20" y="40" width="200" height="280" rx="12" fill="none" stroke="#c07060" stroke-dasharray="6 4"/><text x="120" y="60" fill="#c07060">ASSET / OT DOMAIN</text>
+    <rect x="40" y="80" width="160" height="44" rx="8" fill="#0b1522" stroke="#9fb6cc"/><text x="120" y="98">Controller</text><text x="120" y="112" font-size="9">genset · UPS · ATS · VFD · BMS · IED</text>
+    <rect x="40" y="150" width="160" height="44" rx="8" fill="#0b1522" stroke="#4fd98a"/><text x="120" y="168" fill="#4fd98a">Read-only gateway</text><text x="120" y="182" font-size="9">diagnostics VLAN · one-way</text>
+    <rect x="40" y="220" width="160" height="44" rx="8" fill="#0b1522" stroke="#c07060"/><text x="120" y="238" fill="#c07060">BC-PORT</text><text x="120" y="252" font-size="9">faceplate · fiducial · LEDs</text>
+    <line x1="120" y1="124" x2="120" y2="150" stroke="#9fb6cc" stroke-width="2"/><line x1="120" y1="194" x2="120" y2="220" stroke="#4fd98a" stroke-width="2"/>
+    <!-- cat -->
+    <rect x="270" y="40" width="200" height="280" rx="12" fill="none" stroke="#3fd6ff" stroke-dasharray="6 4"/><text x="370" y="60" fill="#3fd6ff">CAT BC-n</text>
+    <rect x="290" y="80" width="160" height="44" rx="8" fill="#0b1522" stroke="#4fd98a"/><text x="370" y="98" fill="#4fd98a">Probe head client</text><text x="370" y="112" font-size="9">Modbus · SNMP · BACnet · 61850</text>
+    <rect x="290" y="150" width="160" height="44" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="370" y="168" fill="#3fd6ff">Mission executive</text><text x="370" y="182" font-size="9">ready·out·dock·scan·back·charging</text>
+    <rect x="290" y="220" width="160" height="44" rx="8" fill="#0b1522" stroke="#b39cff"/><text x="370" y="238" fill="#b39cff">Checklist + scorer</text><text x="370" y="252" font-size="9">→ BC_ASSESS · BC_EVENT</text>
+    <line x1="200" y1="242" x2="290" y2="102" stroke="#4fd98a" stroke-width="2"/><text x="250" y="160" font-size="8" fill="#4fd98a" transform="rotate(-57 250 160)">mated</text>
+    <line x1="370" y1="124" x2="370" y2="150" stroke="#3fd6ff" stroke-width="2"/><line x1="370" y1="194" x2="370" y2="220" stroke="#3fd6ff" stroke-width="2"/>
+    <!-- kennel / fleet -->
+    <rect x="520" y="40" width="120" height="120" rx="12" fill="none" stroke="#4fd98a" stroke-dasharray="6 4"/><text x="580" y="60" fill="#4fd98a">KENNEL</text>
+    <rect x="530" y="76" width="100" height="34" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="580" y="97">Fleet ctrl</text>
+    <rect x="530" y="118" width="100" height="34" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="580" y="139">Gateway radio</text>
+    <path d="M450 242 L530 135" stroke="#3fd6ff" stroke-width="1.5" fill="none" marker-end="url(#ar4)"/><text x="500" y="200" font-size="8" fill="#5a7898">Wi-Fi · LTE · LoRa</text>
+    <!-- SONAR bus -->
+    <rect x="520" y="200" width="120" height="60" rx="8" fill="#0b1522" stroke="#ffb340"/><text x="580" y="224" fill="#ffb340">SONAR bus</text><text x="580" y="240" font-size="9">SRABus · site channel</text>
+    <line x1="580" y1="152" x2="580" y2="200" stroke="#ffb340" stroke-width="2"/>
+    <!-- consumers -->
+    <rect x="680" y="60" width="120" height="44" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="740" y="78" fill="#3fd6ff">SONARmobile</text><text x="740" y="93" font-size="9">BattleCat tile · MSG · toast</text>
+    <rect x="680" y="130" width="120" height="44" rx="8" fill="#0b1522" stroke="#3fd6ff"/><text x="740" y="148" fill="#3fd6ff">Console</text><text x="740" y="163" font-size="9">audit · Drill · ADM-11</text>
+    <rect x="680" y="200" width="120" height="44" rx="8" fill="#0b1522" stroke="#9fb6cc"/><text x="740" y="218">Site channel</text><text x="740" y="233" font-size="9">system MSG</text>
+    <rect x="680" y="270" width="120" height="44" rx="8" fill="#0b1522" stroke="#9fb6cc"/><text x="740" y="288">CMMS / DCIM</text><text x="740" y="303" font-size="9">work order · evidence</text>
+    <g stroke="#ffb340" stroke-width="1.5" fill="none" marker-end="url(#ar4)"><path d="M640 220 L680 88"/><path d="M640 226 L680 152"/><line x1="640" y1="230" x2="680" y2="222"/><path d="M640 240 L680 290"/></g>
+    <text x="410" y="345" font-size="9" fill="#5a7898">Recall / deploy / hold travel the other way: console or phone → bus → fleet controller → cat.</text>
+  </g>
+</svg>
+<figcaption><b>Fig 7</b>Architecture. The asset domain and the cat only touch at the port, through a read-only gateway. Everything SONAR sees arrives over the existing bus in the existing message types.</figcaption>
+</figure>
+<h3>Wire schema — as the tile publishes it today</h3>
+<pre><span class="c">// BC_EVENT · on dispatch (cmdr/datacenter.html)</span>
+{ <span class="k">"cat"</span>: <span class="s">"BC-2"</span>, <span class="k">"ev"</span>: <span class="s">"dispatch"</span>, <span class="k">"target"</span>: <span class="s">"UPS-2B · battery discharge"</span>, <span class="k">"site"</span>: <span class="s">"br-ldn1"</span> }
+
+<span class="c">// BC_ASSESS · on completion</span>
+{ <span class="k">"ts"</span>: 1758400000000, <span class="k">"cat"</span>: <span class="s">"BC-2"</span>, <span class="k">"target"</span>: <span class="s">"UPS-2B · battery discharge"</span>, <span class="k">"tid"</span>: <span class="s">"u2"</span>,
+  <span class="k">"checks"</span>: [[<span class="s">"String voltage"</span>,<span class="s">"412 V · 11 min at load"</span>,<span class="s">"warn"</span>], …],
+  <span class="k">"v"</span>: <span class="s">"UPS-2B is holding · G3 starter battery is the root cause, not the UPS"</span>,
+  <span class="k">"c"</span>: 88, <span class="k">"etr"</span>: [<span class="s">"10 min"</span>,<span class="s">"6 min"</span>], <span class="k">"rec"</span>: <span class="s">"Parallel G5 to the bus now · swap G3 starter battery · retest crank"</span> }</pre>
+<h3>Proposed additions (backwards-compatible, all optional)</h3>
+<pre><span class="c">// BC_EVENT · ev is now an enum; extra fields describe the physical sortie</span>
+<span class="k">ev</span>: <span class="s">"dispatch" | "enroute" | "arrived" | "docked" | "check" | "assessed" | "unmated" | "returning" | "kennel" | "fault" | "recall" | "kennel_state"</span>
+<span class="k">pos</span>: [x, y, z]          <span class="c">// scene units, feeds the ISO map directly</span>
+<span class="k">batt</span>: 0–100             <span class="c">// replaces the simulated drain</span>
+<span class="k">port</span>: <span class="s">"UPS-2B"</span>          <span class="c">// BC-PORT id; ev:"docked" carries mate force and time-to-mate</span>
+<span class="k">kennel</span>: { <span class="k">id</span>:<span class="s">"K-E"</span>, <span class="k">src</span>:<span class="s">"gen"|"utility"|"battery"</span>, <span class="k">soc</span>: 0–100, <span class="k">door</span>:<span class="s">"open"|"closed"</span> }
+
+<span class="c">// BC_ASSESS · evidence and provenance</span>
+<span class="k">evidence</span>: [{ <span class="k">check</span>: 0, <span class="k">src</span>: <span class="s">"modbus:pcc:40012"</span>, <span class="k">raw</span>: 10.9, <span class="k">unit</span>: <span class="s">"V"</span>, <span class="k">corr</span>: <span class="s">"acoustic:no-engine-note"</span> }, …]
+<span class="k">attach</span>: [{ <span class="k">kind</span>: <span class="s">"thermal"|"photo"|"acoustic"</span>, <span class="k">ref</span>: <span class="s">"bc://BC-2/2026-09-20T08-05/thermal-01.png"</span> }]  <span class="c">// store-and-forward</span>
+<span class="k">caps</span>: { <span class="k">primary_missing</span>: false, <span class="k">map_version</span>: <span class="s">"pcc-3.3-2024.2"</span> }   <span class="c">// why confidence is what it is</span>
+<span class="k">test</span>: true                <span class="c">// from an EXERCISE alert</span>
+<span class="k">hold</span>: { <span class="k">every</span>: 60, <span class="k">until</span>: <span class="s">"ack"</span> }  <span class="c">// P1 hold-on-station cadence</span></pre>
+<p>The console today aliases unknown site ids to <code>br-ldn1</code> and audits both types; nothing above changes that. The phone's tile needs one change to consume real state: replace the internal <code>step()</code> loop with a bus listener that applies <code>pos</code>, <code>batt</code> and <code>ev</code> — a small patch script in the existing <code>tools/</code> pattern.</p>
+</section>
+
+<!-- ═══════════════════════════ 11 ═══════════════════════════ -->
+<section id="s11">
+<h2><i>11</i>Safety and compliance</h2>
+<p>The vehicle is a mobile manipulator working near people and energized equipment. Two bodies of rules apply: mobile-robot safety (people and vehicles on the road) and electrical safety (where the cat and the arm may go). The design treats the electrical rules as geometry: boundaries from the site's arc-flash study are loaded into the map as keep-out zones the planner cannot enter and the arm cannot reach into.</p>
+<div class="tw"><table>
+<tr><th>Rule</th><th>What it requires of BattleCat</th><th>How Rev A meets it</th></tr>
+<tr><td>ANSI/A3 R15.08-1-2020 (R2026), Industrial mobile robots</td><td>Manufacturer-level safety requirements for an IMR Type C (mobile platform with manipulator): personnel detection, speed and separation, stopping distance, safe stop categories, information for use</td><td>Two PLd safety scanners covering 360°, safety controller, speed maps, documented stopping distances on wet asphalt at full mass</td></tr>
+<tr><td>ISO 3691-4, driverless industrial trucks</td><td>Redundant control, fault detection, independent monitoring, PLd for personnel detection per ISO 13849</td><td>Same safety chain; ISO 13849-1 PLd for detection, e-stop and speed limiting</td></tr>
+<tr><td>ISO 10218-1/-2 and ISO/TS 15066, robot arms and collaborative operation</td><td>Power-and-force limiting when people can reach the arm; safeguarding when they cannot</td><td>Cobot-class arm with PFL limits; arm motion only when the scanners report the 2 m zone clear; 3 kg tool</td></tr>
+<tr><td>NFPA 70E-2024, Table 130.4(E)(a) shock approach boundaries</td><td>Stay outside the limited approach boundary of exposed energized parts; the restricted boundary is for qualified persons with PPE only</td><td>Ports only on closed control sections; keep-out geofence from the arc-flash study: 480 V fixed parts 3 ft 6 in / 1.07 m, 5.1–15 kV 5 ft / 1.5 m, 15.1–36 kV (the 34.5 kV entrance) 6 ft / 1.8 m; the cat treats a door switch open as an exclusion of the whole cubicle</td></tr>
+<tr><td>NFPA 70E arc-flash boundary</td><td>No presence inside the arc-flash boundary of energized gear without arc-rated protection</td><td>The cat is not PPE-rated; it never enters the arc-flash boundary of an open enclosure and reads MV gear by thermal and acoustic from outside it</td></tr>
+<tr><td>NFPA 855 / UL 9540A battery rooms</td><td>Hazard awareness in ESS and battery rooms</td><td>H₂ and smoke sensing; docking aborts on alarm; LiFePO₄ pack on the cat</td></tr>
+<tr><td>ASHRAE TC 9.9 thermal guidelines</td><td>Inlet temperature envelopes that define the u3 thresholds</td><td>A1 allowable ceiling used as the <code>bad</code> threshold for cold-aisle checks</td></tr>
+<tr><td>OT cyber (IEC 62443 zones/conduits; NIST 800-82)</td><td>No new path into the control network</td><td>Diagnostics VLAN behind a one-way gateway, read-only clients, signed firmware, per-read audit, radios air-gapped from OT</td></tr>
+</table></div>
+<div class="callout red"><b>Hard rules the executive enforces before any motion.</b> Scanner zones clear before arm motion · port LED not lockout · no H₂/smoke alarm on the asset · door switch closed · keep-out polygons loaded for the site version in use · battery ≥ 25 % before dispatch. Any failed pre-condition publishes a <code>BC_EVENT ev:"fault"</code> with the reason, and the phone's fleet card shows it.</div>
+</section>
+
+<!-- ═══════════════════════════ 12 ═══════════════════════════ -->
+<section id="s12">
+<h2><i>12</i>Prototype plan, bill of materials and tests</h2>
+<h3>Build phases</h3>
+<div class="tw"><table>
+<tr><th>Phase</th><th>Scope</th><th>Exit test</th><th>Weeks</th></tr>
+<tr><td>0 · Bench</td><td>Probe head + BC-PORT on a bench with a genset controller simulator, a UPS network card and a VFD; arm on a cart; read-only gateway</td><td>100 mates in 100 attempts from a ±10 mm, ±5° start; every tile check for u1/u2/u3 read from a real controller; write attempt blocked at both layers</td><td>1–6</td></tr>
+<tr><td>1 · One cat, one kennel</td><td>Chassis, sensors, compute, safety chain; kennel K-S with pad and battery; ring-road autonomy day and night</td><td>50 dispatch-to-assessment sorties on the campus, ≥ 90 % under 8 min; kennel runs the cat for 6 h with the feeder pulled; R15.08 stopping-distance report</td><td>6–16</td></tr>
+<tr><td>2 · Fleet + SONAR</td><td>Three cats, three kennels, fleet controller publishing the real BC_EVENT/BC_ASSESS; tile patched to render live state; console audit</td><td>Drill Builder EXERCISE alert → cat sortie → assessment on the phone, the channel and the console with attachments; recall from both; hold-on-station on a P1</td><td>16–24</td></tr>
+<tr><td>3 · Site retrofit</td><td>BC-PORTs on the site's assessable assets; register maps and fault trees in the site library; operator training</td><td>Every listed asset assessed once by each cat; CMMS work orders raised from BC_ASSESS</td><td>24–30</td></tr>
+</table></div>
+<h3>Indicative bill of materials — one cat and one kennel</h3>
+<p>Budgetary figures for a hand-built prototype from commercial parts; they are order-of-magnitude, not quotes. Reference point: a base Spot lists at about $74,500 and full enterprise inspection bundles reach $150,000; ANYmal is quoted around $150,000.</p>
+<div class="tw"><table>
+<tr><th>Item</th><th>Selection</th><th>Est. USD</th></tr>
+<tr><td>Chassis and drivetrain</td><td>Industrial skid-steer AMR base, 4 hub motors, IP54</td><td>12,000</td></tr>
+<tr><td>Battery</td><td>48 V 1.5 kWh LiFePO₄ with CAN BMS, ×2 (one spare)</td><td>3,000</td></tr>
+<tr><td>Edge compute</td><td>Jetson AGX Orin Industrial carrier, NVMe, PoE switch</td><td>4,000</td></tr>
+<tr><td>Safety chain</td><td>2 safety scanners, safety controller, e-stops, wireless e-stop</td><td>9,000</td></tr>
+<tr><td>3D lidar</td><td>Ouster OS1-class, on a 0.4 m mast</td><td>8,000</td></tr>
+<tr><td>Thermal</td><td>Radiometric LWIR 640 × 512 (Boson+ 640R class) with 18° lens</td><td>5,000</td></tr>
+<tr><td>Visible PTZ + light</td><td>4K 20× PTZ, 3,000 lm LED</td><td>3,500</td></tr>
+<tr><td>Acoustic imager</td><td>MEMS array module, 2–100 kHz (handheld-class sensor re-packaged)</td><td>12,000</td></tr>
+<tr><td>Arm</td><td>Cobot-class 6-DoF, 0.9 m reach, 5 kg</td><td>28,000</td></tr>
+<tr><td>Wrist and probe head</td><td>6-axis F/T sensor, compliant wrist, custom head, wrist camera</td><td>9,000</td></tr>
+<tr><td>Radios</td><td>Wi-Fi 6, LTE/5G module, LoRa</td><td>1,500</td></tr>
+<tr><td>Environmental sensors</td><td>T/RH, CO, H₂, smoke</td><td>800</td></tr>
+<tr><td>Wireless charging</td><td>1 kW-class transmitter + on-board receiver</td><td>6,000</td></tr>
+<tr class="grp"><td>Cat subtotal</td><td></td><td>≈ 102,000</td></tr>
+<tr><td>Kennel shell</td><td>Weatherproof enclosure, roll-up door, heater, light, concrete pad</td><td>9,000</td></tr>
+<tr><td>Kennel power</td><td>30 A feeder from gen-backed panel, small ATS, 5 kWh LiFePO₄ + inverter</td><td>11,000</td></tr>
+<tr><td>Kennel gateway</td><td>Industrial PC, LoRa gateway, Wi-Fi AP</td><td>3,000</td></tr>
+<tr class="grp"><td>Kennel subtotal</td><td></td><td>≈ 23,000</td></tr>
+<tr><td>BC-PORT retrofit</td><td>Faceplate, gateway, electrician — per asset</td><td>1,500</td></tr>
+<tr class="grp"><td>Three cats + three kennels + 40 ports</td><td></td><td>≈ 435,000 hardware, before integration labour</td></tr>
+</table></div>
+<h3>Test cards that map to the tile's QA</h3>
+<p>The phone edition already has a Playwright QA discipline; the prototype adds physical test cards with the same names so a drill result reads the same on the bench and in the field.</p>
+<ul>
+  <li><code>bc.dispatch.nearest</code> — three cats ready, alert at each target; the cat with the shortest ring-road distance rolls; log the choice.</li>
+  <li><code>bc.transit.budget</code> — 20 sorties per target from each kennel, day and night, wet and dry; 90th percentile ≤ 4 min.</li>
+  <li><code>bc.dock.first_time</code> — 100 mates per port from the autonomy approach pose; ≥ 98 % first-attempt, 100 % within one retry, peak force ≤ 15 N.</li>
+  <li><code>bc.readonly.assert</code> — inject a write function code from the head; gateway drops it, head logs a fault, assessment continues with that check marked missing.</li>
+  <li><code>bc.boundary.keepout</code> — place an energized-part keep-out polygon across the approach; planner refuses; arm refuses; <code>BC_EVENT ev:"fault"</code> published.</li>
+  <li><code>bc.kennel.dark</code> — pull the kennel feeder with a cat at 30 %; kennel switches to battery within 20 ms; cat reaches 100 % within the 6 h window.</li>
+  <li><code>bc.comms.degrade</code> — kill Wi-Fi, then LTE; assessment still lands on the phone via LoRa with attachments following when a link returns.</li>
+  <li><code>bc.sonar.roundtrip</code> — Drill Builder EXERCISE alert → BC_ASSESS with <code>test:true</code> on the phone, site channel and console; console audit row present; recall from the phone returns the cat.</li>
+</ul>
+</section>
+
+<!-- ═══════════════════════════ 13 ═══════════════════════════ -->
+<section id="s13">
+<h2><i>13</i>Risks and open questions</h2>
+<div class="tw"><table>
+<tr><th>Risk / question</th><th>Effect</th><th>Position in Rev A</th></tr>
+<tr><td>Operators may refuse any physical connection to their controllers</td><td>The docking mission collapses to stand-off sensing only</td><td>The read-only gateway and per-read audit are the answer; a stand-off-only mode is retained and its confidence is capped at 70, so the value of the port is visible in the number</td></tr>
+<tr><td>Roof-mounted CRAHs and mezzanine gear</td><td>u3 as drawn is unreachable by a ground vehicle</td><td>Elevator-capable cat; ground-level CRAH port in the mechanical gallery; tethered-drone payload in Rev B</td></tr>
+<tr><td>Stairs-only halls</td><td>Wheeled base cannot reach</td><td>Legged platform variant (Spot / ANYmal class) with the same probe head; higher cost, lower payload, same wire schema</td></tr>
+<tr><td>Register maps drift with controller firmware</td><td>Wrong reads look like good reads</td><td>Versioned maps; the cat refuses to read with a map that does not match the controller's reported firmware; confidence cap at 50 on a stale map</td></tr>
+<tr><td>Wet or icy ring road</td><td>Stopping distance and traction</td><td>Speed map by surface state from the kennel's weather sensor; tyres and stopping-distance tests at each speed tier</td></tr>
+<tr><td>Fleet of one sortie at a time (tile policy)</td><td>Two simultaneous P1s queue</td><td>Hardware supports concurrency; the tile guard becomes a console policy switch</td></tr>
+<tr><td>Acoustic imaging modules are handheld products today</td><td>Integration cost and size</td><td>Rev A uses a repackaged handheld array; a purpose-built module is a Rev B item</td></tr>
+<tr><td>Naming</td><td>Public sources call the demo site fictional; the kennel and cat names are product names</td><td>Keep BattleCat, K-N/E/S, BC-n as the product vocabulary; the Navy edition can adopt the same fleet later under the DoD sector</td></tr>
+</table></div>
+<h3>Open questions for the next review</h3>
+<ol>
+  <li>Does the pilot operator allow BC-PORT retrofits on UPS and genset controllers, or only on the BMS and ATS?</li>
+  <li>Is a fourth kennel at the service entrance funded in the pilot, or is the west side covered by a longer transit budget?</li>
+  <li>Which CMMS / DCIM receives the work order, and does it want the evidence attachments or only the verdict?</li>
+  <li>Should hold-on-station be the default for every P1, or opt-in from the phone?</li>
+</ol>
+</section>
+
+<!-- ═══════════════════════════ 14 ═══════════════════════════ -->
+<section id="s14">
+<h2><i>14</i>Sources</h2>
+<p>Public sources consulted for this revision. Product figures are as published by vendors and resellers on the dates shown; verify against current datasheets before procurement.</p>
+<ol class="src">
+  <li>Uptime Institute Intelligence — Annual Outage Analysis 2026 (executive summary and press release, May–June 2026): power the leading cause of impactful outages; UPS, transfer-switch and generator failures dominant. uptimeinstitute.com</li>
+  <li>DCD — Digital Realty deploying ANYbotics robot dogs in Swiss data center (nine missions a day, ~70 elements, two-hour missions, docks to recharge); Novva Spot deployment; Kio, GlobalFoundries, Oracle trials. datacenterdynamics.com</li>
+  <li>ANYbotics — ANYmal product page (thermal −40 to 550 °C, pan-tilt ±90°/±165°, 3,790 lm light, acoustic 0–384 kHz, lidar) and Digital Realty case study. anybotics.com</li>
+  <li>Novva Data Centers — WIRE robot fleet with generative-AI security features (2026). novva.com</li>
+  <li>Robot Overflow — Boston Dynamics Spot specifications and pricing (Explorer $74,500; enterprise bundles to $150,000; 14 kg payload, 90-minute battery, 1.6 m/s). robotoverflow.com</li>
+  <li>Oxmaint — ANYmal vs Spot industrial maintenance comparison 2026 (ANYmal price point; sensor architecture). oxmaint.com</li>
+  <li>ANSI Blog — ANSI/A3 R15.08-1-2020 (R2026) Industrial Mobile Robots safety requirements (September 2026). blog.ansi.org</li>
+  <li>A3 — Robot safety FAQs: IMR Type C definition (manipulator on a mobile platform). automate.org</li>
+  <li>Saphira AI — ISO 3691-4 and R15.08 implementation notes (PLd per ISO 13849, redundant controllers). blog.saphira.ai</li>
+  <li>ToolGrit — NFPA 70E-2024 Table 130.4(E)(a) shock approach boundaries (151–750 V: 3 ft 6 in fixed / 1 ft restricted). toolgrit.com; LegalClarity — boundary distances by voltage band (5.1–15 kV 5 ft; 15.1–36 kV 6 ft). legalclarity.org</li>
+  <li>US Made Supply — NFPA 70E boundary definitions and the 40 cal/cm² energized-work limit. usmadesupply.com</li>
+  <li>Multitel application note — Cummins PowerCommand Modbus RTU over 2-wire RS-485; Monico — direct RS-485 Modbus RTU to PCC 1x/2x/3x controllers; Caterpillar CCM Modbus panel register groups (engine warning/shutdown status). multitel.com, monicoinc.com, aptinc.net</li>
+  <li>Vertiv — IntelliSlot RDU101 (SNMP, Modbus TCP) and IS-UNITY-DP (SNMP, BACnet, Modbus, YDN23); APC — Network Management Card 2/3 (SNMP, Modbus TCP/RTU, BACnet/IP, RFC 1628 MIB, battery cartridge data); Eaton — INDGW-M2 (Modbus TCP/RTU, BACnet/IP, SNMP). vendor and reseller pages</li>
+  <li>arXiv 2503.09409 — force-controlled probe search and insertion for connector mating (UR5e, F/T, vision); arXiv 2312.09190 — online contact-force learning cuts misalignment forces by over 80 % during plug insertion; ResearchGate — six-axis F/T characterisation of a compliant wrist for misaligned ports; USPTO 9,559,461 — self-aligning floating interface with cone-shaped blind-mate connector.</li>
+  <li>WiBotic — 300 W (TR-300 / OC-262) and 1 kW wireless charging for AMRs, GaN transmitters, ~85 % end-to-end efficiency; 1 kW product sheet. wibotic.com, eenewseurope.com, therobotreport.com</li>
+  <li>Fluke — ii910 precision acoustic imager, 2–100 kHz, partial discharge and leak detection (now succeeded by ii905/ii915). fluke.com and resellers</li>
+  <li>Teledyne FLIR — Boson / Boson+ LWIR cores (640 × 512, 12 µm, radiometric, NDAA-compliant, ~600 mW). oem.flir.com; Freefly Boson+ 640R module listing</li>
+  <li>Ouster — OS1 datasheet rev 7 (2026): 170 m range at &gt;90 % detection on 80 % reflectivity in 100 klx sunlight. ouster.com</li>
+  <li>NVIDIA — Jetson AGX Orin (up to 275 TOPS, 15–60 W; Industrial 248 TOPS, 15–75 W) and platform overview; ROS 2 / Nav2 / Isaac ROS deployments on Orin. nvidia.com, developer.nvidia.com</li>
+</ol>
+<div class="foot">BC-ENG-001 · Rev A · 20 Sep 2026 · SONAR-mobile Data Center edition · prepared from cmdr/datacenter.html (BATTLECAT module) and public sources · demo site and assets are fictional</div>
+</section>
+
+</main>
+</div>
+</div>
+</body>
+</html>

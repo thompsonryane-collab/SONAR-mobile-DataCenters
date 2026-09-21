@@ -525,6 +525,13 @@ body.onhome .homebtn{display:none}
 #p-home .hgrid .c-eng svg{stroke:#b39cff}
 #p-bceng{position:absolute;inset:0;z-index:27;background:#07111f;display:none;flex-direction:column}
 #p-bceng.on{display:flex}
+#bceng-missing{position:absolute;inset:0;overflow:auto;padding:18px 16px calc(var(--sab) + 24px)}
+#bceng-missing .bcm{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+#bceng-missing .bcm-t{font-size:16px;font-weight:700;margin-bottom:8px}
+#bceng-missing .bcm-s{font-size:13px;line-height:1.5;color:var(--ink2,#c9d6e6);margin-bottom:12px}
+#bceng-missing .bcm-s code{font-family:"Share Tech Mono",Menlo,monospace;font-size:12px;color:#b39cff}
+#bceng-missing .bcm-l{font-family:"Share Tech Mono",Menlo,monospace;font-size:10.5px;color:var(--ink3,#8fa3ba);line-height:1.6;margin-bottom:14px;word-break:break-all}
+#bceng-missing .bcm-b{display:flex;gap:10px;flex-wrap:wrap}
 #p-bceng .hd{flex:none;padding:calc(var(--sat) + 10px) 12px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0c1a2c,#07111f)}
 #p-bceng .hd .back{width:40px;height:40px;border-radius:20px;background:var(--card);border:1px solid var(--line);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
 #p-bceng .hd .back svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -536,7 +543,7 @@ body.onhome .homebtn{display:none}
 #p-bceng .chips::-webkit-scrollbar{display:none}
 #p-bceng .chips button{flex:none;height:30px;padding:0 11px;border-radius:15px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-family:"Share Tech Mono",Menlo,monospace;font-size:10px;letter-spacing:.8px;white-space:nowrap}
 #p-bceng .chips button.on{border-color:#b39cff;color:#fff;background:rgba(179,156,255,.14)}
-#p-bceng .body{flex:1;min-height:0;position:relative;background:#07111f}
+#p-bceng .body{position:relative;flex:1;min-height:0;position:relative;background:#07111f}
 #p-bceng iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07111f}
 #p-bceng .src{position:absolute;left:12px;bottom:calc(var(--sab) + 8px);z-index:2;font-family:"Share Tech Mono",Menlo,monospace;font-size:9px;letter-spacing:1px;color:var(--ink3);background:rgba(7,17,31,.85);padding:3px 8px;border-radius:8px;pointer-events:none}
 /* ── BATTLECAT · autonomous assessment fleet ── */
@@ -1373,6 +1380,17 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
 .placed-asset{display:flex;align-items:center;gap:5px;padding:4px 8px;background:var(--card);border:1px solid var(--sage-l);border-radius:var(--r);cursor:pointer;font-size:9px;color:var(--sage)}
 .placed-asset:hover{border-color:var(--rose);color:var(--rose)}
 
+/* DC DRILL additions */
+.chip.multi.selected{border-color:var(--cyan-l);color:var(--cyan);background:var(--cyan-d)}
+.chip.sev1.selected{border-color:var(--rose-l);color:var(--rose);background:var(--rose-d)}
+.fuel-clock{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:6px}
+.fuel-clock .fc-row{display:flex;justify-content:space-between;gap:8px;font-size:10px}
+.fuel-clock .fc-row b{font-family:var(--dsp);font-size:11px;color:var(--txh)}
+.fuel-clock .fc-verdict{font-family:var(--dsp);font-size:10px;letter-spacing:1.5px;padding:6px 8px;border-radius:2px;text-align:center}
+.fuel-clock .fc-verdict.ok{color:var(--sage);background:var(--sage-d);border:1px solid var(--sage-l)}
+.fuel-clock .fc-verdict.warn{color:var(--amber);background:var(--amber-d);border:1px solid var(--amber-l)}
+.fuel-clock .fc-verdict.bad{color:var(--rose);background:var(--rose-d);border:1px solid var(--rose-l)}
+.inst-card-tier{font-size:9px;color:var(--cyan);margin-bottom:4px}
 /* INSTALLATION */
 .inst-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(min-width:700px){.inst-grid{grid-template-columns:1fr 1fr 1fr}}
@@ -1619,19 +1637,19 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
   &lt;button class=&quot;c-run-btn&quot; id=&quot;run-btn&quot; onclick=&quot;launchScenario()&quot; disabled title=&quot;Run scenario&quot; aria-label=&quot;Run scenario&quot;&gt;▶ &lt;span class=&quot;c-lbl&quot;&gt;RUN&lt;/span&gt;&lt;/button&gt;
 &lt;/div&gt;
 
-&lt;!-- STEP RIBBON — Step 1 is SONAR Alerts, steps 2–7 shifted --&gt;
+&lt;!-- STEP RIBBON — 1 Alerts · 2 Site · 3 Trigger · 4 Assets · 5 Staffing · 6 Notify · 7 Review --&gt;
 &lt;div id=&quot;ribbon&quot;&gt;
-  &lt;div class=&quot;step active&quot; id=&quot;step-1&quot; onclick=&quot;goStep(1)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;1&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M3 6h18v12H3z&quot;/&gt;&lt;path d=&quot;M3 7l9 6 9-6&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Orders&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;step active&quot; id=&quot;step-1&quot; onclick=&quot;goStep(1)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;1&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M3 6h18v12H3z&quot;/&gt;&lt;path d=&quot;M3 7l9 6 9-6&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Alerts&lt;/span&gt;&lt;/div&gt;
   &lt;div class=&quot;step-dv&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;step&quot; id=&quot;step-2&quot; onclick=&quot;goStep(2)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;2&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 3v18M5 21h14M5 10l7-4 7 4&quot;/&gt;&lt;path d=&quot;M7 10v11M17 10v11&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Install&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;step&quot; id=&quot;step-2&quot; onclick=&quot;goStep(2)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;2&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;4&quot; width=&quot;18&quot; height=&quot;16&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M7 8h4M7 12h4M7 16h4M15 8v8&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Site&lt;/span&gt;&lt;/div&gt;
   &lt;div class=&quot;step-dv&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;step&quot; id=&quot;step-3&quot; onclick=&quot;goStep(3)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;3&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M13 2 4 14h7l-1 8 9-12h-7z&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Trigger&lt;/span&gt;&lt;/div&gt;
   &lt;div class=&quot;step-dv&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;step&quot; id=&quot;step-4&quot; onclick=&quot;goStep(4)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;4&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;7&quot; width=&quot;15&quot; height=&quot;10&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M18 10h2v4h-2M7 11v2M11 11v2&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Assets&lt;/span&gt;&lt;/div&gt;
   &lt;div class=&quot;step-dv&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;step&quot; id=&quot;step-5&quot; onclick=&quot;goStep(5)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;5&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;9&quot; cy=&quot;8&quot; r=&quot;3.5&quot;/&gt;&lt;path d=&quot;M2.5 20a6.5 6.5 0 0 1 13 0&quot;/&gt;&lt;circle cx=&quot;17&quot; cy=&quot;9&quot; r=&quot;2.5&quot;/&gt;&lt;path d=&quot;M15 15.5a5 5 0 0 1 6.5 4.5&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Manpower&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;step&quot; id=&quot;step-5&quot; onclick=&quot;goStep(5)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;5&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;9&quot; cy=&quot;8&quot; r=&quot;3.5&quot;/&gt;&lt;path d=&quot;M2.5 20a6.5 6.5 0 0 1 13 0&quot;/&gt;&lt;circle cx=&quot;17&quot; cy=&quot;9&quot; r=&quot;2.5&quot;/&gt;&lt;path d=&quot;M15 15.5a5 5 0 0 1 6.5 4.5&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Staffing&lt;/span&gt;&lt;/div&gt;
   &lt;div class=&quot;step-dv&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;step&quot; id=&quot;step-6&quot; onclick=&quot;goStep(6)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;6&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 20V10M10 20V4M16 20v-8M22 20H2&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Reporting&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;step&quot; id=&quot;step-6&quot; onclick=&quot;goStep(6)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;6&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 20V10M10 20V4M16 20v-8M22 20H2&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Notify&lt;/span&gt;&lt;/div&gt;
   &lt;div class=&quot;step-dv&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;step&quot; id=&quot;step-7&quot; onclick=&quot;goStep(7)&quot;&gt;&lt;span class=&quot;step-n&quot;&gt;7&lt;/span&gt;&lt;svg class=&quot;step-i&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M20 6 9 17l-5-5&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;step-l&quot;&gt;Review&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -1646,16 +1664,16 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
     &lt;div class=&quot;sec-head&quot;&gt;
       &lt;span class=&quot;sec-icon&quot;&gt;📨&lt;/span&gt;
       &lt;span class=&quot;sec-title&quot;&gt;SONAR Alerts&lt;/span&gt;
-      &lt;span class=&quot;sec-badge&quot; id=&quot;wo-count-badge&quot;&gt;0 orders&lt;/span&gt;
+      &lt;span class=&quot;sec-badge&quot; id=&quot;wo-count-badge&quot;&gt;0 alerts&lt;/span&gt;
     &lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
-      &lt;p class=&quot;hint&quot;&gt;Compose and queue SONAR alerts for this scenario. On RUN, the queue is handed to the Admin Platform and logged to the ADM-03 dispatch log for routing review. Add as many as needed — drag to reorder.&lt;/p&gt;
+      &lt;p class=&quot;hint&quot;&gt;Compose the SONAR alerts this drill will release. On RUN each one lands in Outages tagged EXERCISE, is copied to the Console dispatch log and the Drop Zone, and the first one dispatches a BattleCat. Pick a template or write your own.&lt;/p&gt;
 
       &lt;!-- Composer --&gt;
       &lt;div class=&quot;wo-composer&quot;&gt;
-        &lt;div class=&quot;wo-composer-head&quot;&gt;⊕ COMPOSE NEW ORDER&lt;/div&gt;
+        &lt;div class=&quot;wo-composer-head&quot;&gt;⊕ COMPOSE NEW ALERT&lt;/div&gt;
         &lt;div class=&quot;field-row&quot;&gt;
-          &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Order Type&lt;/label&gt;
+          &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Alert Type&lt;/label&gt;
             &lt;select id=&quot;wo-type&quot;&gt;
               &lt;option value=&quot;warn&quot;&gt;SONAR ALERT&lt;/option&gt;
               &lt;option value=&quot;crit&quot;&gt;CRITICAL ALERT&lt;/option&gt;
@@ -1665,43 +1683,46 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
           &lt;/div&gt;
           &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Priority&lt;/label&gt;
             &lt;select id=&quot;wo-priority&quot;&gt;
-              &lt;option&gt;IMMEDIATE&lt;/option&gt;
-              &lt;option selected&gt;URGENT&lt;/option&gt;
-              &lt;option&gt;ROUTINE&lt;/option&gt;
-              &lt;option&gt;FLASH&lt;/option&gt;
+              &lt;option&gt;P1 · IMMEDIATE&lt;/option&gt;
+              &lt;option selected&gt;P2 · URGENT&lt;/option&gt;
+              &lt;option&gt;P3 · ROUTINE&lt;/option&gt;
+              &lt;option&gt;P1 · FLASH&lt;/option&gt;
             &lt;/select&gt;
           &lt;/div&gt;
         &lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Order Tag / Subject&lt;/label&gt;
-          &lt;input type=&quot;text&quot; id=&quot;wo-tag&quot; placeholder=&quot;e.g. WARN-001 · FUEL RESUPPLY&quot; maxlength=&quot;80&quot;&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Alert Tag / Subject&lt;/label&gt;
+          &lt;input type=&quot;text&quot; id=&quot;wo-tag&quot; placeholder=&quot;e.g. ALT-001 · UTILITY FEED A LOSS&quot; maxlength=&quot;80&quot;&gt;
         &lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Order Body&lt;/label&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Alert Body&lt;/label&gt;
           &lt;textarea id=&quot;wo-body&quot; rows=&quot;3&quot; placeholder=&quot;Full text of the SONAR alert…&quot;&gt;&lt;/textarea&gt;
         &lt;/div&gt;
         &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Recipients&lt;/label&gt;
-          &lt;input type=&quot;text&quot; id=&quot;wo-recip&quot; value=&quot;Installation CO · NAVFAC · DLA Energy&quot; placeholder=&quot;Chain-of-command recipients&quot;&gt;
+          &lt;input type=&quot;text&quot; id=&quot;wo-recip&quot; value=&quot;CFM · Facilities On-call · NOC · Tenant Comms&quot; placeholder=&quot;Site escalation recipients&quot;&gt;
         &lt;/div&gt;
-        &lt;button class=&quot;wo-add-btn&quot; onclick=&quot;addWarningOrder()&quot;&gt;＋ &lt;span class=&quot;c-lbl&quot;&gt;ADD ORDER TO &lt;/span&gt;QUEUE&lt;/button&gt;
+        &lt;button class=&quot;wo-add-btn&quot; onclick=&quot;addWarningOrder()&quot;&gt;＋ &lt;span class=&quot;c-lbl&quot;&gt;ADD ALERT TO &lt;/span&gt;QUEUE&lt;/button&gt;
       &lt;/div&gt;
 
       &lt;!-- Queue display --&gt;
       &lt;div id=&quot;wo-empty&quot; class=&quot;wo-empty&quot;&gt;NO SONAR ALERTS QUEUED — ADD ONE ABOVE&lt;/div&gt;
       &lt;div class=&quot;wo-list&quot; id=&quot;wo-list&quot;&gt;&lt;/div&gt;
 
-      &lt;!-- Mock template library --&gt;
+      &lt;!-- Data center template library --&gt;
       &lt;div class=&quot;section&quot; style=&quot;border-color:var(--blt)&quot;&gt;
-        &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📚&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Template Library&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;Quick-insert&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📚&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Template Library&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;Critical facilities&lt;/span&gt;&lt;/div&gt;
         &lt;div class=&quot;sec-body&quot;&gt;
-          &lt;p class=&quot;hint&quot;&gt;Click a template to pre-fill the composer.&lt;/p&gt;
+          &lt;p class=&quot;hint&quot;&gt;Tap a template to pre-fill the composer. Bracketed values are filled from the site and trigger you pick in the next steps when you add the alert.&lt;/p&gt;
           &lt;div class=&quot;chip-group&quot;&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;fuel&#x27;)&quot;&gt;⛽ Fuel Resupply&lt;/div&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;burnrate&#x27;)&quot;&gt;🔥 Burn Rate Critical&lt;/div&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;interdep&#x27;)&quot;&gt;🔗 Inter-Service Dependency&lt;/div&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;barge&#x27;)&quot;&gt;⛵ Barge Coordination&lt;/div&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;nmcp&#x27;)&quot;&gt;🏥 Medical Priority&lt;/div&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;smr&#x27;)&quot;&gt;⚛️ SMR Feasibility&lt;/div&gt;
-            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;bess&#x27;)&quot;&gt;🔋 BESS Deployment&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;feedloss&#x27;)&quot;&gt;🔌 Utility Feed Loss&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;ats&#x27;)&quot;&gt;🔀 ATS Failed to Transfer&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;ups&#x27;)&quot;&gt;🔋 UPS on Battery&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;genfail&#x27;)&quot;&gt;🛢️ Generator Failure&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;fuel&#x27;)&quot;&gt;⏱ Fuel Clock&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;cooling&#x27;)&quot;&gt;❄️ Cooling Loss&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;cyber&#x27;)&quot;&gt;🛡 BMS / EPMS Cyber&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;tenant&#x27;)&quot;&gt;📣 Tenant SLA Notice&lt;/div&gt;
             &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;weather&#x27;)&quot;&gt;🌀 Weather Hold&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;battlecat&#x27;)&quot;&gt;🐾 BattleCat Assessment&lt;/div&gt;
+            &lt;div class=&quot;chip&quot; onclick=&quot;loadTemplate(&#x27;resync&#x27;)&quot;&gt;✅ Resync to Utility&lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -1710,12 +1731,12 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
   &lt;div class=&quot;btn-row&quot;&gt;&lt;button class=&quot;btn primary&quot; onclick=&quot;goStep(2)&quot;&gt;&lt;span class=&quot;c-lbl&quot;&gt;NEXT: &lt;/span&gt;SITE →&lt;/button&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- ═══ STEP 2: INSTALLATION ═══ --&gt;
+&lt;!-- ═══ STEP 2: SITE ═══ --&gt;
 &lt;div class=&quot;pane&quot; id=&quot;pane-2&quot;&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🗺&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Select Site&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;6 catalogued&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🏢&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Select Site&lt;/span&gt;&lt;span class=&quot;sec-badge&quot; id=&quot;inst-count-badge&quot;&gt;6 catalogued&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
-      &lt;p class=&quot;hint&quot;&gt;Select the data center site or portfolio for this scenario.&lt;/p&gt;
+      &lt;p class=&quot;hint&quot;&gt;Pick the data center for this drill. IT load, tier, redundancy, UPS runtime and fuel on hand fill from the site record and can be overridden.&lt;/p&gt;
       &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Filter by Type&lt;/label&gt;
         &lt;div class=&quot;chip-group&quot; id=&quot;branch-chips&quot;&gt;
           &lt;div class=&quot;chip selected&quot; onclick=&quot;filterBranch(&#x27;ALL&#x27;,this)&quot;&gt;ALL&lt;/div&gt;
@@ -1726,8 +1747,20 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
       &lt;/div&gt;
       &lt;div class=&quot;inst-grid&quot; id=&quot;inst-grid&quot;&gt;&lt;/div&gt;
       &lt;div class=&quot;field-row&quot;&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Peak Demand (MW)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;peak-mw&quot; min=&quot;1&quot; max=&quot;500&quot; value=&quot;58&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Utility Provider&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;utility&quot; value=&quot;Dominion Energy Virginia&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;IT Load (MW)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;peak-mw&quot; min=&quot;0.1&quot; max=&quot;500&quot; step=&quot;0.1&quot; value=&quot;18&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Utility Provider&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;utility&quot; value=&quot;Dominion Energy&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;field-row&quot;&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Uptime Tier&lt;/label&gt;
+          &lt;select id=&quot;tier&quot; onchange=&quot;updateSummary()&quot;&gt;&lt;option&gt;Tier II&lt;/option&gt;&lt;option selected&gt;Tier III&lt;/option&gt;&lt;option&gt;Tier IV&lt;/option&gt;&lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Power Redundancy&lt;/label&gt;
+          &lt;select id=&quot;redund&quot; onchange=&quot;updateSummary()&quot;&gt;&lt;option&gt;N&lt;/option&gt;&lt;option selected&gt;N+1&lt;/option&gt;&lt;option&gt;2N&lt;/option&gt;&lt;option&gt;2N+1&lt;/option&gt;&lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;field-row&quot;&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;UPS Runtime at Load (min)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;ups-min&quot; min=&quot;1&quot; max=&quot;120&quot; value=&quot;12&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Fuel On Hand (gal)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;fuel-gal&quot; min=&quot;0&quot; step=&quot;100&quot; value=&quot;24000&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -1740,40 +1773,54 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
 &lt;!-- ═══ STEP 3: TRIGGER ═══ --&gt;
 &lt;div class=&quot;pane&quot; id=&quot;pane-3&quot;&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;⚡&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Scenario Type &amp;amp; Trigger&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;⚡&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Drill Scenario &amp;amp; Trigger&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
       &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Scenario Category&lt;/label&gt;
         &lt;div class=&quot;chip-group&quot; id=&quot;sc-type-chips&quot;&gt;
           &lt;div class=&quot;chip selected&quot; onclick=&quot;selectScenarioCat(&#x27;Utility Feed Loss&#x27;,this)&quot;&gt;Utility Feed Loss&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;ATS / Switchgear Failure&#x27;,this)&quot;&gt;ATS / Switchgear&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;Generator Failure&#x27;,this)&quot;&gt;Generator Failure&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;Fuel Exhaustion&#x27;,this)&quot;&gt;Fuel Exhaustion&lt;/div&gt;
           &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;Cooling Failure&#x27;,this)&quot;&gt;Cooling Failure&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;BMS Cyber Event&#x27;,this)&quot;&gt;BMS Cyber Event&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;BMS / EPMS Cyber Event&#x27;,this)&quot;&gt;BMS / EPMS Cyber&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;Severe Weather&#x27;,this)&quot;&gt;Severe Weather&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectScenarioCat(&#x27;Fire / EPO&#x27;,this)&quot;&gt;Fire / EPO&lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field-row&quot;&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Trigger Event Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;trigger-name&quot; value=&quot;Hurricane Florence&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Severity Level&lt;/label&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Trigger Event Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;trigger-name&quot; value=&quot;Utility Feed A Loss — Beaumeade substation&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Severity&lt;/label&gt;
           &lt;select id=&quot;severity&quot; onchange=&quot;updateSummary()&quot;&gt;
-            &lt;option&gt;CAT 1 — Minor&lt;/option&gt;&lt;option&gt;CAT 2 — Moderate&lt;/option&gt;
-            &lt;option selected&gt;CAT 3 — Significant&lt;/option&gt;&lt;option&gt;CAT 4 — Severe&lt;/option&gt;&lt;option&gt;CAT 5 — Catastrophic&lt;/option&gt;
+            &lt;option&gt;SEV 4 — Advisory&lt;/option&gt;
+            &lt;option&gt;SEV 3 — Degraded · redundancy lost&lt;/option&gt;
+            &lt;option selected&gt;SEV 2 — Critical · on backup power&lt;/option&gt;
+            &lt;option&gt;SEV 1 — Outage · load dropped&lt;/option&gt;
           &lt;/select&gt;
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Trigger Description&lt;/label&gt;
-        &lt;textarea id=&quot;trigger-desc&quot;&gt;Storm surge disables Dominion Energy Chesapeake transmission corridor. NSN loses commercial grid power. All non-berthed vessels ordered to sea for ride-out.&lt;/textarea&gt;
+        &lt;textarea id=&quot;trigger-desc&quot;&gt;Provider-side fault at the Beaumeade substation drops the 34.5 kV feed A carrying 70% of site load. UPS rides through, ATS-1 transfers Hall 2 to generators G1–G4 and the fuel clock starts. Tenant notices go out inside the 60-minute SLA window; primary fuel contract dispatched.&lt;/textarea&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field-row&quot;&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Est. Outage Duration&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;outage-dur&quot; value=&quot;72+ hours&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Resupply Delay (hrs)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;resupply-delay&quot; value=&quot;48&quot; min=&quot;0&quot; max=&quot;720&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Est. Outage Duration&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;outage-dur&quot; value=&quot;24–72 hours&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Fuel Delivery Lead Time (hrs)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;resupply-delay&quot; value=&quot;4&quot; min=&quot;0&quot; max=&quot;720&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Historical Weather Data&lt;/label&gt;
-        &lt;div class=&quot;chip-group&quot; id=&quot;weather-chips&quot;&gt;
-          &lt;div class=&quot;chip selected amber&quot; onclick=&quot;selectChip(&#x27;weather-chips&#x27;,this)&quot;&gt;2-Year Data&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;weather-chips&#x27;,this)&quot;&gt;5-Year Data&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;weather-chips&#x27;,this)&quot;&gt;10-Year Data&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;weather-chips&#x27;,this)&quot;&gt;NOAA Archive&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;weather-chips&#x27;,this)&quot;&gt;None&lt;/div&gt;
+      &lt;div class=&quot;field-row&quot;&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Halls / Zones Affected&lt;/label&gt;
+          &lt;div class=&quot;chip-group&quot; id=&quot;halls-chips&quot;&gt;&lt;/div&gt;
         &lt;/div&gt;
-        &lt;p class=&quot;hint&quot; style=&quot;margin-top:5px&quot;&gt;Historical data feeds triage analytics. Scenario archived for model learning.&lt;/p&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Site Load Affected (%)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;load-pct&quot; value=&quot;70&quot; min=&quot;1&quot; max=&quot;100&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Drill Objectives&lt;/label&gt;
+        &lt;div class=&quot;chip-group&quot; id=&quot;obj-chips&quot;&gt;
+          &lt;div class=&quot;chip multi selected&quot; onclick=&quot;toggleChip(this)&quot;&gt;Tenant SLA window&lt;/div&gt;
+          &lt;div class=&quot;chip multi selected&quot; onclick=&quot;toggleChip(this)&quot;&gt;Fuel clock&lt;/div&gt;
+          &lt;div class=&quot;chip multi&quot; onclick=&quot;toggleChip(this)&quot;&gt;Cooling clock&lt;/div&gt;
+          &lt;div class=&quot;chip multi selected&quot; onclick=&quot;toggleChip(this)&quot;&gt;N+1 recovery&lt;/div&gt;
+          &lt;div class=&quot;chip multi&quot; onclick=&quot;toggleChip(this)&quot;&gt;Cyber isolation&lt;/div&gt;
+          &lt;div class=&quot;chip multi selected&quot; onclick=&quot;toggleChip(this)&quot;&gt;BattleCat dispatch&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;hint&quot; style=&quot;margin-top:5px&quot;&gt;Objectives are scored in the after-action report and roll into the SLA / compliance evidence for the site.&lt;/p&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -1786,119 +1833,141 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
 &lt;!-- ═══ STEP 4: ASSETS ═══ --&gt;
 &lt;div class=&quot;pane&quot; id=&quot;pane-4&quot;&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🔋&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Energy Resource Inventory &amp;amp; Placement&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;Drag to Deploy&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🔋&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Backup Power Inventory &amp;amp; Placement&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;Drag to Deploy&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
-      &lt;p class=&quot;hint&quot;&gt;Drag assets from the palette into the deployment zone.&lt;/p&gt;
+      &lt;p class=&quot;hint&quot;&gt;Drag the backup assets that carry the affected halls into the deployment zone. Generators drive the fuel clock; UPS and BESS give ride-through only.&lt;/p&gt;
       &lt;div class=&quot;asset-palette&quot; id=&quot;asset-palette&quot;&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;MICROGRID&quot; data-mw=&quot;8.4&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;⚡&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Microgrid&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;8.4 MW · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;DIESEL_GEN&quot; data-mw=&quot;6.0&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🛢️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Diesel Gen&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;6.0 MW · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;BESS&quot; data-mw=&quot;40&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🔋&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;BESS&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;40 MWh · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;SMR&quot; data-mw=&quot;10&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;⚛️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;SMR&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;10 MW · &lt;span class=&quot;tag maint&quot;&gt;MAINT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;SOLAR&quot; data-mw=&quot;1.2&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;☀️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Solar&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;1.2 MW · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;BESS_BARGE&quot; data-mw=&quot;60&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;⛵&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;BESS Barge&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;60 MWh · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;SHIP_GEN&quot; data-mw=&quot;14.4&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🚢&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Ship Gen&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;14.4 MW · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;FUEL_CELL&quot; data-mw=&quot;2.0&quot; ondragstart=&quot;onDragStart(event)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🔬&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Fuel Cell&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;2.0 MW · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;DIESEL_GEN_25&quot; data-mw=&quot;2.5&quot; data-kind=&quot;gen&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🛢️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Diesel Gen 2.5 MW&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;G1–G4 · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;DIESEL_GEN_30&quot; data-mw=&quot;3.0&quot; data-kind=&quot;gen&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🛢️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Diesel Gen 3.0 MW&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;G5–G6 · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;RENTAL_GEN&quot; data-mw=&quot;2.0&quot; data-kind=&quot;gen&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🚛&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Rental Gen 2.0 MW&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;trailer · 6 h ETA · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;UPS_MOD&quot; data-mw=&quot;1.0&quot; data-kind=&quot;ups&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🔌&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;UPS Module 1.0 MW&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;static · 12 min · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;BESS&quot; data-mw=&quot;2.0&quot; data-kind=&quot;bess&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🔋&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;BESS 2 MW / 4 MWh&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;2 h bridge · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;FUEL_CELL&quot; data-mw=&quot;1.5&quot; data-kind=&quot;gen&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;🔬&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Fuel Cell 1.5 MW&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;natural gas · &lt;span class=&quot;tag maint&quot;&gt;MAINT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;SOLAR_STOR&quot; data-mw=&quot;1.0&quot; data-kind=&quot;bess&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;☀️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Solar + Storage 1 MW&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;daylight · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;asset-chip&quot; draggable=&quot;true&quot; data-asset=&quot;RENTAL_CHILLER&quot; data-mw=&quot;0&quot; data-kind=&quot;cool&quot; ondragstart=&quot;onDragStart(event)&quot; onclick=&quot;tapDeploy(this)&quot;&gt;&lt;span class=&quot;aicon&quot;&gt;❄️&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;aname&quot;&gt;Rental Chiller 400 t&lt;/div&gt;&lt;div class=&quot;aquant&quot;&gt;cooling · 8 h ETA · &lt;span class=&quot;tag op&quot;&gt;OP&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;drop-zone&quot; id=&quot;drop-zone&quot; ondragover=&quot;onDragOver(event)&quot; ondragleave=&quot;onDragLeave(event)&quot; ondrop=&quot;onDrop(event)&quot;&gt;
-        &lt;div class=&quot;drop-zone-lbl&quot; id=&quot;dz-lbl&quot;&gt;DROP ASSETS HERE TO DEPLOY&lt;/div&gt;
+        &lt;div class=&quot;drop-zone-lbl&quot; id=&quot;dz-lbl&quot;&gt;DROP (OR TAP) ASSETS HERE TO DEPLOY&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;dist-result&quot; id=&quot;power-calc&quot;&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Deployed&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-cap&quot;&gt;0&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW / MWh&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Peak Demand&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-demand&quot;&gt;58&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Coverage&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-cover&quot;&gt;0%&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;of peak&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Est. Resilience&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-resilience&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;hours&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Deployed&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-cap&quot;&gt;0&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW backup&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Load to Carry&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-demand&quot;&gt;12.6&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW (IT × affected %)&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Coverage&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-cover&quot;&gt;0%&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;of affected load&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Fuel Clock&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dep-resilience&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;hours on generator&lt;/div&gt;&lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;!-- VEHICLE ROLODEX — moved here from Manpower step --&gt;
+  &lt;!-- FUEL &amp; RENTAL LOGISTICS --&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🚛&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Vehicle Rolodex&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;NAVY · Service-Specific&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🚛&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Fuel &amp;amp; Rental Logistics&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;Contracts on call&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
-      &lt;p class=&quot;hint&quot;&gt;Set quantities for Navy fuel and logistics vehicles available to this installation. JLTV and commercial fuel tankers are the primary fuel distribution assets for shore-based operations.&lt;/p&gt;
+      &lt;p class=&quot;hint&quot;&gt;Set the quantities the fuel and rental contracts can put on the road for this site. The 7,500 gal transport is the primary resupply asset.&lt;/p&gt;
       &lt;table class=&quot;vehicle-table&quot;&gt;
-        &lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;width:32px&quot;&gt;&lt;/th&gt;&lt;th&gt;Vehicle&lt;/th&gt;&lt;th&gt;Capacity&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th class=&quot;veh-qty&quot;&gt;Qty&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+        &lt;thead&gt;&lt;tr&gt;&lt;th style=&quot;width:32px&quot;&gt;&lt;/th&gt;&lt;th&gt;Asset&lt;/th&gt;&lt;th&gt;Capacity&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th class=&quot;veh-qty&quot;&gt;Qty&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
         &lt;tbody id=&quot;vehicle-table-body&quot;&gt;&lt;/tbody&gt;
       &lt;/table&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;!-- ROUND-TRIP DISTANCE --&gt;
+  &lt;!-- FUEL RESUPPLY RUN + FUEL CLOCK --&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📍&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Round-Trip Distance Estimation&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;⏱&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Fuel Resupply Run &amp;amp; Fuel Clock&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
       &lt;div class=&quot;field-row&quot;&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Nearest Fuel Depot&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;depot-name&quot; value=&quot;Portsmouth Naval Shipyard&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Distance (miles)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;depot-miles&quot; value=&quot;2.1&quot; step=&quot;0.1&quot; min=&quot;0.1&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Nearest Fuel Terminal&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;depot-name&quot; value=&quot;Sterling fuel yard&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Distance (miles)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;depot-miles&quot; value=&quot;9.5&quot; step=&quot;0.1&quot; min=&quot;0.1&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field-row&quot;&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Avg Speed (mph)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;veh-speed&quot; value=&quot;25&quot; min=&quot;5&quot; max=&quot;80&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Load/Unload (min)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;load-time&quot; value=&quot;45&quot; min=&quot;5&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Avg Speed (mph)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;veh-speed&quot; value=&quot;35&quot; min=&quot;5&quot; max=&quot;80&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Load/Unload (min)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;load-time&quot; value=&quot;40&quot; min=&quot;5&quot; oninput=&quot;calcDistance()&quot;&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;dist-result&quot;&gt;
         &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;One-Way&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dc-oneway&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;minutes&lt;/div&gt;&lt;/div&gt;
         &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Round-Trip&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dc-roundtrip&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;minutes&lt;/div&gt;&lt;/div&gt;
         &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Runs / Day&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dc-runs&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;trips&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Fuel / Day&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dc-gal&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;gallons&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Delivered / Day&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;dc-gal&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;gallons&lt;/div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;fuel-clock&quot; id=&quot;fuel-clock&quot;&gt;
+        &lt;div class=&quot;fc-row&quot;&gt;&lt;span&gt;Burn rate at carried load&lt;/span&gt;&lt;b id=&quot;fc-burn&quot;&gt;—&lt;/b&gt;&lt;/div&gt;
+        &lt;div class=&quot;fc-row&quot;&gt;&lt;span&gt;Fuel on hand ÷ burn&lt;/span&gt;&lt;b id=&quot;fc-hours&quot;&gt;—&lt;/b&gt;&lt;/div&gt;
+        &lt;div class=&quot;fc-row&quot;&gt;&lt;span&gt;First delivery lands&lt;/span&gt;&lt;b id=&quot;fc-first&quot;&gt;—&lt;/b&gt;&lt;/div&gt;
+        &lt;div class=&quot;fc-verdict&quot; id=&quot;fc-verdict&quot;&gt;DEPLOY GENERATORS TO START THE FUEL CLOCK&lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;btn-row&quot;&gt;
     &lt;button class=&quot;btn btn-back&quot; onclick=&quot;goStep(3)&quot;&gt;← BACK&lt;/button&gt;
-    &lt;button class=&quot;btn primary&quot; onclick=&quot;goStep(5)&quot;&gt;&lt;span class=&quot;c-lbl&quot;&gt;NEXT: &lt;/span&gt;MANPOWER →&lt;/button&gt;
+    &lt;button class=&quot;btn primary&quot; onclick=&quot;goStep(5)&quot;&gt;&lt;span class=&quot;c-lbl&quot;&gt;NEXT: &lt;/span&gt;STAFFING →&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- ═══ STEP 5: MANPOWER + VEHICLES ═══ --&gt;
+&lt;!-- ═══ STEP 5: STAFFING &amp; VENDORS ═══ --&gt;
 &lt;div class=&quot;pane&quot; id=&quot;pane-5&quot;&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;👤&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Manpower Requirements&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;👤&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Shift Staffing&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
       &lt;div class=&quot;field-row&quot;&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Total Personnel&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;personnel&quot; value=&quot;120&quot; min=&quot;1&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Qualified Operators&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;operators&quot; value=&quot;18&quot; min=&quot;0&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Staff on Shift&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;personnel&quot; value=&quot;6&quot; min=&quot;1&quot; oninput=&quot;updateSummary()&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Critical Facilities Techs&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;operators&quot; value=&quot;3&quot; min=&quot;0&quot;&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field-row&quot;&gt;
         &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Shift Duration (hrs)&lt;/label&gt;&lt;input type=&quot;number&quot; id=&quot;shift-hrs&quot; value=&quot;12&quot; min=&quot;4&quot; max=&quot;24&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Relief Cycle&lt;/label&gt;
-          &lt;select id=&quot;relief-cycle&quot;&gt;&lt;option&gt;6h on / 6h off&lt;/option&gt;&lt;option selected&gt;12h on / 12h off&lt;/option&gt;&lt;option&gt;8h on / 16h off&lt;/option&gt;&lt;/select&gt;
+          &lt;select id=&quot;relief-cycle&quot;&gt;&lt;option&gt;8h on / 16h off&lt;/option&gt;&lt;option selected&gt;12h on / 12h off&lt;/option&gt;&lt;option&gt;Hold-over · no relief&lt;/option&gt;&lt;/select&gt;
         &lt;/div&gt;
       &lt;/div&gt;
+      &lt;div class=&quot;field-row&quot;&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Incident Commander&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;ic-name&quot; value=&quot;Critical Facilities Manager&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Tenant Comms Owner&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;tc-name&quot; value=&quot;NOC shift lead&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;section&quot;&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📞&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Vendor Call-outs&lt;/span&gt;&lt;span class=&quot;sec-badge&quot;&gt;Contracts&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-body&quot; id=&quot;vendor-list&quot;&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Fuel contract — primary transport&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked data-v=&quot;Fuel contract (primary)&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Generator service (OEM)&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked data-v=&quot;Generator service&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Mechanical / chiller vendor&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; data-v=&quot;Mechanical / chiller&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;BMS / controls integrator&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; data-v=&quot;BMS / controls&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Electrical contractor — switchgear&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; data-v=&quot;Electrical contractor&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Utility provider dispatch desk&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked data-v=&quot;Utility dispatch&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;btn-row&quot;&gt;
     &lt;button class=&quot;btn btn-back&quot; onclick=&quot;goStep(4)&quot;&gt;← BACK&lt;/button&gt;
-    &lt;button class=&quot;btn primary&quot; onclick=&quot;goStep(6)&quot;&gt;&lt;span class=&quot;c-lbl&quot;&gt;NEXT: &lt;/span&gt;REPORTING →&lt;/button&gt;
+    &lt;button class=&quot;btn primary&quot; onclick=&quot;goStep(6)&quot;&gt;&lt;span class=&quot;c-lbl&quot;&gt;NEXT: &lt;/span&gt;NOTIFY →&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- ═══ STEP 6: REPORTING ═══ --&gt;
+&lt;!-- ═══ STEP 6: NOTIFY &amp; COMPLIANCE ═══ --&gt;
 &lt;div class=&quot;pane&quot; id=&quot;pane-6&quot;&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📡&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Outage Reporting Mode&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📡&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Notification &amp;amp; Compliance&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
-      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Primary Reporting Method&lt;/label&gt;
+      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Primary Notification Method&lt;/label&gt;
         &lt;div class=&quot;chip-group&quot; id=&quot;report-chips&quot;&gt;
-          &lt;div class=&quot;chip selected&quot; onclick=&quot;selectChip(&#x27;report-chips&#x27;,this)&quot;&gt;Manual Chain-of-Command&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;report-chips&#x27;,this)&quot;&gt;Auto-Trigger + Notifications&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;report-chips&#x27;,this)&quot;&gt;NOC manual notice&lt;/div&gt;
+          &lt;div class=&quot;chip selected&quot; onclick=&quot;selectChip(&#x27;report-chips&#x27;,this)&quot;&gt;Auto-trigger + tenant notices&lt;/div&gt;
           &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;report-chips&#x27;,this)&quot;&gt;Hybrid&lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Notification Recipients&lt;/label&gt;
-        &lt;textarea id=&quot;notif-recipients&quot; style=&quot;min-height:44px&quot;&gt;NAVFAC Atlantic · CINCLANTFLT · Installation CO · DLA Energy&lt;/textarea&gt;
+        &lt;textarea id=&quot;notif-recipients&quot; style=&quot;min-height:44px&quot;&gt;CFM · Facilities On-call · NOC · Tenant Comms · Fuel contract · Utility dispatch&lt;/textarea&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Auto-trigger on utility outage detection&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
-      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;SMS/email notifications to chain-of-command&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
-      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Archive scenario for model learning&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
-      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Generate post-mortem report on completion&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
-      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Triage analytics — weather + historical outages&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
-      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Post-Mortem Output Priority&lt;/label&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Auto-trigger on ATS transfer / utility loss&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;opt-auto&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Tenant notices inside the 60-min SLA window&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;opt-sla&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;BattleCat auto-dispatch on release&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;opt-bc&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Archive drill for after-action review&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;opt-archive&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Generate after-action report on completion&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;opt-aar&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Log as NFPA 110 / Tier / SOC 2 test evidence&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;opt-comp&quot;&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;After-Action Output Priority&lt;/label&gt;
         &lt;div class=&quot;chip-group&quot; id=&quot;output-chips&quot;&gt;
-          &lt;div class=&quot;chip selected&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;Spending Priorities&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;Resource Allocation&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;Investment Trade-offs&lt;/div&gt;
-          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;All Outputs&lt;/div&gt;
+          &lt;div class=&quot;chip selected&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;SLA exposure&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;Fuel &amp;amp; capital plan&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;Cooling margin&lt;/div&gt;
+          &lt;div class=&quot;chip&quot; onclick=&quot;selectChip(&#x27;output-chips&#x27;,this)&quot;&gt;All outputs&lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -1912,23 +1981,23 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
 &lt;!-- ═══ STEP 7: REVIEW ═══ --&gt;
 &lt;div class=&quot;pane&quot; id=&quot;pane-7&quot;&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📋&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Scenario Summary&lt;/span&gt;&lt;span class=&quot;sec-badge&quot; id=&quot;sum-badge&quot;&gt;DRAFT&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📋&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Drill Summary&lt;/span&gt;&lt;span class=&quot;sec-badge&quot; id=&quot;sum-badge&quot;&gt;DRAFT&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
       &lt;div class=&quot;summary-grid&quot; id=&quot;summary-grid&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📊&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Power Requirements&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📊&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Power &amp;amp; Fuel&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
       &lt;div class=&quot;dist-result&quot;&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Peak Demand&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;sr-demand&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Load to Carry&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;sr-demand&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW&lt;/div&gt;&lt;/div&gt;
         &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Deployed&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;sr-cap&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;MW&lt;/div&gt;&lt;/div&gt;
-        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Resilience&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;sr-window&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;hours&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Fuel Clock&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;sr-window&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;hours&lt;/div&gt;&lt;/div&gt;
         &lt;div class=&quot;dist-item&quot;&gt;&lt;div class=&quot;dist-label&quot;&gt;Est. Capital&lt;/div&gt;&lt;div class=&quot;dist-val&quot; id=&quot;sr-capital&quot;&gt;—&lt;/div&gt;&lt;div class=&quot;dist-unit&quot;&gt;&lt;/div&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div style=&quot;margin-top:8px&quot;&gt;
         &lt;div style=&quot;display:flex;justify-content:space-between;margin-bottom:3px&quot;&gt;
-          &lt;span style=&quot;font-size:8px;color:var(--txd);letter-spacing:1px;text-transform:uppercase&quot;&gt;Coverage vs. Demand&lt;/span&gt;
+          &lt;span style=&quot;font-size:8px;color:var(--txd);letter-spacing:1px;text-transform:uppercase&quot;&gt;Coverage vs. affected load&lt;/span&gt;
           &lt;span style=&quot;font-size:9px;color:var(--sage)&quot; id=&quot;sr-pct&quot;&gt;0%&lt;/span&gt;
         &lt;/div&gt;
         &lt;div class=&quot;prog-wrap&quot;&gt;&lt;div class=&quot;prog-fill&quot; id=&quot;sr-prog&quot; style=&quot;width:0%&quot;&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1939,19 +2008,19 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
     &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;📨&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;SONAR Alerts Queued&lt;/span&gt;&lt;span class=&quot;sec-badge&quot; id=&quot;wo-review-count&quot;&gt;0&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
       &lt;div class=&quot;wo-list&quot; id=&quot;wo-review-list&quot;&gt;&lt;/div&gt;
-      &lt;p class=&quot;hint&quot; style=&quot;margin-top:4px&quot;&gt;These orders will stream into the simulator&#x27;s Ops Feed during scenario playback.&lt;/p&gt;
+      &lt;p class=&quot;hint&quot; style=&quot;margin-top:4px&quot;&gt;These alerts land in Outages tagged EXERCISE when the drill is released.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;section&quot;&gt;
-    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🗃&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Archive&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sec-head&quot;&gt;&lt;span class=&quot;sec-icon&quot;&gt;🗃&lt;/span&gt;&lt;span class=&quot;sec-title&quot;&gt;Drill Record&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;sec-body&quot;&gt;
-      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Scenario ID&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;sc-id&quot; readonly&gt;&lt;/div&gt;
-      &lt;p class=&quot;hint&quot;&gt;Archived after completion. Feeds triage analytics engine for critical-region identification.&lt;/p&gt;
+      &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Drill ID&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;sc-id&quot; readonly&gt;&lt;/div&gt;
+      &lt;p class=&quot;hint&quot;&gt;Archived after completion. Objectives are scored in the after-action report and feed the site&#x27;s SLA and compliance evidence.&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;btn-row&quot;&gt;
     &lt;button class=&quot;btn btn-back&quot; onclick=&quot;goStep(6)&quot;&gt;← BACK&lt;/button&gt;
-    &lt;button class=&quot;btn primary&quot; id=&quot;launch-final-btn&quot; onclick=&quot;launchScenario()&quot;&gt;▶ RUN&lt;span class=&quot;c-lbl&quot;&gt; SCENARIO IN SIMULATOR&lt;/span&gt;&lt;/button&gt;
+    &lt;button class=&quot;btn primary&quot; id=&quot;launch-final-btn&quot; onclick=&quot;launchScenario()&quot;&gt;▶ RUN&lt;span class=&quot;c-lbl&quot;&gt; DRILL&lt;/span&gt;&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -1959,20 +2028,20 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
 
 &lt;/div&gt;&lt;!-- body-shell --&gt;
 
-&lt;div id=&quot;rot&quot; class=&quot;arm&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;&lt;rect x=&quot;5&quot; y=&quot;2&quot; width=&quot;14&quot; height=&quot;20&quot; rx=&quot;2.5&quot;/&gt;&lt;path d=&quot;M11 18h2&quot;/&gt;&lt;/svg&gt;&lt;div&gt;&lt;b&gt;Rotate to landscape&lt;/b&gt;&lt;br&gt;Scenario Builder is designed for landscape iPhone.&lt;/div&gt;&lt;button onclick=&quot;document.getElementById(&#x27;rot&#x27;).classList.remove(&#x27;arm&#x27;)&quot;&gt;View anyway&lt;/button&gt;&lt;/div&gt;
+&lt;div id=&quot;rot&quot; class=&quot;arm&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;&lt;rect x=&quot;5&quot; y=&quot;2&quot; width=&quot;14&quot; height=&quot;20&quot; rx=&quot;2.5&quot;/&gt;&lt;path d=&quot;M11 18h2&quot;/&gt;&lt;/svg&gt;&lt;div&gt;&lt;b&gt;Rotate to landscape&lt;/b&gt;&lt;br&gt;Drill Builder is designed for landscape iPhone.&lt;/div&gt;&lt;button onclick=&quot;document.getElementById(&#x27;rot&#x27;).classList.remove(&#x27;arm&#x27;)&quot;&gt;View anyway&lt;/button&gt;&lt;/div&gt;
 &lt;!-- LAUNCH BANNER --&gt;
 &lt;div id=&quot;launch-banner&quot;&gt;
   &lt;div class=&quot;banner-ring&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;banner-title&quot; id=&quot;banner-title&quot;&gt;INITIALIZING SCENARIO&lt;/div&gt;
-  &lt;div class=&quot;banner-sub&quot; id=&quot;banner-sub&quot;&gt;Building digital twin…&lt;/div&gt;
-  &lt;div id=&quot;banner-btns&quot; style=&quot;display:none;gap:10px;flex-wrap:wrap;justify-content:center&quot;&gt;&lt;button class=&quot;banner-btn&quot; id=&quot;banner-btn&quot; onclick=&quot;sendToSimulator()&quot;&gt;RELEASE TO BUS →&lt;/button&gt;&lt;button class=&quot;banner-btn&quot; onclick=&quot;sendToDropZone()&quot; style=&quot;background:#e8a33d;color:#1a0f00&quot;&gt;SEND TO DROP ZONE ⤓&lt;/button&gt;&lt;button class=&quot;banner-btn&quot; onclick=&quot;document.getElementById(&#x27;launch-banner&#x27;).classList.remove(&#x27;show&#x27;)&quot; style=&quot;background:transparent;color:#b0b8c4;border:1px solid rgba(176,184,196,.4)&quot;&gt;BACK&lt;/button&gt;&lt;/div&gt;
+  &lt;div class=&quot;banner-title&quot; id=&quot;banner-title&quot;&gt;INITIALIZING DRILL&lt;/div&gt;
+  &lt;div class=&quot;banner-sub&quot; id=&quot;banner-sub&quot;&gt;Loading site record…&lt;/div&gt;
+  &lt;div id=&quot;banner-btns&quot; style=&quot;display:none;gap:10px;flex-wrap:wrap;justify-content:center&quot;&gt;&lt;button class=&quot;banner-btn&quot; id=&quot;banner-btn&quot; onclick=&quot;sendToSimulator()&quot;&gt;RELEASE DRILL →&lt;/button&gt;&lt;button class=&quot;banner-btn&quot; onclick=&quot;sendToDropZone()&quot; style=&quot;background:#e8a33d;color:#1a0f00&quot;&gt;SEND TO DROP ZONE ⤓&lt;/button&gt;&lt;button class=&quot;banner-btn&quot; onclick=&quot;document.getElementById(&#x27;launch-banner&#x27;).classList.remove(&#x27;show&#x27;)&quot; style=&quot;background:transparent;color:#b0b8c4;border:1px solid rgba(176,184,196,.4)&quot;&gt;BACK&lt;/button&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- CLEAR CONFIRM MODAL --&gt;
 &lt;div id=&quot;clear-modal&quot;&gt;
   &lt;div class=&quot;modal-box&quot;&gt;
-    &lt;div class=&quot;modal-title&quot;&gt;✕ CLEAR SCENARIO&lt;/div&gt;
-    &lt;div class=&quot;modal-body&quot;&gt;This will reset all steps — SONAR alerts, installation selection, assets, manpower, and reporting settings. This cannot be undone.&lt;/div&gt;
+    &lt;div class=&quot;modal-title&quot;&gt;✕ CLEAR DRILL&lt;/div&gt;
+    &lt;div class=&quot;modal-body&quot;&gt;This will reset all steps — SONAR alerts, site, trigger, assets, staffing and notification settings. This cannot be undone.&lt;/div&gt;
     &lt;div class=&quot;modal-btns&quot;&gt;
       &lt;button class=&quot;modal-cancel&quot; onclick=&quot;closeClear()&quot;&gt;CANCEL&lt;/button&gt;
       &lt;button class=&quot;modal-confirm&quot; onclick=&quot;clearAll()&quot;&gt;CLEAR ALL&lt;/button&gt;
@@ -1981,20 +2050,22 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
 &lt;/div&gt;
 
 &lt;script&gt;
-// ═══ INSTALLATIONS ═══
+// ═══ SITES · data center portfolio (colocation / enterprise / edge) ═══
 const INSTALLATIONS = [
-  // ── data center sector (colocation / enterprise / edge) · mw = IT load · utility = utility provider ──
-  {id:&#x27;D_HBR&#x27;,  name:&#x27;Broad Run Data Center - LDN1&#x27;, loc:&#x27;Ashburn VA&#x27;,        branch:&#x27;COLO&#x27;, mw:18,  utility:&#x27;Dominion Energy&#x27;},
-  {id:&#x27;D_CPS&#x27;,  name:&#x27;Cascade Peak Colocation - CP2&#x27;,  loc:&#x27;Hillsboro OR&#x27;,      branch:&#x27;COLO&#x27;, mw:32,  utility:&#x27;PGE&#x27;},
-  {id:&#x27;D_MFD&#x27;,  name:&#x27;Meridian Financial - Primary DC&#x27;,  loc:&#x27;Dallas TX&#x27;,         branch:&#x27;ENT&#x27;,  mw:6,   utility:&#x27;Oncor&#x27;},
-  {id:&#x27;D_NHS&#x27;,  name:&#x27;Northlake Health System DC&#x27;,        loc:&#x27;Columbus OH&#x27;,       branch:&#x27;ENT&#x27;,  mw:4,   utility:&#x27;AEP Ohio&#x27;},
-  {id:&#x27;D_RLE&#x27;,  name:&#x27;Ridgeline Edge - 12-site portfolio&#x27;, loc:&#x27;Phoenix AZ&#x27;,      branch:&#x27;EDGE&#x27;, mw:1.2, utility:&#x27;APS&#x27;},
-  {id:&#x27;D_GEM&#x27;,  name:&#x27;Gulf Edge Modular - Site 7&#x27;,     loc:&#x27;Houston TX&#x27;,        branch:&#x27;EDGE&#x27;, mw:0.8, utility:&#x27;CenterPoint&#x27;},
+  {id:&#x27;D_HBR&#x27;, name:&#x27;Broad Run Data Center - LDN1&#x27;,    loc:&#x27;Ashburn VA&#x27;,   branch:&#x27;COLO&#x27;, mw:18,  utility:&#x27;Dominion Energy&#x27;, tier:&#x27;Tier III&#x27;, red:&#x27;N+1&#x27;,  ups:12, fuel:24000, feed:&#x27;34.5 kV · Beaumeade sub&#x27;, halls:[&#x27;Hall 1&#x27;,&#x27;Hall 2&#x27;,&#x27;Hall 3&#x27;,&#x27;Cooling plant&#x27;]},
+  {id:&#x27;D_CPS&#x27;, name:&#x27;Cascade Peak Colocation - CP2&#x27;,   loc:&#x27;Hillsboro OR&#x27;, branch:&#x27;COLO&#x27;, mw:32,  utility:&#x27;PGE&#x27;,             tier:&#x27;Tier III&#x27;, red:&#x27;2N&#x27;,   ups:10, fuel:48000, feed:&#x27;115 kV · dual feed&#x27;,      halls:[&#x27;Hall A&#x27;,&#x27;Hall B&#x27;,&#x27;Hall C&#x27;,&#x27;Hall D&#x27;,&#x27;Central plant&#x27;]},
+  {id:&#x27;D_MFD&#x27;, name:&#x27;Meridian Financial - Primary DC&#x27;, loc:&#x27;Dallas TX&#x27;,    branch:&#x27;ENT&#x27;,  mw:6,   utility:&#x27;Oncor&#x27;,           tier:&#x27;Tier IV&#x27;,  red:&#x27;2N+1&#x27;, ups:15, fuel:12000, feed:&#x27;12.47 kV · two substations&#x27;, halls:[&#x27;Data Hall 1&#x27;,&#x27;Data Hall 2&#x27;,&#x27;Trading UPS room&#x27;,&#x27;Chiller plant&#x27;]},
+  {id:&#x27;D_NHS&#x27;, name:&#x27;Northlake Health System DC&#x27;,      loc:&#x27;Columbus OH&#x27;,  branch:&#x27;ENT&#x27;,  mw:4,   utility:&#x27;AEP Ohio&#x27;,        tier:&#x27;Tier III&#x27;, red:&#x27;N+1&#x27;,  ups:15, fuel:9000,  feed:&#x27;13.2 kV · hospital loop&#x27;, halls:[&#x27;Clinical DC&#x27;,&#x27;Admin DC&#x27;,&#x27;Imaging archive&#x27;,&#x27;Cooling plant&#x27;]},
+  {id:&#x27;D_RLE&#x27;, name:&#x27;Ridgeline Edge - 12-site portfolio&#x27;, loc:&#x27;Phoenix AZ&#x27;, branch:&#x27;EDGE&#x27;, mw:1.2, utility:&#x27;APS&#x27;,           tier:&#x27;Tier II&#x27;,  red:&#x27;N&#x27;,    ups:8,  fuel:1800,  feed:&#x27;12 kV · single feed&#x27;,      halls:[&#x27;Edge pod A&#x27;,&#x27;Edge pod B&#x27;,&#x27;Tower site 7&#x27;,&#x27;Fiber hut&#x27;]},
+  {id:&#x27;D_GEM&#x27;, name:&#x27;Gulf Edge Modular - Site 7&#x27;,      loc:&#x27;Houston TX&#x27;,   branch:&#x27;EDGE&#x27;, mw:0.8, utility:&#x27;CenterPoint&#x27;,     tier:&#x27;Tier II&#x27;,  red:&#x27;N+1&#x27;,  ups:10, fuel:1200,  feed:&#x27;12.5 kV · single feed&#x27;,    halls:[&#x27;Module 1&#x27;,&#x27;Module 2&#x27;,&#x27;Cooling skid&#x27;]},
 ];
-const BRANCH_CSS = {NAVY:&#x27;navy&#x27;,USMC:&#x27;usmc&#x27;,JOINT:&#x27;joint&#x27;,COLO:&#x27;iou&#x27;,ENT:&#x27;muni&#x27;,EDGE:&#x27;coop&#x27;};
+const BRANCH_CSS = {COLO:&#x27;iou&#x27;,ENT:&#x27;muni&#x27;,EDGE:&#x27;coop&#x27;};
 const UTIL_BRANCHES = [&#x27;COLO&#x27;,&#x27;ENT&#x27;,&#x27;EDGE&#x27;];
 let selectedInst = INSTALLATIONS[0];
 let currentBranch = &#x27;ALL&#x27;;
+let selectedHalls = [];
+const $ = id =&gt; document.getElementById(id);
+const num = (id, d) =&gt; { const v = parseFloat(($(id)||{}).value); return isNaN(v) ? d : v; };
 
 function filterBranch(b, el) {
   currentBranch = b;
@@ -2003,34 +2074,54 @@ function filterBranch(b, el) {
   renderInst();
 }
 function renderInst() {
-  const list = currentBranch===&#x27;ALL&#x27; ? INSTALLATIONS : currentBranch===&#x27;UTILITY&#x27; ? INSTALLATIONS.filter(i=&gt;UTIL_BRANCHES.indexOf(i.branch)&gt;=0) : INSTALLATIONS.filter(i=&gt;i.branch===currentBranch);
-  document.getElementById(&#x27;inst-grid&#x27;).innerHTML = list.map(i=&gt;`
+  const list = currentBranch===&#x27;ALL&#x27; ? INSTALLATIONS : INSTALLATIONS.filter(i=&gt;i.branch===currentBranch);
+  $(&#x27;inst-count-badge&#x27;).textContent = list.length + &#x27; catalogued&#x27;;
+  $(&#x27;inst-grid&#x27;).innerHTML = list.map(i=&gt;`
     &lt;div class=&quot;inst-card${i.id===selectedInst.id?&#x27; selected&#x27;:&#x27;&#x27;}&quot; onclick=&quot;pickInst(&#x27;${i.id}&#x27;)&quot;&gt;
       &lt;div class=&quot;inst-card-name&quot;&gt;${i.name}&lt;/div&gt;
-      &lt;div class=&quot;inst-card-loc&quot;&gt;${i.loc}&lt;/div&gt;
+      &lt;div class=&quot;inst-card-loc&quot;&gt;${i.loc} · ${i.feed}&lt;/div&gt;
       &lt;span class=&quot;inst-card-branch ${BRANCH_CSS[i.branch]||&#x27;&#x27;}&quot;&gt;${i.branch}&lt;/span&gt;
-      &lt;div class=&quot;inst-card-mw&quot;&gt;⚡ ${i.mw} MW · ${i.utility}&lt;/div&gt;
+      &lt;div class=&quot;inst-card-tier&quot;&gt;${i.tier} · ${i.red} · UPS ${i.ups} min&lt;/div&gt;
+      &lt;div class=&quot;inst-card-mw&quot;&gt;⚡ ${i.mw} MW IT · ${i.utility} · ${i.fuel.toLocaleString()} gal&lt;/div&gt;
     &lt;/div&gt;`).join(&#x27;&#x27;);
 }
 function pickInst(id) {
   selectedInst = INSTALLATIONS.find(i=&gt;i.id===id)||INSTALLATIONS[0];
-  document.getElementById(&#x27;peak-mw&#x27;).value = selectedInst.mw;
-  document.getElementById(&#x27;utility&#x27;).value = selectedInst.utility;
+  $(&#x27;peak-mw&#x27;).value = selectedInst.mw;
+  $(&#x27;utility&#x27;).value = selectedInst.utility;
+  $(&#x27;tier&#x27;).value = selectedInst.tier;
+  $(&#x27;redund&#x27;).value = selectedInst.red;
+  $(&#x27;ups-min&#x27;).value = selectedInst.ups;
+  $(&#x27;fuel-gal&#x27;).value = selectedInst.fuel;
+  selectedHalls = selectedInst.halls.slice(0, Math.min(2, selectedInst.halls.length));
+  renderHalls();
   renderInst(); updateSummary();
 }
+function renderHalls(){
+  const box=$(&#x27;halls-chips&#x27;); if(!box) return;
+  box.innerHTML = selectedInst.halls.map(h=&gt;`&lt;div class=&quot;chip multi${selectedHalls.indexOf(h)&gt;=0?&#x27; selected&#x27;:&#x27;&#x27;}&quot; onclick=&quot;toggleHall(this)&quot;&gt;${h}&lt;/div&gt;`).join(&#x27;&#x27;);
+}
+function toggleHall(el){
+  const h=el.textContent.trim(); const i=selectedHalls.indexOf(h);
+  if(i&gt;=0) selectedHalls.splice(i,1); else selectedHalls.push(h);
+  el.classList.toggle(&#x27;selected&#x27;); updateSummary();
+}
+function toggleChip(el){ el.classList.toggle(&#x27;selected&#x27;); updateSummary(); }
+function selectedChips(groupId){ return Array.from(document.querySelectorAll(&#x27;#&#x27;+groupId+&#x27; .chip.selected&#x27;)).map(c=&gt;c.textContent.trim()); }
 
 // ═══ STEPS ═══
 let currentStep = 1;
 const TOTAL = 7;
 function goStep(n) {
-  document.getElementById(&#x27;pane-&#x27;+currentStep).classList.remove(&#x27;active&#x27;);
-  document.getElementById(&#x27;step-&#x27;+currentStep).classList.remove(&#x27;active&#x27;);
-  if(currentStep &lt; n) document.getElementById(&#x27;step-&#x27;+currentStep).classList.add(&#x27;done&#x27;);
+  $(&#x27;pane-&#x27;+currentStep).classList.remove(&#x27;active&#x27;);
+  $(&#x27;step-&#x27;+currentStep).classList.remove(&#x27;active&#x27;);
+  if(currentStep &lt; n) $(&#x27;step-&#x27;+currentStep).classList.add(&#x27;done&#x27;);
   currentStep = n;
-  document.getElementById(&#x27;pane-&#x27;+n).classList.add(&#x27;active&#x27;);
-  document.getElementById(&#x27;step-&#x27;+n).classList.add(&#x27;active&#x27;);
-  document.getElementById(&#x27;canvas&#x27;).scrollTop = 0;
-  if(n===TOTAL){ buildSummary(); document.getElementById(&#x27;run-btn&#x27;).disabled=false; }
+  $(&#x27;pane-&#x27;+n).classList.add(&#x27;active&#x27;);
+  $(&#x27;step-&#x27;+n).classList.add(&#x27;active&#x27;);
+  $(&#x27;canvas&#x27;).scrollTop = 0;
+  if(n===3) renderHalls();
+  if(n===TOTAL){ buildSummary(); $(&#x27;run-btn&#x27;).disabled=false; }
 }
 
 // ═══ CHIPS ═══
@@ -2041,59 +2132,61 @@ function selectChip(groupId, el) {
 }
 
 // ═══ SCENARIO CATEGORY PRESETS ═══
+let currentCat = &#x27;Utility Feed Loss&#x27;;
 const SC_CAT_PRESETS = {
   &#x27;Utility Feed Loss&#x27;: {
-    name: &#x27;Utility Feed A Loss — Broad Run LDN1&#x27;,
-    severity: &#x27;CAT 3 — Significant&#x27;,
-    duration: &#x27;24–72 hours&#x27;,
-    resupply: &#x27;4&#x27;,
-    desc: &#x27;Provider-side fault drops the 34.5 kV feed A carrying 70% of site load. UPS rides through, ATS transfers Hall 2 to generators G1–G4, fuel clock starts at 48 hours. Tenant notices go out inside the 1-hour SLA window; primary fuel contract dispatched.&#x27;
+    name: &#x27;Utility Feed A Loss — [FEED]&#x27;, severity: &#x27;SEV 2 — Critical · on backup power&#x27;, duration: &#x27;24–72 hours&#x27;, resupply: &#x27;4&#x27;, loadPct: 70, objectives:[&#x27;Tenant SLA window&#x27;,&#x27;Fuel clock&#x27;,&#x27;N+1 recovery&#x27;,&#x27;BattleCat dispatch&#x27;],
+    desc: &#x27;Provider-side fault drops the [FEED] feed A carrying 70% of site load. UPS rides through, ATS-1 transfers [HALLS] to generators and the fuel clock starts. Tenant notices go out inside the 60-minute SLA window; primary fuel contract dispatched.&#x27;
+  },
+  &#x27;ATS / Switchgear Failure&#x27;: {
+    name: &#x27;ATS-1 Failed to Transfer — [SITE]&#x27;, severity: &#x27;SEV 1 — Outage · load dropped&#x27;, duration: &#x27;2–6 hours&#x27;, resupply: &#x27;4&#x27;, loadPct: 40, objectives:[&#x27;Tenant SLA window&#x27;,&#x27;N+1 recovery&#x27;,&#x27;BattleCat dispatch&#x27;],
+    desc: &#x27;Utility feed A drops and ATS-1 fails to transfer on a control-power fault. [HALLS] on UPS battery only; manual transfer at the switchgear inside the UPS runtime window. P3 racks staged for orderly shutdown if runtime falls below 5 minutes.&#x27;
+  },
+  &#x27;Generator Failure&#x27;: {
+    name: &#x27;G3 Fails to Parallel — [SITE]&#x27;, severity: &#x27;SEV 3 — Degraded · redundancy lost&#x27;, duration: &#x27;12–24 hours&#x27;, resupply: &#x27;6&#x27;, loadPct: 55, objectives:[&#x27;Fuel clock&#x27;,&#x27;N+1 recovery&#x27;,&#x27;BattleCat dispatch&#x27;],
+    desc: &#x27;On utility loss, generator G3 fails to parallel on a starter-battery fault. Bus is at N with N+1 lost while [HALLS] are carried. Rental generator requested; load-shed plan for standard halls staged. BattleCat sent to the generator yard for a diagnostic-port assessment.&#x27;
+  },
+  &#x27;Fuel Exhaustion&#x27;: {
+    name: &#x27;Extended Outage — Fuel Clock Critical — [SITE]&#x27;, severity: &#x27;SEV 2 — Critical · on backup power&#x27;, duration: &#x27;72+ hours&#x27;, resupply: &#x27;18&#x27;, loadPct: 100, objectives:[&#x27;Fuel clock&#x27;,&#x27;Tenant SLA window&#x27;,&#x27;N+1 recovery&#x27;],
+    desc: &#x27;Regional grid event keeps [SITE] on generator for days. Bulk storage draws down toward the 12-hour reserve; primary fuel transport delayed by road closures. Secondary contract, tenant workload migration and P3 shed decisions are exercised against the fuel clock.&#x27;
   },
   &#x27;Cooling Failure&#x27;: {
-    name: &#x27;Chiller Plant Trip — Meridian Financial Primary DC&#x27;,
-    severity: &#x27;CAT 3 — Significant&#x27;,
-    duration: &#x27;4–12 hours&#x27;,
-    resupply: &#x27;2&#x27;,
-    desc: &#x27;Both chillers trip on a controls fault with power intact. Inlet temperatures rise 1 °C every 6 minutes; thermal SLA breach at 27 °C. Mechanical on-call and the BMS vendor dispatched; tenant workload migration to the secondary site begins at the 20-minute mark.&#x27;
+    name: &#x27;Chiller Plant Trip — [SITE]&#x27;, severity: &#x27;SEV 2 — Critical · on backup power&#x27;, duration: &#x27;4–12 hours&#x27;, resupply: &#x27;8&#x27;, loadPct: 60, objectives:[&#x27;Cooling clock&#x27;,&#x27;Tenant SLA window&#x27;,&#x27;BattleCat dispatch&#x27;],
+    desc: &#x27;Both chillers trip on a controls fault with power intact. Cold-aisle inlet temperatures in [HALLS] rise about 1 °C every 6 minutes; thermal SLA breach at 27 °C. Mechanical on-call and the BMS vendor dispatched; rental chiller ordered; tenant workload migration begins at the 20-minute mark.&#x27;
   },
-  &#x27;BMS Cyber Event&#x27;: {
-    name: &#x27;BMS / EPMS Intrusion — Cascade Peak CP2&#x27;,
-    severity: &#x27;CAT 4 — Severe&#x27;,
-    duration: &#x27;36–96 hours&#x27;,
-    resupply: &#x27;0&#x27;,
-    desc: &#x27;Anomalous setpoint changes detected in the building management system. Remote control suspended; chillers and switchgear operated locally. Corporate network isolated from the facility control network; SOC 2 availability incident opened and tenants notified.&#x27;
+  &#x27;BMS / EPMS Cyber Event&#x27;: {
+    name: &#x27;BMS / EPMS Intrusion — [SITE]&#x27;, severity: &#x27;SEV 3 — Degraded · redundancy lost&#x27;, duration: &#x27;36–96 hours&#x27;, resupply: &#x27;0&#x27;, loadPct: 100, objectives:[&#x27;Cyber isolation&#x27;,&#x27;Cooling clock&#x27;,&#x27;Tenant SLA window&#x27;],
+    desc: &#x27;Anomalous setpoint writes detected in the building management and electrical power monitoring systems. Remote control suspended; chillers and switchgear operated locally in manual. Facility OT network isolated from corporate; SOC 2 availability incident opened and tenants notified.&#x27;
+  },
+  &#x27;Severe Weather&#x27;: {
+    name: &#x27;Derecho / Ice Storm Warning — [SITE]&#x27;, severity: &#x27;SEV 3 — Degraded · redundancy lost&#x27;, duration: &#x27;24–48 hours&#x27;, resupply: &#x27;24&#x27;, loadPct: 100, objectives:[&#x27;Fuel clock&#x27;,&#x27;Tenant SLA window&#x27;,&#x27;N+1 recovery&#x27;],
+    desc: &#x27;Severe weather forecast for the region. Fuel topped off, generators test-run, staff hold-over authorized and deliveries suspended once winds exceed 50 mph. Utility feed A is lost mid-event with a 24-hour provider ETR; [HALLS] ride on generator through the window.&#x27;
+  },
+  &#x27;Fire / EPO&#x27;: {
+    name: &#x27;Battery Room Smoke — EPO — [SITE]&#x27;, severity: &#x27;SEV 1 — Outage · load dropped&#x27;, duration: &#x27;6–18 hours&#x27;, resupply: &#x27;4&#x27;, loadPct: 35, objectives:[&#x27;Tenant SLA window&#x27;,&#x27;N+1 recovery&#x27;,&#x27;BattleCat dispatch&#x27;],
+    desc: &#x27;Smoke detection in the UPS battery room triggers pre-action suppression and an emergency power-off of [HALLS]. Fire department on site; hall re-energized only after all-clear. Tenant notices, controlled restart sequence and evidence for the after-action report are exercised.&#x27;
   }
 };
+function fill(t){
+  const site=selectedInst;
+  return String(t).replace(/\[SITE\]/g,site.name).replace(/\[FEED\]/g,site.feed).replace(/\[HALLS\]/g,selectedHalls.length?selectedHalls.join(&#x27; and &#x27;):site.halls[0]).replace(/\[UTILITY\]/g,$(&#x27;utility&#x27;).value||site.utility);
+}
 
 function selectScenarioCat(cat, el) {
-  // Update chip selection
   document.querySelectorAll(&#x27;#sc-type-chips .chip&#x27;).forEach(c =&gt; c.classList.remove(&#x27;selected&#x27;));
   el.classList.add(&#x27;selected&#x27;);
-
-  // Populate trigger fields from preset
+  currentCat = cat;
   const p = SC_CAT_PRESETS[cat];
   if (!p) { updateSummary(); return; }
-
-  const nameEl     = document.getElementById(&#x27;trigger-name&#x27;);
-  const sevEl      = document.getElementById(&#x27;severity&#x27;);
-  const durEl      = document.getElementById(&#x27;outage-dur&#x27;);
-  const resupEl    = document.getElementById(&#x27;resupply-delay&#x27;);
-  const descEl     = document.getElementById(&#x27;trigger-desc&#x27;);
-
-  if (nameEl)  { nameEl.value  = p.name; }
-  if (sevEl)   { for (var i=0;i&lt;sevEl.options.length;i++) { if(sevEl.options[i].text===p.severity){sevEl.selectedIndex=i;break;} } }
-  if (durEl)   { durEl.value   = p.duration; }
-  if (resupEl) { resupEl.value = p.resupply; }
-  if (descEl)  { descEl.value  = p.desc; }
-
-  // Flash the fields to signal auto-fill
-  [nameEl, durEl, descEl].forEach(function(el) {
-    if (!el) return;
-    el.style.transition = &#x27;border-color .15s&#x27;;
-    el.style.borderColor = &#x27;var(--sage)&#x27;;
+  const nameEl=$(&#x27;trigger-name&#x27;), sevEl=$(&#x27;severity&#x27;), durEl=$(&#x27;outage-dur&#x27;), resupEl=$(&#x27;resupply-delay&#x27;), descEl=$(&#x27;trigger-desc&#x27;), loadEl=$(&#x27;load-pct&#x27;);
+  nameEl.value = fill(p.name);
+  for (var i=0;i&lt;sevEl.options.length;i++) { if(sevEl.options[i].text===p.severity){sevEl.selectedIndex=i;break;} }
+  durEl.value = p.duration; resupEl.value = p.resupply; descEl.value = fill(p.desc); loadEl.value = p.loadPct;
+  document.querySelectorAll(&#x27;#obj-chips .chip&#x27;).forEach(c=&gt;c.classList.toggle(&#x27;selected&#x27;, p.objectives.indexOf(c.textContent.trim())&gt;=0));
+  [nameEl, durEl, descEl, loadEl].forEach(function(el) {
+    el.style.transition = &#x27;border-color .15s&#x27;; el.style.borderColor = &#x27;var(--sage)&#x27;;
     setTimeout(function(){ el.style.borderColor = &#x27;&#x27;; }, 800);
   });
-
   updateSummary();
 }
 
@@ -2107,48 +2200,47 @@ const WO_TYPE_META = {
 };
 
 const TEMPLATES = {
-  fuel:     { type:&#x27;warn&#x27;, priority:&#x27;URGENT&#x27;,    tag:&#x27;WARN-XXX · FUEL RESUPPLY&#x27;, body:&#x27;3 of 4 resupply trucks available. Nearest depot: [DEPOT] miles away. ETA: [X] hours. Coordinate with logistics officer to prioritize routing via primary route.&#x27; },
-  burnrate: { type:&#x27;crit&#x27;, priority:&#x27;IMMEDIATE&#x27;, tag:&#x27;WARN-XXX · BURN RATE — CRITICAL&#x27;, body:&#x27;On-hand diesel: [X] gal. Burn rate at current load: ~[X] gal/hr. Estimated exhaustion: [X] hours from trigger event. Resupply essential to sustain operations.&#x27; },
-  interdep: { type:&#x27;info&#x27;, priority:&#x27;ROUTINE&#x27;,   tag:&#x27;WARN-XXX · INTER-SERVICE DEPENDENCY&#x27;, body:&#x27;Adjacent installations confirmed within the dependency ring. Cross-service coordination required for fuel-sharing and resupply sequencing.&#x27; },
-  barge:    { type:&#x27;info&#x27;, priority:&#x27;ROUTINE&#x27;,   tag:&#x27;WARN-XXX · BARGE COORDINATION&#x27;, body:&#x27;USCG Fuel Barge pre-positioned at [SHIPYARD]. Barge carries [X] gal diesel. Transit window: post-storm clearance H+[X]. Coordinate with NAVFAC for barge-to-pier fuel transfer.&#x27; },
-  nmcp:     { type:&#x27;crit&#x27;, priority:&#x27;FLASH&#x27;,     tag:&#x27;WARN-XXX · MEDICAL FACILITY POWER PRIORITY&#x27;, body:&#x27;Medical facility has declared emergency status. [X] inpatients, active OR cases. Requires uninterrupted power for all life-safety systems. Priority: [X]% of all available diesel.&#x27; },
-  smr:      { type:&#x27;res&#x27;,  priority:&#x27;ROUTINE&#x27;,   tag:&#x27;SMR FEASIBILITY — SITE APPROVED&#x27;, body:&#x27;SMR site survey complete at [LOCATION]. [X]-acre footprint available. [X]-ft safety radius within base perimeter. No residential encroachment. Projected: [X] MW continuous.&#x27; },
-  bess:     { type:&#x27;res&#x27;,  priority:&#x27;URGENT&#x27;,    tag:&#x27;RESOLVED · BESS ONLINE&#x27;, body:&#x27;BESS ([X] MWh) online. Bridging power gap during resupply. Critical systems at 100% coverage. Bridge duration: ~[X] hours. Convoy confirmed en route.&#x27; },
-  weather:  { type:&#x27;crit&#x27;, priority:&#x27;IMMEDIATE&#x27;, tag:&#x27;WARN-XXX · WEATHER HOLD&#x27;, body:&#x27;All road and air resupply routes suspended — minimum [X] hours. Adverse weather conditions exceed safe operating thresholds. No convoy movement authorized.&#x27; },
+  feedloss: { type:&#x27;warn&#x27;, priority:&#x27;P2 · URGENT&#x27;,    tag:&#x27;ALT-XXX · UTILITY FEED A LOSS&#x27;, body:&#x27;Utility feed A lost at the service entrance ([FEED]). UPS riding through; ATS transferring [HALLS] to generators. Fuel clock started — [FUELH] h on hand at current load. [UTILITY] dispatch notified.&#x27; },
+  ats:      { type:&#x27;crit&#x27;, priority:&#x27;P1 · IMMEDIATE&#x27;, tag:&#x27;ALT-XXX · ATS FAILED TO TRANSFER&#x27;, body:&#x27;ATS-1 did not transfer on feed loss; [HALLS] on UPS battery only — [UPS] min runtime remaining. Manual transfer in progress; facilities on-call en route to the switchgear room.&#x27; },
+  ups:      { type:&#x27;crit&#x27;, priority:&#x27;P1 · IMMEDIATE&#x27;, tag:&#x27;ALT-XXX · UPS ON BATTERY&#x27;, body:&#x27;UPS-2B discharging at 78% load; [UPS] min runtime. Generator G3 slow to start — cranking. Prepare orderly shutdown of P3 racks in rows K–P if runtime drops below 5 min.&#x27; },
+  genfail:  { type:&#x27;warn&#x27;, priority:&#x27;P2 · URGENT&#x27;,    tag:&#x27;ALT-XXX · GENERATOR FAILURE&#x27;, body:&#x27;Generator G3 failed to parallel (starter battery). Bus at N, N+1 lost while [HALLS] carried. Rental generator requested from the OEM contract; ETA 6 h. Load-shed plan staged for standard halls.&#x27; },
+  fuel:     { type:&#x27;warn&#x27;, priority:&#x27;P2 · URGENT&#x27;,    tag:&#x27;ALT-XXX · FUEL CLOCK&#x27;, body:&#x27;Bulk storage [FUEL] gal; burn rate ~[BURN] gal/h across the gen bus. Runtime [FUELH] h at carried load. Primary fuel contract dispatched ([DEPOT], [LEAD] h lead time); secondary on standby.&#x27; },
+  cooling:  { type:&#x27;crit&#x27;, priority:&#x27;P1 · IMMEDIATE&#x27;, tag:&#x27;ALT-XXX · COOLING LOSS&#x27;, body:&#x27;Chiller plant tripped; CRAH units on [HALLS] losing chilled water. Cold-aisle inlet rising ~1 °C per 6 min; thermal SLA breach at 27 °C in ~20 min. Mechanical on-call and BMS vendor dispatched; workload migration requested from tenants.&#x27; },
+  cyber:    { type:&#x27;crit&#x27;, priority:&#x27;P1 · FLASH&#x27;,     tag:&#x27;ALT-XXX · BMS / EPMS CYBER EVENT&#x27;, body:&#x27;Anomalous setpoint writes detected in the BMS / EPMS. Remote control suspended; chillers and switchgear in local manual. Facility OT network isolated from corporate; incident bridge open; SOC 2 availability incident logged.&#x27; },
+  tenant:   { type:&#x27;info&#x27;, priority:&#x27;P3 · ROUTINE&#x27;,   tag:&#x27;ALT-XXX · TENANT SLA NOTICE&#x27;, body:&#x27;Tenant notice per MSA: [HALLS] on backup power at [SITE]; no customer impact expected. Next update in 60 min or on change of state. SLA credit exposure under review.&#x27; },
+  weather:  { type:&#x27;warn&#x27;, priority:&#x27;P2 · URGENT&#x27;,    tag:&#x27;ALT-XXX · WEATHER HOLD&#x27;, body:&#x27;Severe weather forecast for the [SITE] region. Fuel top-off ordered, generators test-run, staff hold-over authorized. Deliveries suspended once winds exceed 50 mph; expect [LEAD] h fuel lead time.&#x27; },
+  battlecat:{ type:&#x27;info&#x27;, priority:&#x27;P3 · ROUTINE&#x27;,   tag:&#x27;ALT-XXX · BATTLECAT ASSESSMENT&#x27;, body:&#x27;BattleCat dispatched from kennel to [HALLS]. Diagnostic-port assessment expected in 8 min; confidence, revised ETR and recommendation will post to the site channel and the Console.&#x27; },
+  resync:   { type:&#x27;res&#x27;,  priority:&#x27;P3 · ROUTINE&#x27;,   tag:&#x27;RESOLVED · RESYNC TO UTILITY&#x27;, body:&#x27;Utility feed A restored and stable for 30 min. Retransfer to utility complete; generators cooled down and back to standby. Fuel top-off scheduled; after-action report opened for [SITE].&#x27; },
 };
 
+function fillAlert(t){
+  const fc=fuelClock();
+  return fill(t).replace(/\[UPS\]/g,num(&#x27;ups-min&#x27;,12)).replace(/\[FUEL\]/g,num(&#x27;fuel-gal&#x27;,0).toLocaleString()).replace(/\[BURN\]/g,fc.burn?fc.burn.toLocaleString():&#x27;—&#x27;).replace(/\[FUELH\]/g,fc.hours?fc.hours:&#x27;—&#x27;).replace(/\[DEPOT\]/g,$(&#x27;depot-name&#x27;).value||&#x27;fuel terminal&#x27;).replace(/\[LEAD\]/g,num(&#x27;resupply-delay&#x27;,4));
+}
 function loadTemplate(key) {
   const t = TEMPLATES[key]; if(!t) return;
-  document.getElementById(&#x27;wo-type&#x27;).value     = t.type;
-  document.getElementById(&#x27;wo-priority&#x27;).value = t.priority;
-  document.getElementById(&#x27;wo-tag&#x27;).value       = t.tag;
-  document.getElementById(&#x27;wo-body&#x27;).value      = t.body;
+  $(&#x27;wo-type&#x27;).value     = t.type;
+  $(&#x27;wo-priority&#x27;).value = t.priority;
+  $(&#x27;wo-tag&#x27;).value      = t.tag;
+  $(&#x27;wo-body&#x27;).value     = t.body;
 }
 
 function addWarningOrder() {
-  const type  = document.getElementById(&#x27;wo-type&#x27;).value;
-  const prio  = document.getElementById(&#x27;wo-priority&#x27;).value;
-  const tag   = document.getElementById(&#x27;wo-tag&#x27;).value.trim()  || &#x27;WARN-&#x27; + String(warningOrders.length+1).padStart(3,&#x27;0&#x27;);
-  const body  = document.getElementById(&#x27;wo-body&#x27;).value.trim() || &#x27;(no details provided)&#x27;;
-  const recip = document.getElementById(&#x27;wo-recip&#x27;).value.trim();
+  const type  = $(&#x27;wo-type&#x27;).value;
+  const prio  = $(&#x27;wo-priority&#x27;).value;
+  const tag   = $(&#x27;wo-tag&#x27;).value.trim()  || &#x27;ALT-&#x27; + String(warningOrders.length+1).padStart(3,&#x27;0&#x27;);
+  const body  = $(&#x27;wo-body&#x27;).value.trim() || &#x27;(no details provided)&#x27;;   // bracketed values fill at review / release from the live drill
+  const recip = $(&#x27;wo-recip&#x27;).value.trim();
   const ts    = new Date().toISOString().substring(0,16).replace(&#x27;T&#x27;,&#x27; &#x27;)+&#x27; UTC&#x27;;
-  warningOrders.push({ type, prio, tag, body, recip, ts });
-  // Clear composer
-  document.getElementById(&#x27;wo-tag&#x27;).value  = &#x27;&#x27;;
-  document.getElementById(&#x27;wo-body&#x27;).value = &#x27;&#x27;;
+  warningOrders.push({ type, prio, tag: tag.replace(&#x27;ALT-XXX&#x27;,&#x27;ALT-&#x27;+String(warningOrders.length+1).padStart(3,&#x27;0&#x27;)), body, recip, ts });
+  $(&#x27;wo-tag&#x27;).value  = &#x27;&#x27;;
+  $(&#x27;wo-body&#x27;).value = &#x27;&#x27;;
   renderWOs();
 }
-
-function removeWO(i) {
-  warningOrders.splice(i,1);
-  renderWOs();
-}
-
+function removeWO(i) { warningOrders.splice(i,1); renderWOs(); }
 function renderWOs() {
-  const list = document.getElementById(&#x27;wo-list&#x27;);
-  const empty= document.getElementById(&#x27;wo-empty&#x27;);
-  const badge= document.getElementById(&#x27;wo-count-badge&#x27;);
-  badge.textContent = warningOrders.length + (warningOrders.length===1?&#x27; order&#x27;:&#x27; orders&#x27;);
+  const list = $(&#x27;wo-list&#x27;), empty= $(&#x27;wo-empty&#x27;), badge= $(&#x27;wo-count-badge&#x27;);
+  badge.textContent = warningOrders.length + (warningOrders.length===1?&#x27; alert&#x27;:&#x27; alerts&#x27;);
   if(!warningOrders.length){ empty.style.display=&#x27;&#x27;; list.innerHTML=&#x27;&#x27;; return; }
   empty.style.display = &#x27;none&#x27;;
   list.innerHTML = warningOrders.map((w,i)=&gt;{
@@ -2157,12 +2249,12 @@ function renderWOs() {
       &lt;div class=&quot;wo-card-head&quot;&gt;
         &lt;div class=&quot;wo-dot ${m.cls}&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;wo-type-lbl ${m.cls}&quot;&gt;${m.lbl}&lt;/div&gt;
-        &lt;div class=&quot;wo-seq&quot;&gt;ORDER ${i+1} OF ${warningOrders.length}&lt;/div&gt;
+        &lt;div class=&quot;wo-seq&quot;&gt;ALERT ${i+1} OF ${warningOrders.length}&lt;/div&gt;
         &lt;button class=&quot;wo-del-btn&quot; onclick=&quot;removeWO(${i})&quot;&gt;✕&lt;/button&gt;
       &lt;/div&gt;
       &lt;div class=&quot;wo-card-body&quot;&gt;
-        &lt;div class=&quot;wo-tag-text&quot;&gt;${w.tag}&lt;/div&gt;
-        &lt;div class=&quot;wo-body-text&quot;&gt;${w.body}&lt;/div&gt;
+        &lt;div class=&quot;wo-tag-text&quot;&gt;${fillAlert(w.tag)}&lt;/div&gt;
+        &lt;div class=&quot;wo-body-text&quot;&gt;${fillAlert(w.body)}&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;wo-foot&quot;&gt;
         &lt;div class=&quot;wo-ts&quot;&gt;${w.ts} · ${w.prio}&lt;/div&gt;
@@ -2172,54 +2264,69 @@ function renderWOs() {
   }).join(&#x27;&#x27;);
 }
 
-// ═══ ASSET DRAG ═══
+// ═══ ASSET DRAG (tap works on the phone) ═══
 let dragData=null, deployedAssets=[];
+function assetOf(el){ return {asset:el.dataset.asset,mw:parseFloat(el.dataset.mw)||0,kind:el.dataset.kind||&#x27;gen&#x27;,label:el.querySelector(&#x27;.aname&#x27;).textContent}; }
 function onDragStart(e){
-  dragData={asset:e.currentTarget.dataset.asset,mw:parseFloat(e.currentTarget.dataset.mw)||0,label:e.currentTarget.querySelector(&#x27;.aname&#x27;).textContent};
+  dragData=assetOf(e.currentTarget);
   e.currentTarget.classList.add(&#x27;dragging&#x27;);
   setTimeout(()=&gt;e.currentTarget.classList.remove(&#x27;dragging&#x27;),0);
 }
-function onDragOver(e){e.preventDefault();document.getElementById(&#x27;drop-zone&#x27;).classList.add(&#x27;over&#x27;);}
-function onDragLeave(){document.getElementById(&#x27;drop-zone&#x27;).classList.remove(&#x27;over&#x27;);}
+function tapDeploy(el){ deployedAssets.push(assetOf(el)); renderDropZone(); calcPower(); }
+function onDragOver(e){e.preventDefault();$(&#x27;drop-zone&#x27;).classList.add(&#x27;over&#x27;);}
+function onDragLeave(){$(&#x27;drop-zone&#x27;).classList.remove(&#x27;over&#x27;);}
 function onDrop(e){
-  e.preventDefault();document.getElementById(&#x27;drop-zone&#x27;).classList.remove(&#x27;over&#x27;);
+  e.preventDefault();$(&#x27;drop-zone&#x27;).classList.remove(&#x27;over&#x27;);
   if(!dragData)return;
   deployedAssets.push({...dragData});renderDropZone();calcPower();dragData=null;
 }
 function removeAsset(i){deployedAssets.splice(i,1);renderDropZone();calcPower();}
 function renderDropZone(){
-  const dz=document.getElementById(&#x27;drop-zone&#x27;);
-  document.getElementById(&#x27;dz-lbl&#x27;).style.display=deployedAssets.length?&#x27;none&#x27;:&#x27;&#x27;;
+  const dz=$(&#x27;drop-zone&#x27;);
+  $(&#x27;dz-lbl&#x27;).style.display=deployedAssets.length?&#x27;none&#x27;:&#x27;&#x27;;
   dz.querySelectorAll(&#x27;.placed-asset&#x27;).forEach(el=&gt;el.remove());
   deployedAssets.forEach((a,i)=&gt;{
     const el=document.createElement(&#x27;div&#x27;);el.className=&#x27;placed-asset&#x27;;
-    el.innerHTML=`${a.label} &lt;span style=&quot;color:var(--txd)&quot;&gt;(${a.mw})&lt;/span&gt; ✕`;
+    el.innerHTML=`${a.label} &lt;span style=&quot;color:var(--txd)&quot;&gt;(${a.mw?a.mw+&#x27; MW&#x27;:&#x27;cooling&#x27;})&lt;/span&gt; ✕`;
     el.onclick=()=&gt;removeAsset(i);dz.appendChild(el);
   });
 }
+// load to carry = IT load × affected %; generators burn ~70 gal per MWh delivered (diesel, 0.7 load factor)
+const GAL_PER_MWH = 70;
+function loadToCarry(){ return +(num(&#x27;peak-mw&#x27;,18) * Math.min(100,Math.max(1,num(&#x27;load-pct&#x27;,70)))/100).toFixed(1); }
+function genMw(){ return deployedAssets.filter(a=&gt;a.kind===&#x27;gen&#x27;).reduce((s,a)=&gt;s+a.mw,0); }
+function totalMw(){ return deployedAssets.reduce((s,a)=&gt;s+a.mw,0); }
+function fuelClock(){
+  const carry=Math.min(genMw(), loadToCarry());
+  const burn=Math.round(carry*GAL_PER_MWH);
+  const gal=num(&#x27;fuel-gal&#x27;,0);
+  const hours=burn&gt;0?Math.round(gal/burn):0;
+  return {carry:carry,burn:burn,hours:hours,gal:gal};
+}
 function calcPower(){
-  const demand=parseFloat(document.getElementById(&#x27;peak-mw&#x27;).value)||58;
-  const total=deployedAssets.reduce((s,a)=&gt;s+a.mw,0);
-  const cover=Math.min(100,total/demand*100);
-  const res=total&gt;0?Math.round(total/demand*72):0;
-  document.getElementById(&#x27;dep-cap&#x27;).textContent=total.toFixed(1);
-  document.getElementById(&#x27;dep-demand&#x27;).textContent=demand;
-  document.getElementById(&#x27;dep-cover&#x27;).textContent=cover.toFixed(0)+&#x27;%&#x27;;
-  document.getElementById(&#x27;dep-resilience&#x27;).textContent=res?res+&#x27;h&#x27;:&#x27;—&#x27;;
+  const demand=loadToCarry();
+  const total=totalMw();
+  const cover=Math.min(100,demand?total/demand*100:0);
+  const fc=fuelClock();
+  $(&#x27;dep-cap&#x27;).textContent=total.toFixed(1);
+  $(&#x27;dep-demand&#x27;).textContent=demand;
+  $(&#x27;dep-cover&#x27;).textContent=cover.toFixed(0)+&#x27;%&#x27;;
+  $(&#x27;dep-resilience&#x27;).textContent=fc.hours?fc.hours+&#x27;h&#x27;:(deployedAssets.length?num(&#x27;ups-min&#x27;,12)+&#x27; min UPS&#x27;:&#x27;—&#x27;);
+  calcDistance();
 }
 
-// ═══ VEHICLES ═══
+// ═══ FUEL &amp; RENTAL LOGISTICS ═══
 const VEHICLES=[
-  {icon:&#x27;🚛&#x27;,name:&#x27;Commercial Fuel Tanker — 6,000 gal&#x27;,    cap:&#x27;6,000 gal&#x27;,  status:&#x27;op&#x27;,   branch:&#x27;NAVY&#x27;, desc:&#x27;Primary shore-based diesel/JP-5 delivery to installation storage&#x27;},
-  {icon:&#x27;🚛&#x27;,name:&#x27;Commercial Fuel Tanker — 2,500 gal&#x27;,    cap:&#x27;2,500 gal&#x27;,  status:&#x27;op&#x27;,   branch:&#x27;NAVY&#x27;, desc:&#x27;Secondary tanker for forward distribution to remote generator pads&#x27;},
-  {icon:&#x27;🚗&#x27;,name:&#x27;JLTV — Joint Light Tactical Vehicle&#x27;,   cap:&#x27;—&#x27;,          status:&#x27;op&#x27;,   branch:&#x27;NAVY&#x27;, desc:&#x27;NAVFAC personnel and light logistics transport&#x27;},
-  {icon:&#x27;🚐&#x27;,name:&#x27;Personnel Transport Van&#x27;,               cap:&#x27;12 persons&#x27;, status:&#x27;op&#x27;,   branch:&#x27;ALL&#x27;,  desc:&#x27;Crew rotation and operator transport across installation&#x27;},
-  {icon:&#x27;🔧&#x27;,name:&#x27;MEP-831A — 60 kW Generator Trailer&#x27;,   cap:&#x27;60 kW&#x27;,      status:&#x27;op&#x27;,   branch:&#x27;ALL&#x27;,  desc:&#x27;Towed tactical generator for remote load centers&#x27;},
-  {icon:&#x27;⛽&#x27;,name:&#x27;JP-5 Fuel Bowser — Shore&#x27;,             cap:&#x27;3,000 gal&#x27;,  status:&#x27;op&#x27;,   branch:&#x27;NAVY&#x27;, desc:&#x27;Aviation fuel bowser — NAS and carrier pier support&#x27;},
+  {icon:&#x27;🚛&#x27;,name:&#x27;Fuel transport — 7,500 gal&#x27;,      cap:&#x27;7,500 gal&#x27;, gal:7500, status:&#x27;op&#x27;,    desc:&#x27;Primary bulk diesel resupply under the fuel contract&#x27;},
+  {icon:&#x27;🚛&#x27;,name:&#x27;Fuel bobtail — 3,000 gal&#x27;,        cap:&#x27;3,000 gal&#x27;, gal:3000, status:&#x27;op&#x27;,    desc:&#x27;Secondary delivery to day tanks and remote gen pads&#x27;},
+  {icon:&#x27;⛽&#x27;,name:&#x27;On-site bowser — 1,000 gal&#x27;,      cap:&#x27;1,000 gal&#x27;, gal:0,    status:&#x27;op&#x27;,    desc:&#x27;Day-tank top-off between deliveries&#x27;},
+  {icon:&#x27;🔧&#x27;,name:&#x27;Rental generator trailer — 500 kW&#x27;,cap:&#x27;500 kW&#x27;,    gal:0,    status:&#x27;op&#x27;,    desc:&#x27;Towed unit for support loads and the cooling plant&#x27;},
+  {icon:&#x27;❄️&#x27;,name:&#x27;Rental chiller — 400 ton&#x27;,        cap:&#x27;400 ton&#x27;,   gal:0,    status:&#x27;op&#x27;,    desc:&#x27;Temporary chilled water for a hall on cooling loss&#x27;},
+  {icon:&#x27;🌀&#x27;,name:&#x27;Portable CRAC — 20 ton&#x27;,          cap:&#x27;20 ton&#x27;,    gal:0,    status:&#x27;maint&#x27;, desc:&#x27;Spot cooling for hot rows while the plant recovers&#x27;},
 ];
-let vehicleQty=VEHICLES.map(()=&gt;0);
+let vehicleQty=VEHICLES.map(()=&gt;0); vehicleQty[0]=1;
 function renderVehicles(){
-  document.getElementById(&#x27;vehicle-table-body&#x27;).innerHTML=VEHICLES.map((v,i)=&gt;`
+  $(&#x27;vehicle-table-body&#x27;).innerHTML=VEHICLES.map((v,i)=&gt;`
     &lt;tr&gt;&lt;td&gt;${v.icon}&lt;/td&gt;&lt;td style=&quot;color:var(--txh)&quot;&gt;${v.name}&lt;/td&gt;&lt;td style=&quot;color:var(--txd)&quot;&gt;${v.cap}&lt;/td&gt;
     &lt;td style=&quot;font-size:9px;color:var(--txd);max-width:140px&quot;&gt;${v.desc}&lt;/td&gt;
     &lt;td&gt;&lt;span class=&quot;tag ${v.status}&quot;&gt;${v.status===&#x27;op&#x27;?&#x27;OP&#x27;:&#x27;MAINT&#x27;}&lt;/span&gt;&lt;/td&gt;
@@ -2227,162 +2334,171 @@ function renderVehicles(){
       oninput=&quot;vehicleQty[${i}]=parseInt(this.value)||0;calcDistance()&quot;&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&#x27;&#x27;);
 }
 
-// ═══ DISTANCE ═══
+// ═══ RESUPPLY RUN + FUEL CLOCK ═══
+function resupplyGalPerDay(){
+  const miles=num(&#x27;depot-miles&#x27;,9.5), speed=num(&#x27;veh-speed&#x27;,35), load=num(&#x27;load-time&#x27;,40);
+  const oneWay=(miles/speed)*60, rt=oneWay*2+load, runs=Math.floor(24*60/rt);
+  const gal=runs*VEHICLES.reduce((s,v,i)=&gt;s+v.gal*(vehicleQty[i]||0),0);
+  return {oneWay,rt,runs,gal};
+}
 function calcDistance(){
-  const miles=parseFloat(document.getElementById(&#x27;depot-miles&#x27;).value)||2.1;
-  const speed=parseFloat(document.getElementById(&#x27;veh-speed&#x27;).value)||25;
-  const load =parseFloat(document.getElementById(&#x27;load-time&#x27;).value)||45;
-  const oneWay=(miles/speed)*60;
-  const rt=oneWay*2+load;
-  const runs=Math.floor(24*60/rt);
-  const trucks=vehicleQty[0]||1; // Commercial 6,000 gal tanker as primary
-  const gal=runs*trucks*6000;    // 6,000 gal capacity
-  document.getElementById(&#x27;dc-oneway&#x27;).textContent=oneWay.toFixed(0);
-  document.getElementById(&#x27;dc-roundtrip&#x27;).textContent=rt.toFixed(0);
-  document.getElementById(&#x27;dc-runs&#x27;).textContent=runs;
-  document.getElementById(&#x27;dc-gal&#x27;).textContent=gal.toLocaleString();
+  const r=resupplyGalPerDay(), fc=fuelClock(), lead=num(&#x27;resupply-delay&#x27;,4);
+  $(&#x27;dc-oneway&#x27;).textContent=r.oneWay.toFixed(0);
+  $(&#x27;dc-roundtrip&#x27;).textContent=r.rt.toFixed(0);
+  $(&#x27;dc-runs&#x27;).textContent=r.runs;
+  $(&#x27;dc-gal&#x27;).textContent=r.gal.toLocaleString();
+  $(&#x27;fc-burn&#x27;).textContent=fc.burn?fc.burn.toLocaleString()+&#x27; gal/h · &#x27;+fc.carry.toFixed(1)+&#x27; MW&#x27;:&#x27;—&#x27;;
+  $(&#x27;fc-hours&#x27;).textContent=fc.hours?fc.hours+&#x27; h (&#x27;+fc.gal.toLocaleString()+&#x27; gal)&#x27;:&#x27;—&#x27;;
+  $(&#x27;fc-first&#x27;).textContent=fc.burn?(&#x27;T+&#x27;+lead+&#x27; h · &#x27;+(r.gal?&#x27;+&#x27;+Math.round(r.gal/24)+&#x27; gal/h sustained&#x27;:&#x27;no transport assigned&#x27;)):&#x27;—&#x27;;
+  const v=$(&#x27;fc-verdict&#x27;);
+  if(!fc.burn){v.className=&#x27;fc-verdict&#x27;;v.textContent=&#x27;DEPLOY GENERATORS TO START THE FUEL CLOCK&#x27;;return;}
+  if(fc.hours&lt;=lead){v.className=&#x27;fc-verdict bad&#x27;;v.textContent=&#x27;FUEL RUNS OUT BEFORE FIRST DELIVERY · &#x27;+fc.hours+&#x27; H vs &#x27;+lead+&#x27; H LEAD&#x27;;}
+  else if(r.gal/24&gt;=fc.burn){v.className=&#x27;fc-verdict ok&#x27;;v.textContent=&#x27;SUSTAINED · RESUPPLY ≥ BURN · &#x27;+fc.hours+&#x27; H RESERVE&#x27;;}
+  else{v.className=&#x27;fc-verdict warn&#x27;;v.textContent=&#x27;DEFICIT · &#x27;+Math.round(fc.burn-r.gal/24)+&#x27; GAL/H SHORT · &#x27;+fc.hours+&#x27; H RESERVE&#x27;;}
 }
 
 // ═══ SUMMARY ═══
 function updateSummary(){ calcPower(); }
+function vendors(){ return Array.from(document.querySelectorAll(&#x27;#vendor-list input:checked&#x27;)).map(i=&gt;i.dataset.v); }
+function resilienceHrs(){ const fc=fuelClock(); if(fc.hours) return fc.hours; const b=deployedAssets.filter(a=&gt;a.kind===&#x27;bess&#x27;).reduce((s,a)=&gt;s+a.mw,0); return b?2:deployedAssets.length?+(num(&#x27;ups-min&#x27;,12)/60).toFixed(1):0; }
 function buildSummary(){
-  const demand=parseFloat(document.getElementById(&#x27;peak-mw&#x27;).value)||selectedInst.mw;
-  const total=deployedAssets.reduce((s,a)=&gt;s+a.mw,0);
+  const demand=loadToCarry(), total=totalMw();
   const cover=total&gt;0?Math.min(100,total/demand*100).toFixed(0):0;
-  const win=total&gt;0?Math.round(total/demand*72):0;
-  const cap=(deployedAssets.length*8.5+total*0.9).toFixed(1);
-  document.getElementById(&#x27;sr-demand&#x27;).textContent=demand;
-  document.getElementById(&#x27;sr-cap&#x27;).textContent=total.toFixed(1);
-  document.getElementById(&#x27;sr-window&#x27;).textContent=win||&#x27;—&#x27;;
-  document.getElementById(&#x27;sr-capital&#x27;).textContent=&#x27;$&#x27;+cap+&#x27;M&#x27;;
-  document.getElementById(&#x27;sr-pct&#x27;).textContent=cover+&#x27;%&#x27;;
-  document.getElementById(&#x27;sr-prog&#x27;).style.width=cover+&#x27;%&#x27;;
-  const scId=&#x27;SC-&#x27;+selectedInst.id+&#x27;-&#x27;+Date.now().toString(36).toUpperCase().slice(-6);
-  document.getElementById(&#x27;sc-id&#x27;).value=scId;
-  document.getElementById(&#x27;sum-badge&#x27;).textContent=total&gt;0?&#x27;READY&#x27;:&#x27;INCOMPLETE&#x27;;
-  document.getElementById(&#x27;sum-badge&#x27;).style.color=total&gt;0?&#x27;var(--sage)&#x27;:&#x27;var(--amber)&#x27;;
-  document.getElementById(&#x27;summary-grid&#x27;).innerHTML=[
-    [&#x27;Installation&#x27;, selectedInst.name],
-    [&#x27;Location&#x27;,     selectedInst.loc],
-    [&#x27;Branch&#x27;,       selectedInst.branch],
-    [&#x27;Trigger&#x27;,      document.getElementById(&#x27;trigger-name&#x27;).value||&#x27;—&#x27;],
-    [&#x27;Severity&#x27;,     document.getElementById(&#x27;severity&#x27;).value],
-    [&#x27;Duration&#x27;,     document.getElementById(&#x27;outage-dur&#x27;).value||&#x27;—&#x27;],
-    [&#x27;Resupply Delay&#x27;,document.getElementById(&#x27;resupply-delay&#x27;).value+&#x27;h&#x27;],
-    [&#x27;Personnel&#x27;,    document.getElementById(&#x27;personnel&#x27;).value||&#x27;—&#x27;],
-    [&#x27;Assets&#x27;,       deployedAssets.map(a=&gt;a.label).join(&#x27;, &#x27;)||&#x27;None&#x27;],
-    [&#x27;Orders&#x27;,       warningOrders.length+&#x27; queued&#x27;],
+  const fc=fuelClock();
+  const cap=(deployedAssets.filter(a=&gt;a.kind!==&#x27;cool&#x27;).length*1.2+total*0.65).toFixed(1);
+  $(&#x27;sr-demand&#x27;).textContent=demand;
+  $(&#x27;sr-cap&#x27;).textContent=total.toFixed(1);
+  $(&#x27;sr-window&#x27;).textContent=fc.hours||&#x27;—&#x27;;
+  $(&#x27;sr-capital&#x27;).textContent=&#x27;$&#x27;+cap+&#x27;M&#x27;;
+  $(&#x27;sr-pct&#x27;).textContent=cover+&#x27;%&#x27;;
+  $(&#x27;sr-prog&#x27;).style.width=cover+&#x27;%&#x27;;
+  const scId=&#x27;DR-&#x27;+selectedInst.id.replace(&#x27;D_&#x27;,&#x27;&#x27;)+&#x27;-&#x27;+Date.now().toString(36).toUpperCase().slice(-6);
+  $(&#x27;sc-id&#x27;).value=scId;
+  $(&#x27;sum-badge&#x27;).textContent=total&gt;0?&#x27;READY&#x27;:&#x27;INCOMPLETE&#x27;;
+  $(&#x27;sum-badge&#x27;).style.color=total&gt;0?&#x27;var(--sage)&#x27;:&#x27;var(--amber)&#x27;;
+  $(&#x27;summary-grid&#x27;).innerHTML=[
+    [&#x27;Site&#x27;,          selectedInst.name],
+    [&#x27;Location&#x27;,      selectedInst.loc+&#x27; · &#x27;+($(&#x27;utility&#x27;).value||selectedInst.utility)],
+    [&#x27;Type · Tier&#x27;,   selectedInst.branch+&#x27; · &#x27;+$(&#x27;tier&#x27;).value+&#x27; · &#x27;+$(&#x27;redund&#x27;).value],
+    [&#x27;Trigger&#x27;,       $(&#x27;trigger-name&#x27;).value||&#x27;—&#x27;],
+    [&#x27;Severity&#x27;,      $(&#x27;severity&#x27;).value],
+    [&#x27;Halls affected&#x27;,(selectedHalls.join(&#x27;, &#x27;)||&#x27;—&#x27;)+&#x27; · &#x27;+num(&#x27;load-pct&#x27;,70)+&#x27;% load&#x27;],
+    [&#x27;Duration&#x27;,      $(&#x27;outage-dur&#x27;).value||&#x27;—&#x27;],
+    [&#x27;Fuel lead time&#x27;,num(&#x27;resupply-delay&#x27;,4)+&#x27; h · &#x27;+(fc.hours?fc.hours+&#x27; h on hand&#x27;:&#x27;no gens deployed&#x27;)],
+    [&#x27;Staff on shift&#x27;,($(&#x27;personnel&#x27;).value||&#x27;—&#x27;)+&#x27; · IC &#x27;+$(&#x27;ic-name&#x27;).value],
+    [&#x27;Vendors&#x27;,       vendors().join(&#x27;, &#x27;)||&#x27;None&#x27;],
+    [&#x27;Assets&#x27;,        deployedAssets.map(a=&gt;a.label).join(&#x27;, &#x27;)||&#x27;None&#x27;],
+    [&#x27;Alerts&#x27;,        warningOrders.length+&#x27; queued · &#x27;+selectedChips(&#x27;obj-chips&#x27;).length+&#x27; objectives&#x27;],
   ].map(([k,v])=&gt;`&lt;div class=&quot;sum-item&quot;&gt;&lt;div class=&quot;sum-key&quot;&gt;${k}&lt;/div&gt;&lt;div class=&quot;sum-val&quot;&gt;${v}&lt;/div&gt;&lt;/div&gt;`).join(&#x27;&#x27;);
-  // SONAR alerts review
-  const wrc=document.getElementById(&#x27;wo-review-count&#x27;);
-  const wrl=document.getElementById(&#x27;wo-review-list&#x27;);
+  const wrc=$(&#x27;wo-review-count&#x27;), wrl=$(&#x27;wo-review-list&#x27;);
   wrc.textContent=warningOrders.length;
-  if(!warningOrders.length){ wrl.innerHTML=&#x27;&lt;div class=&quot;wo-empty&quot; style=&quot;margin:0&quot;&gt;NO ORDERS QUEUED&lt;/div&gt;&#x27;; return; }
+  if(!warningOrders.length){ wrl.innerHTML=&#x27;&lt;div class=&quot;wo-empty&quot; style=&quot;margin:0&quot;&gt;NO ALERTS QUEUED&lt;/div&gt;&#x27;; return; }
   wrl.innerHTML=warningOrders.map((w,i)=&gt;{
     const m=WO_TYPE_META[w.type]||WO_TYPE_META.warn;
     return `&lt;div class=&quot;wo-card&quot;&gt;
       &lt;div class=&quot;wo-card-head&quot;&gt;
         &lt;div class=&quot;wo-dot ${m.cls}&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;wo-type-lbl ${m.cls}&quot;&gt;${m.lbl}&lt;/div&gt;
-        &lt;div class=&quot;wo-seq&quot;&gt;ORDER ${i+1}&lt;/div&gt;
+        &lt;div class=&quot;wo-seq&quot;&gt;ALERT ${i+1}&lt;/div&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;wo-card-body&quot;&gt;&lt;div class=&quot;wo-tag-text&quot;&gt;${w.tag}&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;wo-card-body&quot;&gt;&lt;div class=&quot;wo-tag-text&quot;&gt;${fillAlert(w.tag)}&lt;/div&gt;&lt;/div&gt;
     &lt;/div&gt;`;
   }).join(&#x27;&#x27;);
 }
 
 // ═══ LAUNCH ═══
 function launchScenario(){
-  document.getElementById(&#x27;launch-banner&#x27;).classList.add(&#x27;show&#x27;);
-  const msgs=[&#x27;Building digital twin…&#x27;,&#x27;Loading installation data…&#x27;,&#x27;Configuring assets…&#x27;,&#x27;Calculating power requirements…&#x27;,&#x27;Packaging SONAR alerts…&#x27;,&#x27;Scenario ready — release queues each alert on the SONARmobile bus as an exercise.&#x27;];
+  $(&#x27;launch-banner&#x27;).classList.add(&#x27;show&#x27;);
+  const msgs=[&#x27;Loading site record…&#x27;,&#x27;Reading the tier and redundancy model…&#x27;,&#x27;Placing backup assets…&#x27;,&#x27;Starting the fuel clock…&#x27;,&#x27;Packaging SONAR alerts…&#x27;,&#x27;Drill ready — release tags each alert EXERCISE and dispatches a BattleCat.&#x27;];
   let i=0;
-  const sub=document.getElementById(&#x27;banner-sub&#x27;),title=document.getElementById(&#x27;banner-title&#x27;);
+  const sub=$(&#x27;banner-sub&#x27;),title=$(&#x27;banner-title&#x27;);
+  title.textContent=&#x27;INITIALIZING DRILL&#x27;;title.style.color=&#x27;&#x27;;
   const iv=setInterval(()=&gt;{
     if(i&lt;msgs.length){sub.textContent=msgs[i++];}
     else{
       clearInterval(iv);
-      title.textContent=&#x27;SCENARIO READY&#x27;;title.style.color=&#x27;var(--sage)&#x27;;
-      document.getElementById(&#x27;banner-btns&#x27;).style.display=&#x27;flex&#x27;;
+      title.textContent=&#x27;DRILL READY&#x27;;title.style.color=&#x27;var(--sage)&#x27;;
+      $(&#x27;banner-btns&#x27;).style.display=&#x27;flex&#x27;;
     }
   },550);
 }
-function sendToSimulator(){
-  const demand = parseFloat(document.getElementById(&#x27;peak-mw&#x27;).value)||selectedInst.mw;
-  const totalMw = deployedAssets.reduce((s,a)=&gt;s+a.mw,0);
-  const g = id =&gt; { const el=document.getElementById(id); return el ? el.value : &#x27;&#x27;; };
-  const payload = {
-    installation: selectedInst.name, installationId: selectedInst.id, branch: selectedInst.branch, loc: selectedInst.loc,
-    peakMw: demand, utility: g(&#x27;utility&#x27;)||selectedInst.utility||&#x27;&#x27;,
-    trigger: g(&#x27;trigger-name&#x27;), severity: g(&#x27;severity&#x27;), outageDur: g(&#x27;outage-dur&#x27;), personnel: g(&#x27;personnel&#x27;),
-    assets: deployedAssets.map(a=&gt;({label:a.label, mw:a.mw, zone:a.zone||&#x27;&#x27;})),
-    totalMw: +totalMw.toFixed(1), coverPct: totalMw&gt;0?Math.min(100,Math.round(totalMw/demand*100)):0,
-    resilienceHrs: totalMw&gt;0?Math.round(totalMw/demand*72):0,
-    warningOrders: warningOrders.map(w=&gt;({type:({warn:&#x27;SONAR ALERT&#x27;,crit:&#x27;CRITICAL ALERT&#x27;,info:&#x27;INFORMATION&#x27;,res:&#x27;RESOLVED&#x27;})[w.type]||String(w.type||&#x27;SONAR ALERT&#x27;).toUpperCase(), priority:w.prio||&#x27;&#x27;, tag:w.tag||&#x27;&#x27;, body:w.body||&#x27;&#x27;, recipients:w.recip||&#x27;&#x27;, ts:w.ts||&#x27;&#x27;}))
-  };
-  window.parent.postMessage({type:&#x27;BUILDER_SCENARIO&#x27;, payload: payload},&#x27;*&#x27;);
-  document.getElementById(&#x27;launch-banner&#x27;).classList.remove(&#x27;show&#x27;);
-}
 function buildPayload(){
-  const demand = parseFloat(document.getElementById(&#x27;peak-mw&#x27;).value)||selectedInst.mw;
-  const totalMw = deployedAssets.reduce((s,a)=&gt;s+a.mw,0);
-  const g = id =&gt; { const el=document.getElementById(id); return el ? el.value : &#x27;&#x27;; };
+  const demand = loadToCarry();
+  const total = totalMw();
+  const fc = fuelClock(), r = resupplyGalPerDay();
+  const g = id =&gt; { const el=$(id); return el ? el.value : &#x27;&#x27;; };
+  const on = id =&gt; !!($(id)&amp;&amp;$(id).checked);
   return {
     installation: selectedInst.name, installationId: selectedInst.id, branch: selectedInst.branch, loc: selectedInst.loc,
-    peakMw: demand, utility: g(&#x27;utility&#x27;)||selectedInst.utility||&#x27;&#x27;,
-    trigger: g(&#x27;trigger-name&#x27;), severity: g(&#x27;severity&#x27;), outageDur: g(&#x27;outage-dur&#x27;), personnel: g(&#x27;personnel&#x27;),
-    assets: deployedAssets.map(a=&gt;({label:a.label, mw:a.mw, zone:a.zone||&#x27;&#x27;})),
-    totalMw: +totalMw.toFixed(1), coverPct: totalMw&gt;0?Math.min(100,Math.round(totalMw/demand*100)):0,
-    resilienceHrs: totalMw&gt;0?Math.round(totalMw/demand*72):0,
-    warningOrders: warningOrders.map(w=&gt;({type:({warn:&#x27;SONAR ALERT&#x27;,crit:&#x27;CRITICAL ALERT&#x27;,info:&#x27;INFORMATION&#x27;,res:&#x27;RESOLVED&#x27;})[w.type]||String(w.type||&#x27;SONAR ALERT&#x27;).toUpperCase(), priority:w.prio||&#x27;&#x27;, tag:w.tag||&#x27;&#x27;, body:w.body||&#x27;&#x27;, recipients:w.recip||&#x27;&#x27;, ts:w.ts||&#x27;&#x27;}))
+    sector:&#x27;datacenter&#x27;, category: currentCat,
+    peakMw: num(&#x27;peak-mw&#x27;,selectedInst.mw), loadPct: num(&#x27;load-pct&#x27;,70), loadMw: demand, utility: g(&#x27;utility&#x27;)||selectedInst.utility||&#x27;&#x27;,
+    tier: g(&#x27;tier&#x27;), redundancy: g(&#x27;redund&#x27;), upsMin: num(&#x27;ups-min&#x27;,12), fuelGal: fc.gal, burnGalHr: fc.burn, fuelHrs: fc.hours, resupplyGalDay: r.gal,
+    halls: selectedHalls.slice(), objectives: selectedChips(&#x27;obj-chips&#x27;),
+    trigger: g(&#x27;trigger-name&#x27;), severity: g(&#x27;severity&#x27;), outageDur: g(&#x27;outage-dur&#x27;), leadTimeHrs: num(&#x27;resupply-delay&#x27;,4), personnel: g(&#x27;personnel&#x27;),
+    staffing:{ onShift:num(&#x27;personnel&#x27;,6), techs:num(&#x27;operators&#x27;,3), shiftHrs:num(&#x27;shift-hrs&#x27;,12), relief:g(&#x27;relief-cycle&#x27;), ic:g(&#x27;ic-name&#x27;), tenantComms:g(&#x27;tc-name&#x27;) },
+    vendors: vendors(), notifyMode: selectedChips(&#x27;report-chips&#x27;)[0]||&#x27;&#x27;, recipients: g(&#x27;notif-recipients&#x27;),
+    options:{ autoTrigger:on(&#x27;opt-auto&#x27;), slaNotices:on(&#x27;opt-sla&#x27;), battlecat:on(&#x27;opt-bc&#x27;), archive:on(&#x27;opt-archive&#x27;), aar:on(&#x27;opt-aar&#x27;), compliance:on(&#x27;opt-comp&#x27;) },
+    battlecat: on(&#x27;opt-bc&#x27;), drillId: g(&#x27;sc-id&#x27;),
+    assets: deployedAssets.map(a=&gt;({label:a.label, mw:a.mw, kind:a.kind, zone:a.zone||&#x27;&#x27;})),
+    totalMw: +total.toFixed(1), coverPct: total&gt;0?Math.min(100,Math.round(total/demand*100)):0,
+    resilienceHrs: resilienceHrs(),
+    warningOrders: warningOrders.map(w=&gt;({type:({warn:&#x27;SONAR ALERT&#x27;,crit:&#x27;CRITICAL ALERT&#x27;,info:&#x27;INFORMATION&#x27;,res:&#x27;RESOLVED&#x27;})[w.type]||String(w.type||&#x27;SONAR ALERT&#x27;).toUpperCase(), priority:w.prio||&#x27;&#x27;, tag:fillAlert(w.tag||&#x27;&#x27;), body:fillAlert(w.body||&#x27;&#x27;), recipients:w.recip||&#x27;&#x27;, ts:w.ts||&#x27;&#x27;}))
   };
+}
+function sendToSimulator(){
+  window.parent.postMessage({type:&#x27;BUILDER_SCENARIO&#x27;, payload: buildPayload()},&#x27;*&#x27;);
+  $(&#x27;launch-banner&#x27;).classList.remove(&#x27;show&#x27;);
 }
 function sendToDropZone(){
   window.parent.postMessage({type:&#x27;BUILDER_DROP&#x27;, payload: buildPayload()},&#x27;*&#x27;);
-  document.getElementById(&#x27;launch-banner&#x27;).classList.remove(&#x27;show&#x27;);
+  $(&#x27;launch-banner&#x27;).classList.remove(&#x27;show&#x27;);
 }
 
 // ═══ CLEAR ═══
-function confirmClear(){ document.getElementById(&#x27;clear-modal&#x27;).classList.add(&#x27;show&#x27;); }
-function closeClear(){ document.getElementById(&#x27;clear-modal&#x27;).classList.remove(&#x27;show&#x27;); }
+function confirmClear(){ $(&#x27;clear-modal&#x27;).classList.add(&#x27;show&#x27;); }
+function closeClear(){ $(&#x27;clear-modal&#x27;).classList.remove(&#x27;show&#x27;); }
 function clearAll(){
   closeClear();
-  warningOrders=[];deployedAssets=[];vehicleQty=VEHICLES.map(()=&gt;0);
+  warningOrders=[];deployedAssets=[];vehicleQty=VEHICLES.map(()=&gt;0);vehicleQty[0]=1;
   selectedInst=INSTALLATIONS[0];currentBranch=&#x27;ALL&#x27;;
-  // Reset form fields
-  document.getElementById(&#x27;peak-mw&#x27;).value=&#x27;58&#x27;;
-  document.getElementById(&#x27;utility&#x27;).value=&#x27;Dominion Energy Virginia&#x27;;
-  document.getElementById(&#x27;trigger-name&#x27;).value=&#x27;Hurricane Florence&#x27;;
-  document.getElementById(&#x27;outage-dur&#x27;).value=&#x27;72+ hours&#x27;;
-  document.getElementById(&#x27;resupply-delay&#x27;).value=&#x27;48&#x27;;
-  document.getElementById(&#x27;trigger-desc&#x27;).value=&#x27;Storm surge disables Dominion Energy Chesapeake transmission corridor. NSN loses commercial grid power. All non-berthed vessels ordered to sea for ride-out.&#x27;;
-  document.getElementById(&#x27;personnel&#x27;).value=&#x27;120&#x27;;
-  document.getElementById(&#x27;wo-tag&#x27;).value=&#x27;&#x27;;
-  document.getElementById(&#x27;wo-body&#x27;).value=&#x27;&#x27;;
+  document.querySelectorAll(&#x27;#branch-chips .chip&#x27;).forEach((c,i)=&gt;c.classList.toggle(&#x27;selected&#x27;,i===0));
+  pickInst(selectedInst.id);
+  const first=document.querySelector(&#x27;#sc-type-chips .chip&#x27;);
+  selectScenarioCat(&#x27;Utility Feed Loss&#x27;, first);
+  $(&#x27;resupply-delay&#x27;).value=&#x27;4&#x27;;
+  $(&#x27;personnel&#x27;).value=&#x27;6&#x27;;$(&#x27;operators&#x27;).value=&#x27;3&#x27;;$(&#x27;shift-hrs&#x27;).value=&#x27;12&#x27;;
+  $(&#x27;ic-name&#x27;).value=&#x27;Critical Facilities Manager&#x27;;$(&#x27;tc-name&#x27;).value=&#x27;NOC shift lead&#x27;;
+  $(&#x27;wo-tag&#x27;).value=&#x27;&#x27;;$(&#x27;wo-body&#x27;).value=&#x27;&#x27;;
+  $(&#x27;depot-name&#x27;).value=&#x27;Sterling fuel yard&#x27;;$(&#x27;depot-miles&#x27;).value=&#x27;9.5&#x27;;$(&#x27;veh-speed&#x27;).value=&#x27;35&#x27;;$(&#x27;load-time&#x27;).value=&#x27;40&#x27;;
   renderWOs();renderInst();renderDropZone();renderVehicles();calcDistance();
   document.querySelectorAll(&#x27;.step&#x27;).forEach(s=&gt;s.classList.remove(&#x27;done&#x27;,&#x27;active&#x27;));
-  document.getElementById(&#x27;run-btn&#x27;).disabled=true;
+  $(&#x27;run-btn&#x27;).disabled=true;
   goStep(1);
 }
 
 // ═══ INIT ═══
-renderInst();renderVehicles();calcDistance();
-try{var _ps=JSON.parse(localStorage.getItem(&#x27;sonarmobile_state&#x27;)||&#x27;{}&#x27;);
-  {var _b=UTIL_BRANCHES.indexOf(_ps.utilType)&gt;=0?_ps.utilType:&#x27;COLO&#x27;;
-    var _chip=Array.prototype.filter.call(document.querySelectorAll(&#x27;#branch-chips .chip&#x27;),function(c){return (c.getAttribute(&#x27;onclick&#x27;)||&#x27;&#x27;).indexOf(&quot;&#x27;&quot;+_b+&quot;&#x27;&quot;)&gt;=0;})[0];
-    var _first=INSTALLATIONS.filter(function(i){return _b===&#x27;UTILITY&#x27;?UTIL_BRANCHES.indexOf(i.branch)&gt;=0:i.branch===_b;})[0];
-    if(_first){selectedInst=_first;}
-    filterBranch(_b,_chip);
-    if(_first){pickInst(_first.id);}
-  }}catch(e){}
-document.getElementById(&#x27;sc-id&#x27;).value=&#x27;SC-PENDING-&#x27;+Math.random().toString(36).slice(2,8).toUpperCase();
+renderInst();renderVehicles();
+try{var _ps=JSON.parse(localStorage.getItem(&#x27;sonarmobile_dc_state&#x27;)||localStorage.getItem(&#x27;sonarmobile_state&#x27;)||&#x27;{}&#x27;);
+  var _b=UTIL_BRANCHES.indexOf(_ps.utilType)&gt;=0?_ps.utilType:&#x27;COLO&#x27;;
+  var _chip=Array.prototype.filter.call(document.querySelectorAll(&#x27;#branch-chips .chip&#x27;),function(c){return (c.getAttribute(&#x27;onclick&#x27;)||&#x27;&#x27;).indexOf(&quot;&#x27;&quot;+_b+&quot;&#x27;&quot;)&gt;=0;})[0];
+  var _first=INSTALLATIONS.filter(function(i){return i.branch===_b;})[0];
+  if(_first){selectedInst=_first;}
+  filterBranch(_b,_chip);
+  pickInst((_first||selectedInst).id);
+}catch(e){pickInst(selectedInst.id);}
+renderHalls();
+$(&#x27;trigger-desc&#x27;).value=fill(SC_CAT_PRESETS[&#x27;Utility Feed Loss&#x27;].desc);
+$(&#x27;trigger-name&#x27;).value=fill(SC_CAT_PRESETS[&#x27;Utility Feed Loss&#x27;].name);
+calcDistance();
+$(&#x27;sc-id&#x27;).value=&#x27;DR-PENDING-&#x27;+Math.random().toString(36).slice(2,8).toUpperCase();
 
-// Theme sync + API key injection from hub
+// Theme sync from hub
 window.addEventListener(&#x27;message&#x27;,function(e){
   if(!e.data) return;
   if(e.data.type===&#x27;SET_THEME&#x27;) document.documentElement.setAttribute(&#x27;data-theme&#x27;,e.data.theme);
 });
 
-function updateAiContext(){try{var n=[&#x27;&#x27;,&#x27;ORDERS&#x27;,&#x27;INSTALL&#x27;,&#x27;TRIGGER&#x27;,&#x27;ASSETS&#x27;,&#x27;MANPOWER&#x27;,&#x27;REPORTING&#x27;,&#x27;REVIEW&#x27;];document.getElementById(&#x27;c-step&#x27;).textContent=currentStep+&#x27; · &#x27;+n[currentStep];}catch(e){}}
+function updateAiContext(){try{var n=[&#x27;&#x27;,&#x27;ALERTS&#x27;,&#x27;SITE&#x27;,&#x27;TRIGGER&#x27;,&#x27;ASSETS&#x27;,&#x27;STAFFING&#x27;,&#x27;NOTIFY&#x27;,&#x27;REVIEW&#x27;];$(&#x27;c-step&#x27;).textContent=currentStep+&#x27; · &#x27;+n[currentStep];}catch(e){}}
 (function(){var _g=goStep;goStep=function(n){_g(n);updateAiContext();};})();
 updateAiContext();
 &lt;/script&gt;
@@ -3110,7 +3226,7 @@ window.SRADropZone=(function(){
       {id:'comp',g:'Sustain',t:'SLA &amp; compliance',sel:"go('comp')",open:function(){go('comp');},
         d:function(){return 'Uptime Tier III, TIA-942, NFPA 110 test cadence and tenant SLA exposure. Outage minutes count against the availability evidence here.';},tip:function(){return 'Findings from a Black start drill roll into this view.';}},
       {id:'drill',g:'Train',t:'Drill builder',sel:"openBuilder()",open:function(){openBuilder();},
-        d:function(){return 'Build an exercise: pick the trigger, severity, load and coverage, and it releases tagged SONAR alerts into Outages — which also sets BattleCat auto-dispatch in motion. Good for demos and for training the shift.';},tip:function(){return 'Everything a drill releases is marked EXERCISE.';}},
+        d:function(){return 'Build a data center drill in seven steps: alerts from the critical-facilities template library, the site record (tier, redundancy, UPS runtime, fuel on hand), a trigger from feed loss to cooling failure with the halls affected, backup assets that run the <b>fuel clock</b> against the resupply run, shift staffing and vendor call-outs, tenant-notice and compliance options, then review. Release lands every alert in Outages tagged EXERCISE and sends a BattleCat to the affected asset.';},tip:function(){return 'Everything a drill releases is marked EXERCISE · the first alert dispatches a BattleCat.';}},
       {id:'drop',g:'Train',t:'Drop Zone',sel:"go('drop')",open:function(){go('drop');},
         d:function(){return 'Files and scenario snapshots shared with ADMIN and the ie-SRS hub. Anything dropped here is copied to the peers, and incoming drops badge the tile.';},tip:function(){return 'The drill builder can send its scenario straight here.';}},
       {id:'custs',g:'Sustain',t:'Tenants',sel:"go('custs')",open:function(){go('custs');},
@@ -3185,7 +3301,7 @@ window.SRADropZone=(function(){
       c.state='out';sortie={cat:c,tgt:tgt,path:path([c.x,c.y],[tgt.x,tgt.y]),i:0,phase:'out',checks:[],t:Date.now(),ck:(CHECKS[id]||CHECKS.w).slice(),done:0};
       try{bus.publish('BC_EVENT',{cat:c.id,ev:'dispatch',target:tgt.label,site:cfg.site},{site:cfg.site});}catch(e){}
       toast('BattleCat '+c.id,'Dispatched → '+tgt.label,'cyan');buzz();saveBC();run();paint();try{renderBadges();}catch(e){}return true;}
-    function onAlert(code,p){if(!st.auto)return;var name=code+' · '+(p&&p.title||'SONAR alert');setTimeout(function(){deploy('w0',name,p&&p.msg||'');},900);}
+    function onAlert(code,p,tgt){if(!st.auto)return;var name=code+' · '+(p&&p.title||'SONAR alert');setTimeout(function(){deploy(tgt||'w0',name,p&&p.msg||'');},900);}
     function run(){clearInterval(tick);tick=setInterval(step,100);}
     function step(){if(!sortie){clearInterval(tick);tick=null;return;}var c=sortie.cat,sp=9;
       if(sortie.phase==='out'||sortie.phase==='back'){var p=sortie.path;while(sp>0&&sortie.i<p.length-1){var a=[c.x,c.y],b=p[sortie.i+1],d=dist(a,b);if(d<=sp){c.x=b[0];c.y=b[1];sortie.i++;sp-=d;}else{c.x+=(b[0]-a[0])/d*sp;c.y+=(b[1]-a[1])/d*sp;sp=0;}c.batt=Math.max(0,c.batt-0.03);}
@@ -3995,30 +4111,50 @@ window.SRADropZone=(function(){
       onIncoming:function(d,env){if(!$('p-drop').classList.contains('on')){S.unreadDrop=(S.unreadDrop||0)+1;save();renderBadges();}toast('Drop zone · '+d.name,'from '+(d.from||env.from||'peer').toUpperCase(),'amber');buzz();}});}
   window.SRABus.subscribe(function(env){if(env.type==='DROP'&&!$('p-drop').classList.contains('on')&&!DZM){S.unreadDrop=(S.unreadDrop||0)+1;save();renderBadges();toast('Drop zone · '+(env.payload&&env.payload.name||'new item'),'from '+(env.from||'peer').toUpperCase(),'amber');}});
   function dzScenario(pl,source){var d=window.SRADropZone.fromScenario(pl,{source:source});return d;}
-  /* BattleCat Engineering report · local copy first, Pages fallback */
-  var BCENG={local:'../docs/battlecat-engineering/index.html',pages:'https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat-engineering/',src:'',loaded:false,hash:''};
-  function bcEngUrl(){return (location.protocol==='file:'||BCENG.src==='pages')?BCENG.pages:BCENG.local;}
-  window.openBcEng=function(){var p=$('p-bceng'),f=$('bceng-frame');p.classList.add('on');
-    if(!BCENG.loaded){BCENG.loaded=true;if(location.protocol==='file:')BCENG.src='pages';
-      f.addEventListener('load',function(){var ok=false;try{var d=f.contentDocument;ok=!!(d&&d.querySelector('section#s1'));}catch(e){ok=BCENG.src==='pages';}
-        if(!ok&&BCENG.src!=='pages'){BCENG.src='pages';f.src=BCENG.pages+(BCENG.hash||'');return;}
-        $('bceng-src').textContent=(BCENG.src==='pages'?'GITHUB PAGES':'LOCAL COPY')+' · docs/battlecat-engineering';if(BCENG.hash)bcEngGo(BCENG.hash.slice(1));});
-      f.src=bcEngUrl();}};
+  /* BattleCat Engineering report · probe every known home of the report, then load; never show a raw 404 */
+  var BCENG={url:'',tried:[],busy:false,loaded:false,hash:'',
+    pages:['https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat-engineering/','https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat/',
+           'https://thompsonryane-collab.github.io/ie-SRS/docs/battlecat-engineering/','https://thompsonryane-collab.github.io/ie-SRS/docs/battlecat/'],
+    pdf:'https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat/BC-ENG-001_BattleCat_Engineering_Report.pdf'};
+  /* order: the copy shipped in this folder (cmdr/battlecat-build.html) → docs/ copies → Pages copies */
+  function bcEngCandidates(){var c=[];if(location.protocol!=='file:'){c.push('battlecat-build.html','../docs/battlecat-engineering/index.html','../docs/battlecat/index.html','docs/battlecat-engineering/index.html','docs/battlecat/index.html');}
+    c.push('https://thompsonryane-collab.github.io/sonar-mobile-dc/cmdr/battlecat-build.html','https://thompsonryane-collab.github.io/ie-SRS/cmdr/battlecat-build.html');
+    BCENG.pages.forEach(function(u){c.push(u+'index.html');});return c;}
+  function bcEngProbe(list,i,done){if(i>=list.length){done('');return;}var u=list[i];BCENG.tried.push(u);
+    try{fetch(u,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){if(/id=["']s1["']/.test(t)&&/BC-ENG-001|BattleCat/i.test(t))done(u);else bcEngProbe(list,i+1,done);}).catch(function(){bcEngProbe(list,i+1,done);});}
+    catch(e){bcEngProbe(list,i+1,done);}}
+  function bcEngMissing(){var b=$('p-bceng').querySelector('.body');var f=$('bceng-frame');f.style.display='none';
+    var card=$('bceng-missing');if(!card){card=document.createElement('div');card.id='bceng-missing';b.appendChild(card);}
+    card.innerHTML='<div class="bcm"><div class="bcm-t">Report not on this site yet</div>'+
+      '<div class="bcm-s">The BattleCat engineering report (BC-ENG-001) is not published beside this app, and none of the fallback locations answered. Upload <code>battlecat-build.html</code> into the same <code>cmdr/</code> folder as this app, commit to main, wait for Pages to finish, then tap Retry.</div>'+
+      '<div class="bcm-l">'+BCENG.tried.map(function(u){return '<div>✕ '+esc(u.replace('https://thompsonryane-collab.github.io/',''))+'</div>';}).join('')+'</div>'+
+      '<div class="bcm-b"><button class="btn pri" onclick="bcEngRetry()">Retry</button><button class="btn" onclick="window.open(BCENG.pdf,\'sonar-battlecat-pdf\')">Try the PDF</button></div></div>';
+    card.style.display='';$('bceng-src').textContent='NOT FOUND · '+BCENG.tried.length+' locations checked';}
+  function bcEngShow(u){var f=$('bceng-frame');var card=$('bceng-missing');if(card)card.style.display='none';f.style.display='';BCENG.url=u;BCENG.loaded=true;
+    var local=u.indexOf('http')!==0;$('bceng-src').textContent=(local?'LOCAL COPY · ':'GITHUB PAGES · ')+(local?'cmdr/':'')+u.replace('https://thompsonryane-collab.github.io/','').replace(/^\.\.\//,'').replace(/index\.html$/,'');
+    f.onload=function(){if(BCENG.hash)bcEngGo(BCENG.hash.slice(1));};f.src=u+(BCENG.hash||'');}
+  window.bcEngRetry=function(){BCENG.loaded=false;BCENG.url='';BCENG.tried=[];$('bceng-src').textContent='LOOKING FOR THE REPORT…';openBcEng();};
+  window.openBcEng=function(){var p=$('p-bceng');p.classList.add('on');if(BCENG.loaded||BCENG.busy)return;BCENG.busy=true;BCENG.tried=[];
+    $('bceng-src').textContent='LOOKING FOR THE REPORT…';
+    bcEngProbe(bcEngCandidates(),0,function(u){BCENG.busy=false;if(u)bcEngShow(u);else bcEngMissing();});};
   window.closeBcEng=function(){$('p-bceng').classList.remove('on');};
   window.bcEngGo=function(id,btn){var f=$('bceng-frame');BCENG.hash='#'+id;document.querySelectorAll('#bceng-chips button').forEach(function(b){b.classList.toggle('on',b===btn);});
+    if(!BCENG.url)return;
     try{var d=f.contentDocument,el=d&&d.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});return;}}catch(e){}
-    try{f.contentWindow.location.replace(bcEngUrl()+'#'+id);}catch(e){f.src=bcEngUrl()+'#'+id;}};
-  window.bcEngFull=function(){window.open(BCENG.pages+(BCENG.hash||''),'sonar-battlecat-engineering');};
+    try{f.contentWindow.location.replace(BCENG.url+'#'+id);}catch(e){f.src=BCENG.url+'#'+id;}};
+  window.bcEngFull=function(){var u=BCENG.url||BCENG.pages[0];if(u.indexOf('http')!==0){try{u=new URL(u,location.href).href;}catch(e){}}window.open(u+(BCENG.hash||''),'sonar-battlecat-engineering');};
   window.openBuilder=function(){$('p-builder').classList.add('on');};
   window.closeBuilder=function(){$('p-builder').classList.remove('on');};
   function builderRelease(pl){if(!pl)return;var wos=Array.isArray(pl.warningOrders)?pl.warningOrders:[];var stamp=String(Date.now()).slice(-4),n=0;
-    wos.forEach(function(w,i){var code='SC-'+stamp+'-'+String(i+1).padStart(2,'0'),ts=Date.now()+i;var sev=/urgent|crit|flash/i.test(w.priority||'')?'P1':/priority|major/i.test(w.priority||'')?'P2':'P3';
+    wos.forEach(function(w,i){var code='SC-'+stamp+'-'+String(i+1).padStart(2,'0'),ts=Date.now()+i;var sev=/\bP1\b|immediate|crit|flash/i.test(w.priority||'')?'P1':/\bP2\b|urgent|priority|major/i.test(w.priority||'')?'P2':'P3';
       var title=(w.type||'SONAR ALERT')+' · '+(w.tag||'Untitled'),body=(w.body||'')+(pl.trigger?' — trigger: '+pl.trigger:'');
-      var p={code:code,site:cfg.site,siteName:S.siteName,msg:body,title:title,sev:sev,type:w.type||'SONAR ALERT',loc:pl.installation||'',etr:pl.outageDur||'Unknown',test:true,kind:'EXERCISE',ts:ts,channels:w.recipients||'per ADM-03 rules',by:S.name,role:SECTOR.t('role'),origin:'cmdr',scenario:{installation:pl.installation,severity:pl.severity,totalMw:pl.totalMw,coverPct:pl.coverPct,resilienceHrs:pl.resilienceHrs}};
+      var p={code:code,site:cfg.site,siteName:S.siteName,msg:body,title:title,sev:sev,type:w.type||'SONAR ALERT',loc:(pl.installation||'')+(Array.isArray(pl.halls)&&pl.halls.length?' · '+pl.halls.join(', '):''),etr:pl.outageDur||'Unknown',test:true,kind:'EXERCISE',ts:ts,channels:w.recipients||'per ADM-03 rules',by:S.name,role:SECTOR.t('role'),origin:'cmdr',scenario:{installation:pl.installation,severity:pl.severity,totalMw:pl.totalMw,coverPct:pl.coverPct,resilienceHrs:pl.resilienceHrs,category:pl.category||'',halls:pl.halls||[],tier:pl.tier||'',fuelHrs:pl.fuelHrs||0,drillId:pl.drillId||''}};
       S.warnords[code]={id:'cmdr:'+code,code:code,ts:ts,site:cfg.site,siteName:S.siteName,msg:body,title:title,test:true,channels:p.channels,kind:'EXERCISE',mine:true,sev:sev,etr:p.etr,missions:0,ack:{by:S.name,ts:ts,self:true}};
       bus.publish('WARNORD',p,{site:cfg.site});n++;});
     try{dzScenario(pl,'cmdr-builder · released to bus');}catch(x){}
     S.lastEvent=Date.now();save();renderAll();closeBuilder();
+    /* data center drill → BattleCat sortie to the affected asset (kennel dispatch on release) */
+    try{if(n&&pl.battlecat!==false&&window.BATTLECAT){var _c=String(pl.category||pl.trigger||''),_h=(pl.halls||[]).join(' ');var _t=/feed|utility|weather/i.test(_c)?'u1':/ats|switchgear|ups|epo|fire/i.test(_c)?'u2':/cool|chiller|crah/i.test(_c)?'u3':/gen|fuel/i.test(_c)?'w2':/hall 1|hall a|pod a|module 1/i.test(_h)?'w1':'w0';var _w=Object.keys(S.warnords).filter(function(k){return k.indexOf('SC-'+stamp)===0;})[0];BATTLECAT.onAlert(_w||'DRILL',{title:(pl.trigger||'Drill')},_t);}}catch(x){console.warn('drill battlecat',x);}
     toast('Drill released',n+' SONAR alert'+(n===1?'':'s')+' queued as exercise · '+(pl.installation||S.siteName),'amber');buzz();if(n)go('outages');}
   window.addEventListener('message',function(e){var d=e.data||{};if(d.type==='CLOSE_BUILDER')closeBuilder();else if(d.type==='BUILDER_DROP'){try{var dd=dzScenario(d.payload,'cmdr-builder');closeBuilder();toast('Scenario sent to Drop Zone',dd.name+' · copied to ADMIN + ie-SRS','amber');buzz();go('drop');}catch(x){console.warn('BUILDER_DROP',x);}}else if(d.type==='BUILDER_SCENARIO'){try{builderRelease(d.payload);}catch(x){console.warn('BUILDER_SCENARIO',x);}}});
   /* ── collapsible sections: caret / title tap toggles, state persisted ── */
