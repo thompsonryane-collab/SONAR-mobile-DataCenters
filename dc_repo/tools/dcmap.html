@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SONAR · SYS-03 · Data Center Portfolio Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--void:#0a1018;--bg:#060c14;--panel:#0d1825;--card:#0e1a28;--card2:#111f2e;--border:#1a2d42;--border2:#243650;
+--sage:#4db88a;--cyan:#18d4f8;--violet:#a07cf0;--amber:#d4a05a;--red:#e05555;--org:#e08a45;--txh:#f2f8ff;--tx:#cce0f2;--txd:#6e90b0;
+--mono:'Share Tech Mono',monospace;--dsp:'Orbitron',monospace}
+*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font-family:var(--mono);font-size:12px;overflow:hidden}
+#app{display:grid;grid-template-rows:40px auto auto 1fr auto;height:100%}
+#band{display:flex;align-items:center;gap:12px;padding:0 14px;background:rgba(8,14,24,.97);border-bottom:1px solid var(--border);font-family:var(--dsp);font-size:10px;letter-spacing:2.5px;color:var(--violet)}#band span{color:var(--txd);font-family:var(--mono);letter-spacing:1.5px;font-size:9px}
+#strip{display:flex;gap:10px;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--border);overflow-x:auto}
+.mini{min-width:118px;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px}
+.mini .l{font-size:8.5px;letter-spacing:1.6px;color:var(--txd);text-transform:uppercase}.mini .v{font-family:var(--dsp);font-size:16px;font-weight:700;color:var(--txh);margin-top:3px}.mini .s{font-size:9px;color:var(--txd);margin-top:2px}
+#bar{display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid var(--border);background:var(--void);flex-wrap:wrap}
+.chip{font-size:9.5px;letter-spacing:1.4px;padding:4px 10px;border:1px solid var(--border2);border-radius:14px;color:var(--txd);cursor:pointer;background:transparent;font-family:var(--mono)}
+.chip.on,.chip:hover{color:var(--cyan);border-color:rgba(24,212,248,.55);background:rgba(24,212,248,.08)}
+select.sel{font-family:var(--mono);font-size:10px;letter-spacing:1px;background:var(--card);color:var(--tx);border:1px solid var(--border2);border-radius:4px;padding:4px 8px}
+.sp{flex:1}.lg{display:flex;gap:10px;font-size:9px;letter-spacing:1px;color:var(--txd)}.lg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+#main{display:grid;grid-template-columns:1fr 360px;min-height:0}
+#map{background:#03070c}
+#side{border-left:1px solid var(--border);background:var(--panel);overflow:auto;padding:12px}
+.blk{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:10px}
+.blk h4{margin:0 0 8px;font-family:var(--dsp);font-size:9px;letter-spacing:2px;color:var(--cyan);display:flex;justify-content:space-between;align-items:center}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:4px 10px;font-size:11px}.kv .k{color:var(--txd);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;align-self:center}.kv .v{color:var(--txh)}
+.pill{display:inline-block;font-size:8.5px;letter-spacing:1.2px;padding:2px 7px;border:1px solid;border-radius:10px}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.b{font-family:var(--mono);font-size:9.5px;letter-spacing:1.2px;padding:6px 10px;background:rgba(24,212,248,.08);color:var(--cyan);border:1px solid rgba(24,212,248,.4);border-radius:4px;cursor:pointer}
+.b:hover{background:rgba(24,212,248,.18)}.b.warn{color:var(--amber);border-color:rgba(212,160,90,.5);background:rgba(212,160,90,.08)}.b.ok{color:var(--sage);border-color:rgba(77,184,138,.5);background:rgba(77,184,138,.08)}
+.usr{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)}.usr:first-of-type{border-top:0}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.usr small{display:block;color:var(--txd);font-size:9px}
+.empty{color:var(--txd);font-size:11px;padding:30px 10px;text-align:center;line-height:1.7}
+#tbl{border-top:1px solid var(--border);background:var(--void);max-height:190px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:10.5px}th{position:sticky;top:0;background:var(--panel);text-align:left;font-size:8.5px;letter-spacing:1.5px;color:var(--txd);padding:6px 10px;border-bottom:1px solid var(--border);cursor:pointer}
+td{padding:5px 10px;border-bottom:1px solid rgba(26,45,66,.6);white-space:nowrap}tr.r{cursor:pointer}tr.r:hover{background:rgba(24,212,248,.05)}tr.sel{background:rgba(24,212,248,.1)}
+.leaflet-container{font-family:var(--mono)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--tx);border:1px solid var(--border2)}
+.leaflet-popup-content{font-size:11px;margin:10px 12px}.leaflet-control-attribution{background:rgba(6,12,20,.7)!important;color:var(--txd)!important;font-size:8px}
+.mk{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.75);box-shadow:0 0 0 3px rgba(0,0,0,.45),0 0 12px currentColor}
+.mk.sq{border-radius:3px}.mk.dia{transform:rotate(45deg);border-radius:2px}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(0,0,0,.45),0 0 12px currentColor}50%{box-shadow:0 0 0 6px rgba(224,85,85,.25),0 0 22px currentColor}}.mk.out{animation:pulse 1.4s infinite}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="band">SYS-03 // PORTFOLIO MAP <span>· site health · admin view</span></div>
+  <div id="strip"></div>
+  <div id="bar">
+    <span class="chip on" data-ty="ALL" onclick="setTy('ALL',this)">ALL TYPES</span>
+    <span class="chip" data-ty="COLO" onclick="setTy('COLO',this)">COLOCATION</span>
+    <span class="chip" data-ty="ENT" onclick="setTy('ENT',this)">ENTERPRISE</span>
+    <span class="chip" data-ty="EDGE" onclick="setTy('EDGE',this)">EDGE</span>
+    <select class="sel" id="reg" onchange="setReg(this.value)"><option value="">ALL MARKETS</option></select>
+    <select class="sel" id="hf" onchange="setHf(this.value)"><option value="">ANY HEALTH</option><option>HEALTHY</option><option>DEGRADED</option><option>OFFLINE</option><option>OUTAGE</option></select>
+    <span class="sp"></span>
+    <div class="lg"><span><i style="background:#4db88a"></i>HEALTHY</span><span><i style="background:#d4a05a"></i>DEGRADED</span><span><i style="background:#e08a45"></i>OFFLINE</span><span><i style="background:#e05555"></i>OUTAGE</span><span>&nbsp;● COLO &nbsp;■ ENT &nbsp;◆ EDGE</span></div>
+    <button class="b" onclick="fitAll()">FIT PORTFOLIO</button>
+    <button class="b" onclick="try{window.parent.closeApp('overlay-secres')}catch(e){}">← CONSOLE</button>
+  </div>
+  <div id="main"><div id="map"></div><div id="side"><div class="empty">Select a site on the map or in the roll-up table.</div></div></div>
+  <div id="tbl"></div>
+</div>
+<script>
+(function(){
+  var C=null;try{if(window.parent&&window.parent!==window)C=window.parent.ADMIN_CORE||null;}catch(e){}
+  var P=function(){try{return window.parent;}catch(e){return null;}};
+  var $=function(i){return document.getElementById(i);};
+  function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  if(!C){$('side').innerHTML='<div class="empty">ADMIN_CORE not available — open this module from the console.</div>';return;}
+  var F={ty:'ALL',reg:'',hf:''},sel=null,markers={},map;
+  var TY={COLO:'Colocation',ENT:'Enterprise',EDGE:'Edge portfolio'};
+  function mini(l,v,col,s){return '<div class="mini"><div class="l">'+l+'</div><div class="v" style="color:'+(col||'#f2f8ff')+'">'+v+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</div>';}
+  function mw(){return C.SITES.reduce(function(n,s){return n+(+s.mw||0);},0);}
+  function strip(){var s=C.summary();
+    $('strip').innerHTML=mini('Sites',s.sites,'#fff',Object.keys(C.REG).length+' markets')+mini('Instances online',s.online+' / '+s.instances,'#4db88a')+mini('Degraded',s.degraded,s.degraded?'#d4a05a':'#4db88a')+mini('Offline',s.offline,s.offline?'#e08a45':'#4db88a')+mini('Sites in outage',s.outages,s.outages?'#e05555':'#4db88a')+mini('Open SONAR alerts',s.openWO,s.openWO?'#e05555':'#4db88a')+mini('IT load',mw().toFixed(1)+' MW','#18d4f8','portfolio')+mini('Field users online',s.usersOnline,'#18d4f8')+mini('Devices pending',s.devicesPending,s.devicesPending?'#d4a05a':'#4db88a');}
+  function vis(){return C.SITES.filter(function(s){var h=C.health(s);return (F.ty==='ALL'||s.ty===F.ty)&&(!F.reg||s.region===F.reg)&&(!F.hf||h===F.hf);});}
+  function icon(s){var h=C.health(s),c=C.healthColor(h),cls='mk'+(s.ty==='ENT'?' sq':s.ty==='EDGE'?' dia':'')+(h==='OUTAGE'?' out':'')+(sel===s.id?' on':'');
+    return L.divIcon({className:'',html:'<div class="'+cls+'" style="background:'+c+';color:'+c+(sel===s.id?';transform:scale(1.35)'+(s.ty==='EDGE'?' rotate(45deg)':''):'')+'"></div>',iconSize:[14,14],iconAnchor:[7,7]});}
+  function paintMarkers(){if(!map)return;var v=vis().map(function(s){return s.id;});
+    C.SITES.forEach(function(s){var m=markers[s.id];if(!m){m=L.marker([s.lat,s.lon],{icon:icon(s)}).on('click',function(){select(s.id);});markers[s.id]=m;}
+      m.setIcon(icon(s));m.bindTooltip(s.name+' · '+C.health(s),{direction:'top',offset:[0,-8]});
+      if(v.indexOf(s.id)>=0){if(!map.hasLayer(m))m.addTo(map);}else if(map.hasLayer(m))map.removeLayer(m);});}
+  function stPill(st){var c=C.stColor(st);return '<span class="pill" style="color:'+c+';border-color:'+c+'">'+st.toUpperCase()+'</span>';}
+  function side(){var s=sel?C.SITE[sel]:null;if(!s){$('side').innerHTML='<div class="empty">Select a site on the map or in the roll-up table.</div>';return;}
+    var h=C.health(s),hc=C.healthColor(h);var wos=C.listWO().filter(function(w){return w.site===s.id&&!w.ack;}).slice(0,6);
+    var peers={};try{peers=(P().CMDR_LINK&&P().CMDR_LINK.peers())||{};}catch(e){}var pr=peers[s.id];
+    function usr(u,w){return '<div class="usr"><span class="dot" style="background:'+C.stColor(u.status)+'"></span><div style="min-width:0;flex:1"><div>'+esc(u.name)+'</div><small>'+esc(u.role)+' · '+esc(u.email)+' · device '+u.device+' · '+C.ago(u.lastSeenMin)+'</small></div><button class="b" style="padding:4px 8px" onclick="act(\'msg\',\''+w+'\')">MSG</button></div>';}
+    $('side').innerHTML=
+      '<div class="blk" style="border-left:3px solid '+hc+'"><h4>'+esc(s.id.toUpperCase())+' <span class="pill" style="color:'+hc+';border-color:'+hc+'">'+h+'</span></h4>'+
+      '<div style="font-family:var(--dsp);font-size:13px;color:var(--txh);margin-bottom:8px">'+esc(s.name)+'</div>'+
+      '<div class="kv"><span class="k">Type</span><span class="v">'+(TY[s.ty]||s.ty)+' · Tier '+esc(s.tier)+'</span><span class="k">Market</span><span class="v">'+esc(s.regionName)+' ('+esc(s.region)+')</span><span class="k">Utility</span><span class="v">'+esc(s.utility)+'</span><span class="k">IT load</span><span class="v">'+s.mw+' MW · '+esc(s.racks)+' racks</span><span class="k">Generators</span><span class="v">'+esc(s.gens)+' online</span><span class="k">Site code</span><span class="v">'+esc(s.uic)+'</span><span class="k">SONARmobile</span><span class="v">'+(pr?'<span style="color:#4db88a">linked · '+esc(pr.name||'')+(pr.ty?' · '+pr.ty:'')+'</span>':'<span style="color:var(--txd)">not linked</span>')+'</span></div></div>'+
+      '<div class="blk"><h4>INSTANCES</h4><div class="kv"><span class="k">Primary</span><span class="v">'+stPill(s.primary.status)+' v'+s.primary.version+' · sync '+C.ago(s.primary.lastSyncMin)+' · '+s.primary.uptime+'%</span><span class="k">Secondary</span><span class="v">'+stPill(s.secondary.status)+' v'+s.secondary.version+' · sync '+C.ago(s.secondary.lastSyncMin)+' · '+s.secondary.uptime+'%</span></div>'+
+      '<div class="btns"><button class="b" onclick="act(\'sync\')">FORCE SYNC</button><button class="b warn" onclick="act(\'restart\')">RESTART PAIR</button><button class="b" onclick="act(\'health\')">ADM-04 →</button></div></div>'+
+      '<div class="blk"><h4>ACCOUNT HOLDERS</h4>'+usr(s.fm,'fm')+usr(s.backup,'backup')+'</div>'+
+      '<div class="blk"><h4>SONAR ALERTS <span>'+(s.openWO||0)+' open</span></h4>'+(wos.length?wos.map(function(w){return '<div style="padding:4px 0;border-top:1px solid var(--border);font-size:10.5px"><b style="color:'+(w.test?'#18d4f8':'#e05555')+'">'+esc(w.code)+'</b> '+esc(String(w.msg||'').slice(0,90))+'</div>';}).join(''):'<div style="color:var(--txd);font-size:10.5px">'+(s.outage?'Site flagged in outage · no envelope on file':'No open alerts')+'</div>')+
+      '<div class="btns"><button class="b warn" onclick="act(\'test\')">TEST SONAR ALERT → PHONE</button>'+(s.openWO||s.outage?'<button class="b ok" onclick="act(\'ack\')">CLOSE ALERT</button>':'')+'<button class="b" onclick="act(\'status\')">PUSH STATUS</button></div></div>';}
+  window.act=function(k,w){var p=P();if(!p||!sel)return;try{
+    if(k==='sync')p.admSiteSync(sel);else if(k==='restart')p.admSiteRestart(sel);else if(k==='ack')p.admSiteAck(sel);
+    else if(k==='test')p.admCmdrTest(sel);else if(k==='status'&&p.CMDR_LINK){p.CMDR_LINK.sendStatus(sel);p.hubToast&&p.hubToast('STATUS → '+C.SITE[sel].name,'ok',2500);}
+    else if(k==='msg'){p.closeApp('overlay-secres');p.admMsgTo(sel,w);return;}
+    else if(k==='health'){p.closeApp('overlay-secres');p.openApp('overlay-adm-health');return;}
+  }catch(e){console.warn('act',e);}paint();};
+  var sortK='name',sortD=1;
+  window.sortBy=function(k){if(sortK===k)sortD=-sortD;else{sortK=k;sortD=1;}table();};
+  function table(){var rows=vis().map(function(s){return {id:s.id,name:s.name,ty:s.ty,region:s.region,utility:s.utility,mw:+s.mw,health:C.health(s),p:s.primary.status,sec:s.secondary.status,sync:s.primary.lastSyncMin,wo:s.openWO||0};});
+    rows.sort(function(a,b){var x=a[sortK],y=b[sortK];return (x>y?1:x<y?-1:0)*sortD;});
+    var cols=[['name','SITE'],['ty','TYPE'],['region','MARKET'],['utility','UTILITY'],['mw','IT MW'],['health','HEALTH'],['p','PRIMARY'],['sec','SECONDARY'],['sync','SYNC'],['wo','ALERTS']];
+    $('tbl').innerHTML='<table><thead><tr>'+cols.map(function(c){return '<th onclick="sortBy(\''+c[0]+'\')">'+c[1]+(sortK===c[0]?(sortD>0?' ▲':' ▼'):'')+'</th>';}).join('')+'</tr></thead><tbody>'+
+      rows.map(function(r){var hc=C.healthColor(r.health);return '<tr class="r'+(sel===r.id?' sel':'')+'" onclick="selectAdminSite(\''+r.id+'\')"><td style="color:var(--txh)">'+esc(r.name)+'</td><td>'+r.ty+'</td><td>'+r.region+'</td><td>'+esc(r.utility)+'</td><td>'+r.mw+'</td><td style="color:'+hc+'">'+r.health+'</td><td style="color:'+C.stColor(r.p)+'">'+r.p+'</td><td style="color:'+C.stColor(r.sec)+'">'+r.sec+'</td><td>'+C.ago(r.sync)+'</td><td style="color:'+(r.wo?'#e05555':'var(--txd)')+'">'+r.wo+'</td></tr>';}).join('')+
+      '</tbody></table><div style="font-size:8.5px;letter-spacing:1px;color:var(--txd);padding:5px 10px">'+rows.length+' of '+C.SITES.length+' sites · click a column to sort · click a row to select</div>';}
+  function paint(){strip();paintMarkers();side();table();}
+  function select(id){sel=id;paint();var s=C.SITE[id];if(s&&map)map.flyTo([s.lat,s.lon],Math.max(map.getZoom(),5),{duration:.6});}
+  window.selectAdminSite=function(id){if(C.SITE[id])select(id);};
+  window.setTy=function(t,el){F.ty=t;document.querySelectorAll('#bar .chip[data-ty]').forEach(function(c){c.classList.toggle('on',c.getAttribute('data-ty')===t);});paint();};
+  window.setReg=function(v){F.reg=v;paint();};window.setHf=function(v){F.hf=v;paint();};
+  window.fitAll=function(){var v=vis();if(!v.length||!map)return;map.fitBounds(L.latLngBounds(v.map(function(s){return [s.lat,s.lon];})),{padding:[30,30]});};
+  /* boot */
+  Object.keys(C.REG).forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k+' — '+C.REG[k];$('reg').appendChild(o);});
+  try{
+    if(!window.L)throw new Error('Leaflet not loaded');
+    map=L.map('map',{worldCopyJump:true,zoomControl:true,attributionControl:true}).setView([30,-20],2);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:'abcd',maxZoom:18}).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:18,opacity:.7}).addTo(map);
+  }catch(e){map=null;$('map').innerHTML='<div class="empty" style="padding-top:60px">Map tiles unavailable (offline or Leaflet blocked).<br>The roll-up table and site panel still work · select a site below.</div>';console.warn('SYS-03 map',e);}
+  paint();setTimeout(fitAll,300);
+  setInterval(paint,15000);
+  window.addEventListener('message',function(e){var d=e.data||{};if(d.type==='ADMIN_REFRESH')paint();});
+})();
+</script>
+</body>
+</html>
