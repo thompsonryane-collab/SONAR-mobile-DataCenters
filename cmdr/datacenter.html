@@ -6,13 +6,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0c1a2c">
-<title>SONARmobile · Data Center</title>
-<link rel="icon" href="../favicon.ico?v=20260921" sizes="any">
-<link rel="icon" type="image/svg+xml" href="../favicon.svg?v=20260921">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png?v=20260921">
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png?v=20260921">
-<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=20260921">
-<link rel="manifest" href="manifest.json?v=20260921">
+<title>SONARmobile · Data Center · sample</title>
+<link rel="icon" href="../favicon.ico?v=20260910" sizes="any">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg?v=20260910">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png?v=20260910">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png?v=20260910">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png?v=20260910">
+<link rel="manifest" href="manifest.json?v=20260914d">
 <meta name="apple-mobile-web-app-title" content="SONARmobile">
 <meta name="apple-mobile-web-app-title" content="SONARmobile">
 <style>
@@ -37,7 +37,10 @@ a{color:var(--cyan);text-decoration:none}
 .brand{display:flex;align-items:center;gap:9px;min-width:0}
 .nav{gap:8px}
 .navtop{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-width:0;flex:1 1 auto}
-.nav-site{font-size:11.5px;font-weight:600;letter-spacing:.3px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1;min-width:0}
+.nav-site{font-size:11px;font-weight:600;letter-spacing:.2px;color:var(--ink2);white-space:normal;overflow:hidden;line-height:1.15;min-width:0;max-width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.navtop .t1{max-width:100%}
+.navtop.brand{flex:1 1 0;min-width:0;padding-right:4px}
+.navr{flex:0 0 auto}
 .navr{flex:none;align-self:center;gap:7px!important}
 .navr .link{font-size:12.5px;padding:8px 11px}
 .navr .link svg{width:17px!important;height:17px!important}
@@ -58,6 +61,8 @@ a{color:var(--cyan);text-decoration:none}
 .link.warn i{background:var(--amber)}
 .link.ping{color:var(--amber);border-color:rgba(255,179,64,.45)}
 .link.ping svg{color:var(--amber)}
+#pingpill{padding:6px 8px;gap:0}
+#pingpill.off svg{opacity:.55}
 .link.off svg{opacity:.45}
 .qa button{position:relative}
 .qa .nl{position:absolute;top:-4px;right:calc(50% - 32px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#ff3b30;color:#fff;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--bg),0 0 10px rgba(255,59,48,.6)}
@@ -514,6 +519,26 @@ body.onhome .homebtn{display:none}
 #coach .card .btn.pri{background:#ffd27a;border-color:#ffd27a;color:#2a1200}
 #coach .card .btn.ghost{background:transparent;flex:none;padding:0 14px}
 #coach .card .dots{display:flex;gap:4px;justify-content:center}#coach .card .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18)}#coach .card .dots i.on{background:#ffd27a}#coach .card .dots i.done{background:var(--green)}
+/* ── BATTLECAT ENGINEERING · in-app report viewer ── */
+#p-home .hgrid .nl.eng{display:flex;right:calc(50% - min(12vw,48px) - 10px);top:-7px;min-width:44px;height:22px;padding:0 8px;border-radius:0;clip-path:polygon(12% 0,88% 0,100% 50%,88% 100%,12% 100%,0 50%);background:linear-gradient(135deg,#b39cff,#3fd6ff);color:#0a0a20;font-family:"Share Tech Mono",Menlo,monospace;font-size:10px;letter-spacing:.8px;animation:none;box-shadow:none;filter:drop-shadow(0 0 6px rgba(179,156,255,.55))}
+.c-eng{background:radial-gradient(120% 90% at 30% 20%,#2a2450 0%,#0b1220 70%);box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 0 0 1.5px rgba(179,156,255,.55) inset,0 10px 22px rgba(0,0,0,.4),0 0 18px rgba(179,156,255,.22)}
+#p-home .hgrid .c-eng svg{stroke:#b39cff}
+#p-bceng{position:absolute;inset:0;z-index:27;background:#07111f;display:none;flex-direction:column}
+#p-bceng.on{display:flex}
+#p-bceng .hd{flex:none;padding:calc(var(--sat) + 10px) 12px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0c1a2c,#07111f)}
+#p-bceng .hd .back{width:40px;height:40px;border-radius:20px;background:var(--card);border:1px solid var(--line);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+#p-bceng .hd .back svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#p-bceng .hd .t{flex:1;min-width:0}
+#p-bceng .hd .t b{display:block;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#p-bceng .hd .t small{display:block;font-family:"Share Tech Mono",Menlo,monospace;font-size:9.5px;letter-spacing:1.2px;color:#b39cff;text-transform:uppercase;margin-top:1px}
+#p-bceng .hd .full{flex:none;height:34px;padding:0 12px;border-radius:17px;border:1px solid rgba(179,156,255,.6);color:#b39cff;background:transparent;font-family:"Share Tech Mono",Menlo,monospace;font-size:10px;letter-spacing:1px}
+#p-bceng .chips{flex:none;display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-bottom:1px solid var(--line)}
+#p-bceng .chips::-webkit-scrollbar{display:none}
+#p-bceng .chips button{flex:none;height:30px;padding:0 11px;border-radius:15px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-family:"Share Tech Mono",Menlo,monospace;font-size:10px;letter-spacing:.8px;white-space:nowrap}
+#p-bceng .chips button.on{border-color:#b39cff;color:#fff;background:rgba(179,156,255,.14)}
+#p-bceng .body{flex:1;min-height:0;position:relative;background:#07111f}
+#p-bceng iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07111f}
+#p-bceng .src{position:absolute;left:12px;bottom:calc(var(--sab) + 8px);z-index:2;font-family:"Share Tech Mono",Menlo,monospace;font-size:9px;letter-spacing:1px;color:var(--ink3);background:rgba(7,17,31,.85);padding:3px 8px;border-radius:8px;pointer-events:none}
 /* ── BATTLECAT · autonomous assessment fleet ── */
 #p-home .hgrid .nl.bc{display:flex;right:calc(50% - min(12vw,48px) - 10px);top:-7px;min-width:44px;height:22px;padding:0 8px;border-radius:0;clip-path:polygon(12% 0,88% 0,100% 50%,88% 100%,12% 100%,0 50%);background:linear-gradient(135deg,#3fd6ff,#4fd98a);color:#04202b;font-family:"Share Tech Mono",Menlo,monospace;font-size:10px;letter-spacing:.8px;animation:none;box-shadow:none;filter:drop-shadow(0 0 6px rgba(63,214,255,.55))}
 #p-home .hgrid .nl.bc.out{background:linear-gradient(135deg,#ffb340,#ff5a4e);color:#1a0a05;animation:blink 1.1s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(255,120,60,.7))}
@@ -975,7 +1000,6 @@ body.locked #app{visibility:visible}
   <button class="pa-x" onclick="PINGALARM.dismiss()">Dismiss</button>
 </div>
 <div id="app">
-  <div class="sample-tag">SAMPLE</div>
   <div class="nav">
     <div class="navtop brand" onclick="go('home')" role="button" aria-label="Dashboard" style="cursor:pointer">
       <div class="t1">SONAR<span class="wm-sub">mob<i class="wm-i">i</i>le</span></div>
@@ -1000,7 +1024,7 @@ body.locked #app{visibility:visible}
           </button>
         </div>
       </div>
-      <button class="link" id="pingpill" onclick="togglePing()" aria-label="Notifications"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg><span id="pingtxt">Ping</span></button>
+      <button class="link" id="pingpill" onclick="togglePing()" aria-label="Notifications"><svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg><span id="pingtxt" class="sr" hidden>Ping</span></button>
       <button class="link" id="linkpill" onclick="go('link')" aria-label="Link · Offline" title="Offline"><i></i></button>
     </div>
   </div>
@@ -1016,6 +1040,7 @@ body.locked #app{visibility:visible}
         <button onclick="openImpact()"><div class="ic c-violet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><div class="l" id="tl-impact">Mission impact</div></button>
         <button onclick="go('crews')" id="tile-crews"><span class="nl amber" id="hl-crews"></span><div class="ic" style="background:linear-gradient(160deg,#ffcf6b,#c8791a)"><svg viewBox="0 0 24 24"><path d="M3 17h2l1-6h12l1 6h2"/><path d="M8 11V9a4 4 0 0 1 8 0v2"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/><path d="M11 5h2"/></svg></div><div class="l">On-call</div></button>
         <button onclick="go('battlecat')" id="tile-bc"><span class="nl bc" id="hl-bc">3 RDY</span><div class="ic c-bc"><svg viewBox="0 0 24 24"><path d="M5 20V5l4 4h6l4-4v15z"/><path d="M9 13.5h.01M15 13.5h.01"/><path d="M12 15.5l-1.3 1.6h2.6z"/><path d="M13 2.5l-1.6 3h2.2L12 8.5"/></svg></div><div class="l">BattleCat</div></button>
+        <button onclick="openBcEng()" id="tile-bceng"><span class="nl eng" id="hl-bceng">REV A</span><div class="ic c-eng"><svg viewBox="0 0 24 24"><path d="M5 20V5l4 4h6l4-4v15z"/><path d="M9 13.5h.01M15 13.5h.01"/><path d="M12 15.5l-1.3 1.6h2.6z"/><circle cx="19" cy="5" r="2.5"/><path d="M19 2.5v1M19 6.5v1M16.5 5h1M20.5 5h1"/></svg></div><div class="l">BattleCat Build</div></button>
         <button onclick="go('blackstart')" id="tile-bs"><div class="ic c-ink"><svg viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M7 6.5a8 8 0 1 0 10 0"/></svg></div><div class="l">Black start</div></button>
         <button onclick="openMap()" id="tile-map"><span class="nl" id="hl-map"></span><div class="ic c-green" style="background:linear-gradient(160deg,#5fd98a,#1f7a4c)"><svg viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></div><div class="l">Live map</div></button>
         <button onclick="callEOC()"><div class="ic c-red"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div><div class="l" id="tl-eoc">Call EOC</div></button>
@@ -1103,6 +1128,13 @@ body.locked #app{visibility:visible}
     <div id="gd-lists"></div>
   </div>
   <div id="coach" onclick="if(event.target===this)GUIDE.close()"><div class="spot" id="coach-spot" onclick="GUIDE.openStep()"></div><div class="card" id="coach-card"></div></div>
+
+  <!-- BATTLECAT ENGINEERING · report viewer -->
+  <div id="p-bceng" role="dialog" aria-label="BattleCat Build — engineering report">
+    <div class="hd"><button class="back" onclick="closeBcEng()" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="t"><b>BattleCat Build</b><small>BC-ENG-001 · Rev A · engineering report</small></div><button class="full" onclick="bcEngFull()">OPEN FULL</button></div>
+    <div class="chips" id="bceng-chips"><button onclick="bcEngGo('s1',this)">Summary</button><button onclick="bcEngGo('s2',this)">Commitments</button><button onclick="bcEngGo('s3',this)">CONOPS</button><button onclick="bcEngGo('s4',this)">Capabilities</button><button onclick="bcEngGo('s5',this)">Vehicle</button><button onclick="bcEngGo('s6',this)">Docking · BC-PORT</button><button onclick="bcEngGo('s7',this)">Kennel & energy</button><button onclick="bcEngGo('s8',this)">Sensing</button><button onclick="bcEngGo('s9',this)">Assessment logic</button><button onclick="bcEngGo('s10',this)">SONAR wire schema</button><button onclick="bcEngGo('s11',this)">Safety</button><button onclick="bcEngGo('s12',this)">Prototype & BOM</button><button onclick="bcEngGo('s13',this)">Risks</button><button onclick="bcEngGo('s14',this)">Sources</button></div>
+    <div class="body"><iframe id="bceng-frame" title="BattleCat engineering report"></iframe><div class="src" id="bceng-src"></div></div>
+  </div>
 
   <!-- BATTLECAT · autonomous outage assessment fleet -->
   <div class="page" id="p-battlecat">
@@ -1647,7 +1679,7 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
           &lt;textarea id=&quot;wo-body&quot; rows=&quot;3&quot; placeholder=&quot;Full text of the SONAR alert…&quot;&gt;&lt;/textarea&gt;
         &lt;/div&gt;
         &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Recipients&lt;/label&gt;
-          &lt;input type=&quot;text&quot; id=&quot;wo-recip&quot; value=&quot;Facility Director · NOC · Utility provider&quot; placeholder=&quot;Chain-of-command recipients&quot;&gt;
+          &lt;input type=&quot;text&quot; id=&quot;wo-recip&quot; value=&quot;Installation CO · NAVFAC · DLA Energy&quot; placeholder=&quot;Chain-of-command recipients&quot;&gt;
         &lt;/div&gt;
         &lt;button class=&quot;wo-add-btn&quot; onclick=&quot;addWarningOrder()&quot;&gt;＋ &lt;span class=&quot;c-lbl&quot;&gt;ADD ORDER TO &lt;/span&gt;QUEUE&lt;/button&gt;
       &lt;/div&gt;
@@ -1854,7 +1886,7 @@ body::after{content:&#x27;&#x27;;position:absolute;inset:0;background:repeating-
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;field&quot;&gt;&lt;label&gt;Notification Recipients&lt;/label&gt;
-        &lt;textarea id=&quot;notif-recipients&quot; style=&quot;min-height:44px&quot;&gt;Facility Director · NOC · Customer Success · Utility provider&lt;/textarea&gt;
+        &lt;textarea id=&quot;notif-recipients&quot; style=&quot;min-height:44px&quot;&gt;NAVFAC Atlantic · CINCLANTFLT · Installation CO · DLA Energy&lt;/textarea&gt;
       &lt;/div&gt;
       &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;Auto-trigger on utility outage detection&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
       &lt;div class=&quot;toggle-row&quot;&gt;&lt;span class=&quot;toggle-lbl&quot;&gt;SMS/email notifications to chain-of-command&lt;/span&gt;&lt;label class=&quot;toggle&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;&lt;div class=&quot;toggle-track&quot;&gt;&lt;/div&gt;&lt;/label&gt;&lt;/div&gt;
@@ -2374,7 +2406,7 @@ updateAiContext();
         <div class="isohd" onclick="toggleIso()"><div class="t" id="iso-title">ISO · BROAD RUN DATA CENTER · LDN1</div><div class="s">Campus · drag to pan · pinch to zoom · twist or ⟲ ⟳ to rotate · 2×tap reset</div></div>
         <button class="isochip" onclick="toggleIso()">SATELLITE</button><div class="isolegend" id="iso-legend"></div>
         <div class="isobody" id="iso-body"><div class="isoxf" id="iso-xf"><svg class="isofull" id="iso-svg" viewBox="-330 -135 800 585" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg></div></div>
-        <div class="isorot"><button onclick="isoRotate(-30)" aria-label="Rotate left"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button><button onclick="isoRotate(30)" aria-label="Rotate right"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></button><button id="iso-spin" onclick="isoSpin()" aria-label="Auto-rotate 360°"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 3v18"/><path d="M15 6l-3-3-3 3"/></svg></button></div><span class="isozoom" id="iso-zoom"><span class="hd" id="iso-hd">000°</span><span id="iso-k">1.0×</span></span>
+        <div class="isorot"><button onclick="isoRotate(-30)" aria-label="Rotate left"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button><button onclick="isoRotate(30)" aria-label="Rotate right"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></button><button id="iso-spin" type="button" aria-label="Auto-rotate 360°" aria-pressed="false"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 3v18"/><path d="M15 6l-3-3-3 3"/></svg></button></div><span class="isozoom" id="iso-zoom"><span class="hd" id="iso-hd">000°</span><span id="iso-k">1.0×</span></span>
       </div>
       <div class="mlayers"><button class="on" data-l="outages" onclick="mapLayer(this)">Outages</button><button class="on" data-l="feeders" onclick="mapLayer(this)">Feeds</button><button class="on" data-l="gens" onclick="mapLayer(this)">Generators</button><button data-l="sat" onclick="mapLayer(this)">Labels</button></div>
       <div class="mlegend"><span><i style="background:var(--red)"></i>Loss of power · P1</span><span><i style="background:var(--amber)"></i>Degraded · backup / P2</span><span><i style="background:var(--blue)"></i>Minor · P3</span><span><i style="background:var(--green)"></i>Energized / microgrid island</span></div>
@@ -2540,7 +2572,7 @@ window.SRABus=(function(){
   var NODE='cmdr';
   var CFG_KEY='sra_bus_cfg_'+NODE+'_dc', LOG_KEY='sra_bus_log_dc', SEEN_KEY='sra_bus_seen_'+NODE+'_dc';
   var CH_NAME='ie-sra-bus';
-  var DEF={transport:'off', node:NODE, site:'nb-sd', repo:'thompsonryane-collab/sonar-mobile-dc', branch:'main', path:'data/bus.json', token:'', poll:5};
+  var DEF={transport:'off', node:NODE, site:'nb-sd', repo:'thompsonryane-collab/ie-SRS', branch:'main', path:'data/bus.json', token:'', poll:5};
   function ls(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
   function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
   var cfg=Object.assign({},DEF,ls(CFG_KEY,{}));
@@ -3061,6 +3093,9 @@ window.SRADropZone=(function(){
         d:function(){var m=n(BATTLECAT.summary)||{rdy:0,out:0};return 'Three cats live in kennels on the ring road (on the gen bus, with battery). A SONAR alert dispatches the nearest one; it drives to the outage, mates its arm to the asset’s <b>diagnostic port</b> — never the live bus — runs a checklist and pushes an assessment with confidence and a revised ETR here, to the channel and to ADMIN. Fleet now: <b>'+m.rdy+' ready</b>, <b>'+m.out+' on sortie</b>.';},
         tip:function(){return 'Try it: tap DEPLOY on an outage and watch the sortie on the embedded campus map.';},
         tryIt:function(){go('battlecat');var o=(n(outages)||[])[0];if(o)BATTLECAT.deploy(o.id,o.name);}},
+      {id:'bceng',g:'Assess',t:'BattleCat Build — engineering report',sel:"openBcEng()",open:function(){openBcEng();},
+        d:function(){return 'The prototype engineering report behind the tile — BC-ENG-001 Rev A: what the tile commits to, the vehicle, the BC-PORT diagnostic docking, the kennel one-line, the SONAR wire schema, safety, and the build plan with a bill of materials. Section chips jump inside the report; OPEN FULL launches it in the browser.';},
+        tip:function(){return 'Read Docking and Safety first — they are what a facilities director will ask about.';}},
       {id:'blackstart',g:'Assess',t:'Black start drill',sel:"go('blackstart')",open:function(){go('blackstart');},
         d:function(){var b=n(function(){return BLACKSTART._st();})||{phase:-1};return 'The annual pull-the-plug drill: open the utility tie, UPS ride-through, black-start the dead generator bus, cooling first, then IT tiers, then resync. The <b>cooling clock</b> — cold aisle rising toward 27°C — is the real limit, not the UPS. Drill state: <b>'+(b.phase<0?'planned':b.phase>=5?'complete':'step '+(b.phase+1)+' of 6')+'</b>.';},
         tip:function(){return 'Try it: Auto-run the sequence, then answer the Director load-shed decision at T2.';},
@@ -3517,7 +3552,7 @@ window.SRADropZone=(function(){
       test:function(){start({id:'t'+Date.now(),by:'ADMIN',secs:10});}
     };
   })();
-  function renderPing(){var p=$('pingpill');if(!p)return;p.className='link '+(S.notify?'ping':'off');$('pingtxt').textContent=S.notify?'Ping':'Off';var f=$('f-notify');if(f)f.classList.toggle('on',!!S.notify);}
+  function renderPing(){var p=$('pingpill');if(!p)return;p.className='link '+(S.notify?'ping':'off');$('pingtxt').textContent=S.notify?'Ping':'Off';p.setAttribute('aria-label',S.notify?'Notifications on':'Notifications off');p.title=S.notify?'Ping on':'Ping off';var f=$('f-notify');if(f)f.classList.toggle('on',!!S.notify);}
   window.togglePing=function(){S.notify=!S.notify;save();renderPing();
     if(S.notify){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume();}catch(e){}if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();ping('msg');toast('Notifications on','Sound + vibration for SONAR alerts and messages','amber');}
     else toast('Notifications off','','');};
@@ -3923,7 +3958,20 @@ window.SRADropZone=(function(){
     var hd=$('iso-hd');if(hd)hd.textContent=String(Math.round(ISO.th)).padStart(3,'0')+'°';
     if(window.isoRepaint)window.isoRepaint();}
   window.isoRotate=function(d){isoRender(ISO.th+d);};
-  window.isoSpin=function(){var b=$('iso-spin');if(ISO.spin){clearInterval(ISO.spin);ISO.spin=null;if(b)b.classList.remove('on');return;}if(b)b.classList.add('on');ISO.spin=setInterval(function(){if(!$('iso-view').classList.contains('on')){window.isoSpin();return;}isoRender(ISO.th+1.5);},50);};
+  /* 360° spin · rAF, time-based (30°/s), render throttled to ~14 fps, paused while a two-finger gesture is live */
+  var SPIN={raf:null,t:0,last:0,paused:false,RATE:30,FPS:14};
+  function spinFrame(now){if(!ISO.spin)return;if(!$('iso-view').classList.contains('on')){window.isoSpin(false);return;}
+    if(!SPIN.paused){var dt=(now-SPIN.t)/1000;SPIN.t=now;ISO.th=((ISO.th+dt*SPIN.RATE)%360+360)%360;if(now-SPIN.last>1000/SPIN.FPS){SPIN.last=now;isoRender(ISO.th);}}else SPIN.t=now;
+    SPIN.raf=requestAnimationFrame(spinFrame);}
+  window.isoSpin=function(on){var b=$('iso-spin');if(typeof on!=='boolean')on=!ISO.spin;
+    if(!on){if(SPIN.raf)cancelAnimationFrame(SPIN.raf);SPIN.raf=null;ISO.spin=null;if(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');}isoRender(ISO.th);return;}
+    if(ISO.spin)return;ISO.spin=1;SPIN.t=performance.now();SPIN.last=0;SPIN.paused=false;if(b){b.classList.add('on');b.setAttribute('aria-pressed','true');}SPIN.raf=requestAnimationFrame(spinFrame);};
+  (function(){var b=$('iso-spin');if(!b)return;var armed=false;
+    b.addEventListener('pointerdown',function(e){armed=true;e.preventDefault();e.stopPropagation();});
+    b.addEventListener('pointerup',function(e){e.preventDefault();e.stopPropagation();if(armed){armed=false;window.isoSpin();}});
+    b.addEventListener('pointercancel',function(){armed=false;});
+    b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();});
+    b.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();window.isoSpin();}});})();
   /* outage overlay on the campus: demo outages land on their asset (u1 service entrance · u2 UPS-2B · u3 CRAH-14), live SONAR alerts take the spare pins */
   function isoPaint(){var used={};function show(id,p,tag){var g=$('iso-mk-'+id);if(!g)return false;g.style.display='';g.className.baseVal='isomk '+p;g.querySelector('.isotag').textContent=tag;used[id]=1;return true;}
     var rows=[];
@@ -3931,12 +3979,12 @@ window.SRADropZone=(function(){
     var w=0;woList().filter(function(x){return !x.test&&(!x.ack||x.mine);}).forEach(function(x){if(w>3)return;var p=(x.sev||'P1').toLowerCase();if(show('w'+w,p,x.sev||'P1')){rows.push([p,x.code+' · '+(x.title||'SONAR alert'),x.etr||'—']);w++;}});
     ['u1','u2','u3','w0','w1','w2','w3'].forEach(function(id){if(!used[id]){var g=$('iso-mk-'+id);if(g)g.style.display='none';}});
     var fa=$('iso-feedA');if(fa)fa.setAttribute('stroke',used.u1?'#ff5a4e':'#4fd98a');
-    ISO.rows=rows;var lg=$('iso-legend');if(lg){var ids=Object.keys(used);lg.innerHTML=rows.length?'<div class="k">'+rows.length+' outage'+(rows.length===1?'':'s')+' on campus</div><div class="rail">'+rows.map(function(r,i){var nm=r[1].split(' · ')[0];return '<button onclick="isoFocus(\''+ids[i]+'\',this)"><b class="'+r[0]+'">'+r[0].toUpperCase()+'</b>'+esc(nm)+'<small>'+esc(r[2])+'</small></button>';}).join('')+'</div>':'<div class="k">no outages on campus</div>';}
+    ISO.rows=rows;var lg=$('iso-legend'),sig=JSON.stringify(rows)+'|'+(ISO.hi||'');if(lg&&lg.getAttribute('data-sig')===sig)lg=null;else if(lg)lg.setAttribute('data-sig',sig);if(lg){var ids=Object.keys(used);lg.innerHTML=rows.length?'<div class="k">'+rows.length+' outage'+(rows.length===1?'':'s')+' on campus</div><div class="rail">'+rows.map(function(r,i){var nm=r[1].split(' · ')[0];return '<button onclick="isoFocus(\''+ids[i]+'\',this)"><b class="'+r[0]+'">'+r[0].toUpperCase()+'</b>'+esc(nm)+'<small>'+esc(r[2])+'</small></button>';}).join('')+'</div>':'<div class="k">no outages on campus</div>';}
     if(ISO.hi){var h=$('iso-mk-'+ISO.hi);if(h)h.classList.add('hi');}}
   window.isoFocus=function(id,btn){var g=$('iso-mk-'+id);var on=ISO.hi!==id;document.querySelectorAll('#iso-view .isomk.hi').forEach(function(x){x.classList.remove('hi');});document.querySelectorAll('#iso-view .isolegend button.on').forEach(function(x){x.classList.remove('on');});ISO.hi=on?id:null;if(on&&g){g.classList.add('hi');if(btn)btn.classList.add('on');}};
   window.isoRepaint=function(){isoPaint();try{if(window.BATTLECAT)BATTLECAT.paintMap();}catch(e){}};
   function setIso(on){var v=$('iso-view'),b=$('iso-btn');if(!v||!b)return;v.classList.toggle('on',on);b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');
-    if(on){$('iso-title').textContent='ISO · '+(S.siteName||'Utility').toUpperCase();if(ISO.rendered!==ISO.th){ISO.rendered=ISO.th;isoRender(ISO.th);}else isoPaint();}else{if(ISO.spin)window.isoSpin();if(MAP.map)MAP.map.invalidateSize();}}
+    if(on){$('iso-title').textContent='ISO · '+(S.siteName||'Utility').toUpperCase();if(ISO.rendered!==ISO.th){ISO.rendered=ISO.th;isoRender(ISO.th);}else isoPaint();}else{if(ISO.spin)window.isoSpin(false);if(MAP.map)MAP.map.invalidateSize();}}
   window.toggleIso=function(){var on=!$('iso-view').classList.contains('on');MAP.isoPref=on;setIso(on);};
   /* ── SONAR Scenario Builder (ADM-08 port, no ARIA) ── */
   /* ── SYS-04 Data Drop Zone (synced with ADMIN + ie-SRS hub) ── */
@@ -3947,6 +3995,20 @@ window.SRADropZone=(function(){
       onIncoming:function(d,env){if(!$('p-drop').classList.contains('on')){S.unreadDrop=(S.unreadDrop||0)+1;save();renderBadges();}toast('Drop zone · '+d.name,'from '+(d.from||env.from||'peer').toUpperCase(),'amber');buzz();}});}
   window.SRABus.subscribe(function(env){if(env.type==='DROP'&&!$('p-drop').classList.contains('on')&&!DZM){S.unreadDrop=(S.unreadDrop||0)+1;save();renderBadges();toast('Drop zone · '+(env.payload&&env.payload.name||'new item'),'from '+(env.from||'peer').toUpperCase(),'amber');}});
   function dzScenario(pl,source){var d=window.SRADropZone.fromScenario(pl,{source:source});return d;}
+  /* BattleCat Engineering report · local copy first, Pages fallback */
+  var BCENG={local:'../docs/battlecat-engineering/index.html',pages:'https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat-engineering/',src:'',loaded:false,hash:''};
+  function bcEngUrl(){return (location.protocol==='file:'||BCENG.src==='pages')?BCENG.pages:BCENG.local;}
+  window.openBcEng=function(){var p=$('p-bceng'),f=$('bceng-frame');p.classList.add('on');
+    if(!BCENG.loaded){BCENG.loaded=true;if(location.protocol==='file:')BCENG.src='pages';
+      f.addEventListener('load',function(){var ok=false;try{var d=f.contentDocument;ok=!!(d&&d.querySelector('section#s1'));}catch(e){ok=BCENG.src==='pages';}
+        if(!ok&&BCENG.src!=='pages'){BCENG.src='pages';f.src=BCENG.pages+(BCENG.hash||'');return;}
+        $('bceng-src').textContent=(BCENG.src==='pages'?'GITHUB PAGES':'LOCAL COPY')+' · docs/battlecat-engineering';if(BCENG.hash)bcEngGo(BCENG.hash.slice(1));});
+      f.src=bcEngUrl();}};
+  window.closeBcEng=function(){$('p-bceng').classList.remove('on');};
+  window.bcEngGo=function(id,btn){var f=$('bceng-frame');BCENG.hash='#'+id;document.querySelectorAll('#bceng-chips button').forEach(function(b){b.classList.toggle('on',b===btn);});
+    try{var d=f.contentDocument,el=d&&d.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});return;}}catch(e){}
+    try{f.contentWindow.location.replace(bcEngUrl()+'#'+id);}catch(e){f.src=bcEngUrl()+'#'+id;}};
+  window.bcEngFull=function(){window.open(BCENG.pages+(BCENG.hash||''),'sonar-battlecat-engineering');};
   window.openBuilder=function(){$('p-builder').classList.add('on');};
   window.closeBuilder=function(){$('p-builder').classList.remove('on');};
   function builderRelease(pl){if(!pl)return;var wos=Array.isArray(pl.warningOrders)?pl.warningOrders:[];var stamp=String(Date.now()).slice(-4),n=0;
@@ -3976,13 +4038,13 @@ window.SRADropZone=(function(){
     function mid(){var a=Object.values(pts);if(a.length<2)return null;return {x:(a[0][0]+a[1][0])/2,y:(a[0][1]+a[1][1])/2,d:Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]),a:Math.atan2(a[1][1]-a[0][1],a[1][0]-a[0][0])*180/Math.PI};}
     body.addEventListener('pointerdown',function(e){try{body.setPointerCapture(e.pointerId);}catch(_){}pts[e.pointerId]=loc(e);var n=Object.keys(pts).length;
       if(n===1){var now=Date.now();if(lastTap&&now-lastTap<300){Z.k=1;Z.x=0;Z.y=0;apply();isoRender(0);lastTap=0;start=null;return;}lastTap=0;start={x:Z.x,y:Z.y,p:pts[e.pointerId],t:now,moved:false};}
-      else if(n===2){var m=mid();start={k:Z.k,x:Z.x,y:Z.y,m:m,th:ISO.th,rot:0};}});
+      else if(n===2){var m=mid();start={k:Z.k,x:Z.x,y:Z.y,m:m,th:ISO.th,rot:0};if(ISO.spin)SPIN.paused=true;}});
     var rotT=0;
     body.addEventListener('pointermove',function(e){if(!(e.pointerId in pts))return;pts[e.pointerId]=loc(e);var n=Object.keys(pts).length;if(!start)return;
       if(n===2&&start.m){var m=mid();var f=m.d/start.m.d;var nk=Math.min(Z.MAX,Math.max(Z.MIN,start.k*f));f=nk/start.k;Z.k=nk;Z.x=m.x-(start.m.x-start.x)*f;Z.y=m.y-(start.m.y-start.y)*f;clamp();apply();
         var da=m.a-start.m.a;if(da>180)da-=360;if(da<-180)da+=360;if(Math.abs(da)>4||start.rot){start.rot=1;var now=Date.now();if(now-rotT>40){rotT=now;isoRender(start.th+da);}}}
       else if(n===1&&start.p){var p=pts[e.pointerId];if(Math.hypot(p[0]-start.p[0],p[1]-start.p[1])>8)start.moved=true;if(start.moved){Z.x=start.x+(p[0]-start.p[0]);Z.y=start.y+(p[1]-start.p[1]);clamp();apply();}}});
-    function up(e){var wasTap=start&&start.p&&!start.m&&!start.moved&&Object.keys(pts).length===1&&(Date.now()-start.t)<250;delete pts[e.pointerId];var a=Object.values(pts);if(a.length===1){start={x:Z.x,y:Z.y,p:a[0],t:Date.now(),moved:true};}else if(a.length===0){start=null;lastTap=wasTap?Date.now():0;}}
+    function up(e){var wasTap=start&&start.p&&!start.m&&!start.moved&&Object.keys(pts).length===1&&(Date.now()-start.t)<250;if(wasTap&&ISO.spin){window.isoSpin(false);lastTap=0;}if(ISO.spin&&Object.keys(pts).length<=1)SPIN.paused=false;delete pts[e.pointerId];var a=Object.values(pts);if(a.length===1){start={x:Z.x,y:Z.y,p:a[0],t:Date.now(),moved:true};}else if(a.length===0){start=null;lastTap=wasTap?Date.now():0;}}
     body.addEventListener('pointerup',up);body.addEventListener('pointercancel',up);body.addEventListener('pointerleave',function(e){if(e.pointerId in pts)up(e);});
     body.addEventListener('wheel',function(e){e.preventDefault();var c=loc(e);if(e.shiftKey||e.altKey){isoRender(ISO.th+(e.deltaY<0?-6:6));return;}zoomAt(e.deltaY<0?1.15:1/1.15,c[0],c[1]);},{passive:false});
     body.addEventListener('dblclick',function(e){e.preventDefault();});
@@ -4489,7 +4551,7 @@ function logoutSonarMobile(){try{window.__toast('Sample screen','Log out is inac
 /* ── PITCH PLAYER · step-1 badge ── */
 var PITCH=(function(){
   var FILE='SONARmobile-release.html';
-  var PUB='https://thompsonryane-collab.github.io/ie-SRS/';   /* pitch/SONARmobile-release.html is published from the ie-SRS repo */
+  var PUB='https://thompsonryane-collab.github.io/ie-SRS/';
   function candidates(){
     var list=[];
     if(/^https?:$/.test(location.protocol)){
@@ -4522,7 +4584,7 @@ var PITCH=(function(){
   return {open:open,close:close,candidates:candidates};
 })();
 /* ── SONARMOBILE HUB USERS GUIDE ── */
-function openSonarMobileGuide(){window.open('../docs/phone-guide.html','SONARmobile-DC-Guide');}
+function openSonarMobileGuide(){window.open('https://thompsonryane-collab.github.io/ie-SRS/docs/cmdr-guide.html','ie-SRS-SONARmobile-Guide');}
 </script>
 
 <script>
