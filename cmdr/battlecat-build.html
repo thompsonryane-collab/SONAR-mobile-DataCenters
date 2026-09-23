@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BattleCat · Engineering Report BC-ENG-001 Rev A · SONAR-mobile Data Center</title>
+<title>BattleCat · Engineering Report BC-ENG-001 Rev B · SONAR-mobile Data Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -104,20 +104,29 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 @media (max-width:980px){.layout{grid-template-columns:1fr}nav.toc{position:static;display:flex;flex-wrap:wrap;gap:4px 10px}nav.toc .t{width:100%}nav.toc a{border:1px solid var(--line);border-radius:999px;padding:4px 10px}.hero{grid-template-columns:1fr}.hero h1{font-size:34px}}
 @media (max-width:640px){.cap-grid{grid-template-columns:1fr}.hero .facts{grid-template-columns:repeat(3,1fr)}.kv{grid-template-columns:1fr}.hero h1{font-size:30px}body{font-size:15px}}
 @media print{body{background:#fff;color:#111}nav.toc{display:none}.layout{grid-template-columns:1fr}figure,.cap,.fact,pre{border-color:#bbb;background:#fff}p,td,li,figcaption,.cap .d{color:#222}h2 i,code,.docid .rev{color:#0a6}}
+/* iOS fit · in-app viewer */
+@media (max-width:640px){.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}table{min-width:560px}pre{overflow-x:auto}nav.toc a{min-height:36px;display:flex;align-items:center}figure svg,.hero-art svg{width:100%;height:auto}}
+/* legible-anywhere backdrop */
+html,body{background:#07111f!important;color:#eef5fc!important;color-scheme:dark}
+.frame{background:#07111f;position:relative;z-index:1;min-height:100vh}
+.backdrop{position:fixed;inset:0;background:#07111f;z-index:0;pointer-events:none}
+.frame h1,.frame h2,.frame h3,.frame li,.frame td:first-child,.frame .kv dd,.frame .cap .n,.frame .callout b,.frame p strong,.frame .mast .brand{color:#eef5fc}
+.frame p,.frame li,.frame td,.frame figcaption,.frame .cap .d,.frame .src{color:rgba(255,255,255,.78)}
 </style>
 </head>
 <body>
+<div class="backdrop" aria-hidden="true"></div>
 <div class="frame">
 
 <header class="mast">
   <div class="brand"><b>SONAR</b>-mob<b>i</b>le · Data Center<small>Engineering report · BattleCat autonomous assessment fleet</small></div>
-  <div class="docid">Document <span>BC-ENG-001</span> · <span class="rev">Rev A</span><br>Issued <span>20 Sep 2026</span> · Status <span>Prototype concept for review</span><br>Prepared for <span>Broad Run Data Center · LDN1 (sample site)</span></div>
+  <div class="docid">Document <span>BC-ENG-001</span> · <span class="rev">Rev B</span><br>Issued <span>22 Sep 2026</span> · Status <span>Prototype concept for review · supersedes Rev A (mobility)</span><br>Prepared for <span>Broad Run Data Center · LDN1 (sample site)</span></div>
 </header>
 
 <div class="hero">
   <div>
-    <h1><small>BC-ENG-001 · Rev A</small>BattleCat<br>assessment vehicle</h1>
-    <p class="lede">A kennelled, self-charging ground robot that a SONAR alert dispatches to the failed asset. It drives the ring road, mates a probe to the asset's diagnostic port, reads the controller, looks and listens, and pushes a verdict with a revised ETR to the phone, the site channel and the console before a technician has reached the door.</p>
+    <h1><small>BC-ENG-001 · Rev B</small>BattleCat<br>assessment vehicle</h1>
+    <p class="lede">A kennelled, self-charging ground robot that a SONAR alert dispatches to the failed asset. It rolls the ring road on four leg-mounted track pods, walks or crawls the stairs, mates a probe to the asset's diagnostic port, reads the controller, looks and listens, and pushes a verdict with a revised ETR to the phone, the site channel and the console before a technician has reached the door.</p>
     <div class="facts">
       <div class="fact"><div class="n">3</div><div class="l">cats · 3 kennels on the gen bus</div></div>
       <div class="fact"><div class="n">≤ 8 min</div><div class="l">alert to assessment pushed</div></div>
@@ -125,71 +134,69 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
     </div>
   </div>
   <div class="hero-art"><span class="tag">GENERAL ARRANGEMENT · SIDE</span>
-    <!-- Hero: side elevation of the cat, stylised -->
-    <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side elevation of the BattleCat vehicle with major subsystems called out">
+    <!-- Hero: side elevation of the Rev B cat in ROLL stance, stylised -->
+    <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side elevation of the Rev B BattleCat: body and arm from Rev A on four legs that end in powered track pods">
       <defs>
         <linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e4a66"/><stop offset="1" stop-color="#16263a"/></linearGradient>
-        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#3fd6ff"/></marker>
       </defs>
-      <!-- ground -->
-      <line x1="20" y1="262" x2="500" y2="262" stroke="#243a52" stroke-width="2"/>
-      <!-- wheels -->
-      <g fill="#0b1522" stroke="#5a7898" stroke-width="2">
-        <circle cx="130" cy="236" r="26"/><circle cx="330" cy="236" r="26"/>
+      <line x1="20" y1="272" x2="500" y2="272" stroke="#243a52" stroke-width="2"/>
+      <!-- far-side legs (faint) -->
+      <g stroke="#2a4460" stroke-width="7" fill="none" stroke-linecap="round" opacity=".7">
+        <path d="M148 204 L128 232 L150 254"/><path d="M322 204 L342 232 L320 254"/>
       </g>
-      <g fill="none" stroke="#3fd6ff" stroke-width="1"><circle cx="130" cy="236" r="12"/><circle cx="330" cy="236" r="12"/></g>
-      <!-- chassis -->
+      <g fill="#111f30" stroke="#2a4460" stroke-width="1.5" opacity=".7"><rect x="114" y="246" width="70" height="20" rx="10"/><rect x="286" y="246" width="70" height="20" rx="10"/></g>
+      <!-- chassis + body (Rev A) -->
       <path d="M78 214 L78 176 Q78 166 88 166 L372 166 Q384 166 384 178 L384 214 Z" fill="url(#hg)" stroke="#3fd6ff" stroke-width="1.5"/>
-      <!-- body -->
       <path d="M96 166 L96 122 Q96 110 108 110 L292 110 Q304 110 304 122 L304 166 Z" fill="#1d3148" stroke="#3fd6ff" stroke-width="1.5"/>
-      <!-- battery bay -->
       <rect x="112" y="178" width="150" height="28" rx="4" fill="#0b1522" stroke="#4fd98a" stroke-width="1"/>
       <rect x="118" y="184" width="138" height="16" fill="none" stroke="#4fd98a" stroke-width=".8" stroke-dasharray="3 2"/>
-      <!-- compute bay -->
       <rect x="274" y="178" width="98" height="28" rx="4" fill="#0b1522" stroke="#b39cff" stroke-width="1"/>
-      <!-- lidar mast -->
       <rect x="230" y="80" width="10" height="30" fill="#2a4460" stroke="#3fd6ff" stroke-width="1"/>
       <ellipse cx="235" cy="76" rx="18" ry="6" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.5"/>
       <rect x="217" y="62" width="36" height="14" rx="3" fill="#0b1522" stroke="#3fd6ff" stroke-width="1.5"/>
-      <!-- sensor head (pan-tilt) -->
       <rect x="112" y="92" width="52" height="18" rx="3" fill="#0b1522" stroke="#ffb340" stroke-width="1.5"/>
       <circle cx="126" cy="101" r="4" fill="#ffb340"/><circle cx="150" cy="101" r="4" fill="#3fd6ff"/>
-      <!-- arm: stowed on top, reaching forward -->
-      <g stroke="#3fd6ff" stroke-width="3" fill="none" stroke-linecap="round">
-        <path d="M268 110 L268 86 L332 66 L400 96"/>
-      </g>
+      <g stroke="#3fd6ff" stroke-width="3" fill="none" stroke-linecap="round"><path d="M268 110 L268 86 L332 66 L400 96"/></g>
       <circle cx="268" cy="86" r="5" fill="#0b1522" stroke="#3fd6ff" stroke-width="2"/>
       <circle cx="332" cy="66" r="5" fill="#0b1522" stroke="#3fd6ff" stroke-width="2"/>
-      <!-- probe head -->
       <g transform="translate(400 96)">
         <rect x="-4" y="-9" width="22" height="18" rx="3" fill="#0b1522" stroke="#4fd98a" stroke-width="1.5"/>
         <line x1="18" y1="-4" x2="30" y2="-4" stroke="#4fd98a" stroke-width="2"/><line x1="18" y1="0" x2="30" y2="0" stroke="#4fd98a" stroke-width="2"/><line x1="18" y1="4" x2="30" y2="4" stroke="#4fd98a" stroke-width="2"/>
       </g>
-      <!-- asset port faceplate -->
       <rect x="452" y="70" width="40" height="52" rx="3" fill="#15202e" stroke="#c07060" stroke-width="1.5"/>
       <rect x="460" y="86" width="24" height="20" rx="2" fill="#0b1522" stroke="#4fd98a" stroke-width="1"/>
       <text x="472" y="80" text-anchor="middle" font-size="7" fill="#c07060">BC-PORT</text>
+      <!-- near-side legs: hip · knee · ankle pivot, ROLL crouch -->
+      <g stroke="#3fd6ff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M118 208 L92 238 L118 258"/><path d="M344 208 L370 238 L344 258"/>
+      </g>
+      <g fill="#0b1522" stroke="#3fd6ff" stroke-width="2"><circle cx="118" cy="208" r="6"/><circle cx="92" cy="238" r="6"/><circle cx="344" cy="208" r="6"/><circle cx="370" cy="238" r="6"/></g>
+      <!-- track pods -->
+      <g fill="#111f30" stroke="#4fd98a" stroke-width="2">
+        <rect x="80" y="246" width="76" height="26" rx="13"/><rect x="306" y="246" width="76" height="26" rx="13"/>
+      </g>
+      <g fill="none" stroke="#4fd98a" stroke-width="1" stroke-dasharray="3 3"><rect x="86" y="251" width="64" height="16" rx="8"/><rect x="312" y="251" width="64" height="16" rx="8"/></g>
+      <g fill="#0b1522" stroke="#ffb340" stroke-width="1.5"><circle cx="118" cy="259" r="6"/><circle cx="344" cy="259" r="6"/></g>
       <!-- WPT pad under chassis -->
-      <rect x="150" y="214" width="80" height="6" fill="#4fd98a" opacity=".8"/>
-      <!-- safety lidar / bumper -->
+      <rect x="160" y="214" width="80" height="6" fill="#4fd98a" opacity=".8"/>
+      <text x="200" y="237" text-anchor="middle" font-size="9" fill="#4fd98a">wireless charge pad</text>
+      <!-- safety scanner pods -->
       <path d="M78 200 Q66 200 66 212 L66 214 L78 214Z" fill="#ff5a4e" opacity=".85"/>
       <path d="M384 200 Q396 200 396 212 L396 214 L384 214Z" fill="#ff5a4e" opacity=".85"/>
       <!-- callouts -->
       <g font-size="9" fill="#9fb6cc">
         <g stroke="#3fd6ff" stroke-width=".8" fill="none">
-          <line x1="235" y1="60" x2="235" y2="34"/><line x1="138" y1="90" x2="138" y2="40"/><line x1="332" y1="60" x2="332" y2="34"/>
-          <line x1="187" y1="206" x2="187" y2="270"/><line x1="323" y1="206" x2="323" y2="270"/><line x1="410" y1="106" x2="430" y2="146"/>
-          <line x1="190" y1="220" x2="60" y2="240"/>
+          <line x1="235" y1="60" x2="235" y2="38"/><line x1="138" y1="90" x2="138" y2="40"/><line x1="332" y1="60" x2="345" y2="26"/>
+          <line x1="410" y1="106" x2="430" y2="146"/><line x1="92" y1="244" x2="60" y2="270"/><line x1="344" y1="272" x2="344" y2="276"/>
         </g>
-        <text x="235" y="28" text-anchor="middle" fill="#3fd6ff">3D lidar · 360°</text>
-        <text x="138" y="34" text-anchor="middle" fill="#ffb340">thermal + HMI camera · pan-tilt</text>
-        <text x="332" y="28" text-anchor="middle" fill="#3fd6ff">6-axis arm · F/T wrist</text>
-        <text x="187" y="280" text-anchor="middle" fill="#4fd98a">48 V LiFePO₄ · 1.5 kWh</text>
-        <text x="323" y="280" text-anchor="middle" fill="#b39cff">edge compute · Orin class</text>
+        <text x="262" y="34" text-anchor="middle" fill="#3fd6ff">3D lidar · 360°</text>
+        <text x="112" y="34" text-anchor="middle" fill="#ffb340">thermal · HMI camera · pan-tilt</text>
+        <text x="352" y="22" text-anchor="middle" fill="#3fd6ff">6-axis arm · F/T wrist</text>
         <text x="430" y="158" text-anchor="middle" fill="#4fd98a">probe head → diagnostic port</text>
-        <text x="60" y="252" text-anchor="middle" fill="#4fd98a">wireless charge pad</text>
+        <text x="44" y="282" text-anchor="middle" fill="#3fd6ff">leg · 3 joints</text>
+        <text x="360" y="286" text-anchor="middle" fill="#4fd98a">track pod · 320 × 120 mm · ankle pivot</text>
       </g>
-      <text x="26" y="297" font-size="8" fill="#5a7898">Length ≈ 0.95 m · height ≈ 0.62 m (mast down) · mass ≈ 65 kg</text>
+      <text x="215" y="298" text-anchor="middle" font-size="8" fill="#5a7898">ROLL stance · length ≈ 1.0 m · height ≈ 0.70 m · mass ≈ 84 kg</text>
     </svg>
   </div>
 </div>
@@ -218,18 +225,26 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <!-- ═══════════════════════════ 1 ═══════════════════════════ -->
 <section id="s1">
 <h2><i>1</i>Summary</h2>
+<div class="callout"><b>Rev B in one line.</b> The wheeled skid-steer base of Rev A is replaced by a quadruped whose four legs end in powered track pods. On the ring road it rolls on the pods at 2 m/s with the legs acting as active suspension; at a kerb, a flight of stairs or a gravel yard it locks the tracks and walks, or lowers its body and crawls on the tracks like a stair-climbing tracked vehicle. Body, arm, probe head, sensors, compute, kennel, assessment logic, wire schema and the BC-PORT are unchanged from Rev A. Mass rises from 65 to about 84 kg and the battery from 1.5 to 2.0 kWh.</div>
 <p>The BattleCat tile in <code>cmdr/datacenter.html</code> already specifies a complete operational behaviour: three cats in three kennels on the generator bus, auto-dispatch on a SONAR alert, a ring-road sortie, arm-to-diagnostic-port docking, a five-item checklist, and a pushed assessment carrying a verdict, a confidence figure, an original-versus-revised ETR and a recommendation. This report turns that behaviour into an engineering specification for a physical prototype: what the vehicle must be able to do, what it must be built from, how it docks without ever touching a live conductor, how it is powered when the site is dark, how it talks to SONAR-mobile, and how it stays inside the safety envelope of an energized electrical campus.</p>
 <p>The design decision that shapes everything else is <strong>read-only, port-mediated diagnosis</strong>. The cat never opens a door, never operates a breaker and never enters a shock-protection boundary. It reaches a standard faceplate (the <em>BC-PORT</em>) on the outside of the asset's control enclosure, reads the controller over the asset's own service protocol, and confirms what it reads with a thermal image, an HMI photograph and an acoustic sweep. Everything it produces is evidence for a person; the tile's <code>rec</code> field is a recommendation, not a command.</p>
 <div class="callout green"><b>Why this is worth building.</b> Uptime Institute's 2026 outage analysis again finds power the leading cause of impactful outages, with UPS, transfer-switch and generator failures dominant, and notes operators shifting investment toward automation and control systems. The three demo outages in the tile (utility feed lost, UPS on battery with a slow generator, a cooling-loop VFD fault) are exactly that failure set. Robots already walk data halls on scheduled rounds — Digital Realty's ANYmal in Zurich runs nine missions a day over roughly 70 monitored elements; Novva runs Spot fleets in Utah. What none of them do today is <em>respond to an alert</em>, dock to the asset and return a decision. That gap is BattleCat.</div>
+<h3>Revision history</h3>
+<div class="tw"><table>
+<tr><th>Rev</th><th>Date</th><th>Change</th></tr>
+<tr><td>A</td><td>20 Sep 2026</td><td>First issue. Wheeled skid-steer base; stairs and roofs out of reach, elevator-capable only.</td></tr>
+<tr><td>B</td><td>22 Sep 2026</td><td>Mobility replaced: leg-track pod quadruped (§5), three locomotion modes, stair and terrain capability, KNEEL stance for docking and charging. Requirements, C1, safety rows, BOM, tests and risks updated to match. All other subsystems carried over.</td></tr>
+</table></div>
 <h3>Headline requirements</h3>
 <div class="tw"><table>
 <tr><th>Requirement</th><th>Target</th><th>Derived from</th></tr>
 <tr><td>Alert-to-assessment latency</td><td>≤ 8 min for any pinned target on the sample campus</td><td>Tile sortie model; P1 ETR of 45 min must be revised early enough to matter</td></tr>
-<tr><td>Sortie endurance</td><td>≥ 90 min continuous, two sorties without recharge</td><td>Tile drains ~0.03 %/step en route and 2 % per check</td></tr>
+<tr><td>Sortie endurance</td><td>≥ 75 min mixed rolling/walking, two sorties without recharge; ≥ 6 flights of stairs per sortie</td><td>Tile drains ~0.03 %/step en route and 2 % per check</td></tr>
 <tr><td>Dark-site operation</td><td>Kennel powered from the gen bus, with ≥ 6 h local battery bridging generator start and a total loss of the bus</td><td>Tile: "kennels on the gen bus · 6 h battery each"</td></tr>
 <tr><td>Diagnostic reach</td><td>Read the switchgear IED / ATS controller, UPS management card, generator controller, VFD and BMS through one standard faceplate</td><td>Tile check lists for u1, u2, u3</td></tr>
 <tr><td>Electrical safety</td><td>Vehicle envelope stays outside the NFPA 70E limited approach boundary of every exposed part; port faceplate is on a Class 2 / SELV control surface</td><td>"Never the live bus" framing</td></tr>
-<tr><td>Autonomy</td><td>Ring road plus indoor corridors, lights on or off, no beacons required; people and vehicles on the road</td><td>Ring-road path model; ISO 3691-4 / R15.08</td></tr>
+<tr><td>Autonomy</td><td>Ring road, indoor corridors, kerbs, gravel and stairs to IBC 7 in / 11 in geometry, lights on or off, no beacons required; people and vehicles on the road and on the stairs</td><td>Ring-road path model; Rev B stair requirement; ISO 3691-4 / R15.08</td></tr>
+<tr><td>Terrain and stairs</td><td>Ascend and descend a 12-riser flight in ≤ 45 s with zero falls in test; 200 mm kerb, 30° ramp, 400 mm gap, loose gravel and wet epoxy</td><td>Rev B mobility requirement (§5)</td></tr>
 <tr><td>SONAR wire protocol</td><td>Publish <code>BC_EVENT</code> and <code>BC_ASSESS</code> on the site channel exactly as the tile does today, so the phone, console and audit need no change</td><td>Tile <code>bus.publish</code> calls; console audits BC_ASSESS / BC_EVENT</td></tr>
 </table></div>
 </section>
@@ -250,7 +265,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <dt>Events</dt><dd><code>BC_EVENT {cat, ev:'dispatch', target, site}</code> on dispatch. Recall sends the cat straight back. Console audits both message types.</dd>
 </div>
 <h3>Reading the tile as requirements</h3>
-<p>Three things in the tile are aspirational for a first prototype and are called out as such rather than quietly dropped. <strong>Roof access</strong>: target <code>u3</code> is on the Hall 1 roof (z 44). A ground vehicle needs a rooftop ramp or an elevator; Rev A specifies an elevator-capable cat and a fallback ground-level CRAH port in the mechanical gallery, and treats true roof-top work as a Rev B tethered-drone payload. <strong>Single-sortie fleet</strong>: the tile allows one sortie at a time; the hardware supports three concurrent sorties, and the tile guard becomes a policy switch. <strong>Zero-metre ring road</strong>: scene units are treated as metres for this report (ring ≈ 480 × 380 m, perimeter ≈ 1.7 km), which sets the drive-time budget in §3.</p>
+<p>Three things in the tile are aspirational for a first prototype and are called out as such rather than quietly dropped. <strong>Roof access</strong>: target <code>u3</code> is on the Hall 1 roof (z 44). Rev B reaches it by the roof-access stair — two flights in WALK mode on the way up and CRAWL mode on the way down, about 1.5 min added to the sortie (§5). The ground-level CRAH port in the mechanical gallery stays as the fallback when a roof hatch is locked. <strong>Single-sortie fleet</strong>: the tile allows one sortie at a time; the hardware supports three concurrent sorties, and the tile guard becomes a policy switch. <strong>Zero-metre ring road</strong>: scene units are treated as metres for this report (ring ≈ 480 × 380 m, perimeter ≈ 1.7 km), which sets the drive-time budget in §3.</p>
 </section>
 
 <!-- ═══════════════════════════ 3 ═══════════════════════════ -->
@@ -264,7 +279,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <g font-size="11" fill="#9fb6cc" text-anchor="middle">
     <g><circle cx="60" cy="150" r="7" fill="#ff5a4e"/><text x="60" y="125" fill="#ff5a4e">T+0</text><text x="60" y="180">SONAR alert</text><text x="60" y="194" font-size="9" fill="#5a7898">BC_EVENT dispatch</text></g>
     <g><circle cx="160" cy="150" r="7" fill="#3fd6ff"/><text x="160" y="125" fill="#3fd6ff">T+20 s</text><text x="160" y="180">door up · roll</text><text x="160" y="194" font-size="9" fill="#5a7898">kennel releases dock</text></g>
-    <g><circle cx="290" cy="150" r="7" fill="#3fd6ff"/><text x="290" y="125" fill="#3fd6ff">≤ T+4 min</text><text x="290" y="180">arrive · find port</text><text x="290" y="194" font-size="9" fill="#5a7898">≤ 350 m at 1.5 m/s</text></g>
+    <g><circle cx="290" cy="150" r="7" fill="#3fd6ff"/><text x="290" y="125" fill="#3fd6ff">≤ T+4 min</text><text x="290" y="180">arrive · find port</text><text x="290" y="194" font-size="9" fill="#5a7898">≤ 350 m in ROLL at 2 m/s</text></g>
     <g><circle cx="410" cy="150" r="7" fill="#ffb340"/><text x="410" y="125" fill="#ffb340">≤ T+5.5 min</text><text x="410" y="180">docked</text><text x="410" y="194" font-size="9" fill="#5a7898">fiducial · F/T · mate</text></g>
     <g><circle cx="530" cy="150" r="7" fill="#ffb340"/><text x="530" y="125" fill="#ffb340">≤ T+8 min</text><text x="530" y="180">5 checks · verdict</text><text x="530" y="194" font-size="9" fill="#5a7898">read · look · listen</text></g>
     <g><circle cx="650" cy="150" r="7" fill="#4fd98a"/><text x="650" y="125" fill="#4fd98a">T+8 min</text><text x="650" y="180">assessment pushed</text><text x="650" y="194" font-size="9" fill="#5a7898">phone · channel · console</text></g>
@@ -273,7 +288,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <g font-size="10" fill="#5a7898">
     <rect x="40" y="40" width="750" height="60" rx="8" fill="none" stroke="#1e2d45"/>
     <text x="56" y="60" fill="#9fb6cc">Budget by phase</text>
-    <text x="56" y="80">dispatch 20 s · transit ≤ 220 s · dock ≤ 90 s · checklist ≤ 150 s · push ≤ 5 s · return ≤ 300 s</text>
+    <text x="56" y="80">dispatch 20 s · transit ≤ 200 s in ROLL (+45 s per flight of stairs) · dock ≤ 90 s · checklist ≤ 150 s · push ≤ 5 s · return ≤ 300 s</text>
     <text x="56" y="94">Tile animation runs the same phases at 100 ms per step; the physical budget is what the animation stands for.</text>
   </g>
   <text x="40" y="240" font-size="10" fill="#5a7898">Hold-on-station: on a P1 the cat stays docked and re-reads every 60 s until released by ACK,</text>
@@ -281,7 +296,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <text x="40" y="276" font-size="10" fill="#5a7898">Recall: at any phase, the console or the phone sends recall; the cat unmates, retracts and returns.</text>
   <text x="40" y="292" font-size="10" fill="#5a7898">A cat below 25 % on arrival still completes the checklist, then returns on reserve.</text>
 </svg>
-<figcaption><b>Fig 1</b>Sortie timeline. The eight-minute alert-to-assessment target is the driving requirement for speed, docking time and checklist duration.</figcaption>
+<figcaption><b>Fig 1</b>Sortie timeline. The eight-minute alert-to-assessment target is the driving requirement for speed, docking time and checklist duration. Rev B rolls faster than Rev A, so a target one or two flights up still lands inside the budget.</figcaption>
 </figure>
 <h3>Operating modes</h3>
 <ul>
@@ -298,7 +313,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <h2><i>4</i>Capabilities required to run the assessment</h2>
 <p>Ten capabilities, each with a threshold and the tile check it enables. A prototype that cannot meet a threshold should say so in its <code>BC_ASSESS</code> rather than guess; the confidence figure in §9 is where that honesty is scored.</p>
 <div class="cap-grid">
-  <div class="cap"><div class="id">C1 · MOBILITY</div><div class="n">Drive the ring road and the halls</div><div class="d">Outdoor asphalt and concrete with 8 % ramps, kerb cuts, wet surfaces; indoor raised floor and epoxy. <b>1.5 m/s</b> cruise outdoors, 0.8 m/s indoors, 0.3 m/s within 3 m of a person. Doors: card-reader-actuated automatic doors on the cat's route; no door manipulation in Rev A.</div><div class="chk">Enables: reaching every target in ≤ 4 min; "Access route · clear".</div></div>
+  <div class="cap"><div class="id">C1 · MOBILITY · REV B</div><div class="n">Roll the ring road, walk the stairs, crawl the rough</div><div class="d">Three modes on one leg-track pod quadruped. <b>ROLL</b> on the pods at <b>2.0 m/s</b> outdoors, 1.0 indoors, 0.3 within 3 m of a person, legs as active suspension over kerb cuts and speed bumps. <b>WALK</b> with the tracks braked as feet: stairs to 200 mm risers, 200 mm kerbs, 400 mm gaps, 30° ramps, gravel, at 0.8 m/s. <b>CRAWL</b> with the body lowered and the four pods aligned into two track runs: continuous-contact stair descent, wet or icy stairs, 0.3 m/s. Mode changes only on level ground; self-righting after a fall. Doors: card-reader-actuated automatic doors on the route; no door manipulation in Rev B.</div><div class="chk">Enables: every target on the campus including the Hall 1 roof; "Access route · clear" now includes stairs.</div></div>
   <div class="cap"><div class="id">C2 · LOCALISATION</div><div class="n">Know where it is on the campus map without beacons</div><div class="d">3D-lidar SLAM against a surveyed campus map, <b>±10 cm</b> on the ring road, <b>±3 cm</b> at the port approach using the port fiducial. GNSS is a sanity check outdoors only; the halls have none. Works with lights off (lidar is active; cameras carry their own illumination).</div><div class="chk">Enables: the tile's x/y cat position on the ISO map; docking search start pose.</div></div>
   <div class="cap"><div class="id">C3 · PERCEPTION</div><div class="n">See heat, read displays, hear discharge</div><div class="d">Radiometric LWIR 640 × 512, <b>±2 °C or ±2 %</b>, 2–20 m stand-off; 4K visible with 20× optical zoom and a 3,000+ lm spotlight to read HMI screens, breaker flags and gauges; an acoustic array covering <b>2–100 kHz</b> for partial discharge, corona, and a failed fan's bearing note.</div><div class="chk">Enables: "Thermal · xfmr A bushings", "Panel indication · read via HMI camera", "CRAH-14 fan · stopped".</div></div>
   <div class="cap"><div class="id">C4 · MANIPULATION</div><div class="n">Mate a probe to the BC-PORT</div><div class="d">6-axis arm, <b>≥ 0.9 m</b> reach, 3 kg tool, 6-axis force/torque sensing with a compliant wrist; fiducial-guided approach then force-controlled spiral search and insertion under <b>15 N</b>. Port height 0.9–1.2 m above floor. Mate/unmate cycle ≤ 60 s. Retract on any fault.</div><div class="chk">Enables: the whole "docked · arm on diagnostic port" phase.</div></div>
@@ -314,17 +329,25 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <!-- ═══════════════════════════ 5 ═══════════════════════════ -->
 <section id="s5">
 <h2><i>5</i>Vehicle design and attributes</h2>
-<p>The tile draws the cat as a wheeled body with two eyes and an arm, and the mission is a road with a short indoor tail. A wheeled skid-steer chassis is the right prototype answer: it is fast on the ring road, carries a heavier arm and battery than a quadruped, is cheaper, and the campus has ramps rather than stairs. Legged platforms remain the reference for stair-bound halls and are noted in §13.</p>
+<p>The tile draws the cat as a body with two eyes and an arm; Rev A put that body on four wheels because the mission is mostly a road. Rev B keeps the body, the arm and every sensor and puts them on four legs that end in powered track pods — a <em>leg-track pod quadruped</em>. The reasoning: the ring road still rewards rolling (Swiss-Mile's wheeled ANYmal rolls at up to 22 km/h and locks its wheels to walk stairs), but every hall on a real campus has a stair, a mezzanine, a kerb or a gravel yard somewhere on the shortest path, and a tracked foot does two things a wheel cannot — it climbs a stair edge in walking mode and it lays a continuous contact patch in crawling mode. Hybrid leg-wheel-track platforms of this kind have been built at small scale (WheTLHLoc, Titan X, Zero Carrier); Rev B scales the idea to the 84 kg needed to carry the Rev A arm and sensor suite.</p>
 <figure>
 <svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plan view of the BattleCat vehicle with subsystem placement">
   <text x="20" y="24" font-size="11" fill="#3fd6ff">PLAN VIEW · MAST AND ARM STOWED</text>
   <!-- outline -->
   <rect x="120" y="70" width="440" height="300" rx="26" fill="#111f30" stroke="#3fd6ff" stroke-width="1.5"/>
   <!-- wheels -->
-  <g fill="#0b1522" stroke="#5a7898" stroke-width="2">
-    <rect x="98" y="90" width="30" height="70" rx="6"/><rect x="552" y="90" width="30" height="70" rx="6"/>
-    <rect x="98" y="280" width="30" height="70" rx="6"/><rect x="552" y="280" width="30" height="70" rx="6"/>
+  <!-- leg-track pods at the corners (plan): hip at the body corner, pod outboard -->
+  <g stroke="#3fd6ff" stroke-width="6" stroke-linecap="round" fill="none">
+    <line x1="130" y1="100" x2="92" y2="118"/><line x1="550" y1="100" x2="588" y2="118"/><line x1="130" y1="340" x2="92" y2="322"/><line x1="550" y1="340" x2="588" y2="322"/>
   </g>
+  <g fill="#0b1522" stroke="#4fd98a" stroke-width="2">
+    <rect x="70" y="72" width="34" height="92" rx="17"/><rect x="576" y="72" width="34" height="92" rx="17"/>
+    <rect x="70" y="276" width="34" height="92" rx="17"/><rect x="576" y="276" width="34" height="92" rx="17"/>
+  </g>
+  <g fill="#0b1522" stroke="#3fd6ff" stroke-width="2"><circle cx="130" cy="100" r="6"/><circle cx="550" cy="100" r="6"/><circle cx="130" cy="340" r="6"/><circle cx="550" cy="340" r="6"/></g>
+  <g fill="#0b1522" stroke="#ffb340" stroke-width="1.5"><circle cx="87" cy="118" r="5"/><circle cx="593" cy="118" r="5"/><circle cx="87" cy="322" r="5"/><circle cx="593" cy="322" r="5"/></g>
+  <text x="87" y="184" text-anchor="middle" font-size="9" fill="#4fd98a">track pod ×4</text>
+  <text x="168" y="88" text-anchor="middle" font-size="9" fill="#3fd6ff">hip (HAA) ×4</text>
   <!-- battery -->
   <rect x="150" y="250" width="200" height="90" rx="6" fill="#0b1522" stroke="#4fd98a" stroke-width="1.2"/>
   <text x="250" y="290" text-anchor="middle" font-size="11" fill="#4fd98a">48 V LiFePO₄ pack</text>
@@ -368,28 +391,32 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <circle cx="540" cy="80" r="6" fill="#ffb340"/><text x="540" y="62" font-size="9" fill="#ffb340" text-anchor="middle">strobe · speaker</text>
   <!-- dims -->
   <g stroke="#5a7898" stroke-width="1" fill="none"><line x1="120" y1="405" x2="560" y2="405"/><line x1="120" y1="398" x2="120" y2="412"/><line x1="560" y1="398" x2="560" y2="412"/><line x1="600" y1="70" x2="600" y2="370"/><line x1="593" y1="70" x2="607" y2="70"/><line x1="593" y1="370" x2="607" y2="370"/></g>
-  <text x="340" y="426" text-anchor="middle" font-size="10" fill="#9fb6cc">0.95 m</text>
-  <text x="620" y="224" font-size="10" fill="#9fb6cc">0.62 m</text>
+  <text x="340" y="426" text-anchor="middle" font-size="10" fill="#9fb6cc">0.95 m body · 1.10 m over pods</text>
+  <text x="620" y="224" font-size="10" fill="#9fb6cc">0.62 m body</text>
 </svg>
-<figcaption><b>Fig 2</b>Plan view. The arm turret sits forward of centre so the stowed arm and probe head are protected inside the body outline; the battery and charge coil sit aft and low for stability with the arm extended.</figcaption>
+<figcaption><b>Fig 2</b>Plan view, Rev B. The body layout is Rev A's; the four hips sit at the chassis corners and the track pods ride outboard, giving a 0.78 m track width in ROLL stance and up to 1.1 m when the legs splay for docking.</figcaption>
 </figure>
 <h3>Attributes and specifications</h3>
 <div class="tw"><table>
 <tr><th>Attribute</th><th>Specification</th><th>Note</th></tr>
 <tr class="grp"><td colspan="3">Platform</td></tr>
-<tr><td>Form factor</td><td>4-wheel skid-steer, 250 mm pneumatic tyres, independent hub motors</td><td>Kerb cuts to 60 mm, 8 % ramp at 65 kg + 15 kg payload</td></tr>
-<tr><td>Dimensions</td><td>0.95 × 0.62 × 0.62 m stowed; mast to 1.0 m; arm reach envelope 0.9 m radius, 1.5 m high</td><td>Fits a 0.9 m door and a passenger elevator</td></tr>
-<tr><td>Mass</td><td>≈ 65 kg with battery; ≤ 80 kg fully equipped</td><td>Under the 100 kg threshold some floors and lifts assume</td></tr>
-<tr><td>Speed</td><td>1.5 m/s outdoors, 0.8 indoors, 0.3 near people</td><td>Ring road half-perimeter ≈ 850 m in ≈ 9.5 min at 1.5 m/s; the ≤ 4 min transit target assumes the nearest kennel is ≤ 350 m by road — kennel spacing in §7</td></tr>
-<tr><td>Ingress protection</td><td>IP54 body, IP65 sensor head, −10 to +45 °C</td><td>Loudoun winters and gen-yard heat</td></tr>
+<tr><td>Form factor</td><td>Leg-track pod quadruped: 4 legs × (hip abduction HAA, hip flexion HFE, knee KFE, continuous ankle pivot APV) + 4 track pods with their own drive and brake — 20 actuators</td><td>Stairs to 200 mm risers, 200 mm kerbs, 30° ramps, 400 mm gaps at 84 kg + 15 kg payload</td></tr>
+<tr><td>Track pod</td><td>320 × 120 mm, 24 V hub-driven, non-marking lugged rubber track, 60 mm nose radius, brake for foot mode, load cell in the ankle</td><td>Track as foot when braked; nose radius rides a stair edge</td></tr>
+<tr><td>Modes</td><td>ROLL (pods flat, legs as active suspension) · WALK (tracks braked, trot or static crawl gait) · CRAWL (body lowered, pods aligned into two track runs) · KNEEL (belly 40 mm above the pad, brakes on)</td><td>Fig 2b; mode change only on level ground in ≤ 4 s</td></tr>
+<tr><td>Dimensions</td><td>Body 0.95 × 0.62 m; 1.10 × 0.78 m over pods in ROLL; height 0.70 m standing, 0.45 m in CRAWL; belly clearance 120–420 mm; mast to 1.05 m; arm reach envelope 0.9 m radius, 1.55 m high</td><td>Fits a 0.9 m door in ROLL and a passenger elevator; stair width ≥ 1.0 m</td></tr>
+<tr><td>Mass</td><td>≈ 84 kg with battery; ≤ 100 kg fully equipped</td><td>Legs and pods add ≈ 19 kg over Rev A; still inside the 100 kg floor and lift assumption</td></tr>
+<tr><td>Speed</td><td>ROLL 2.0 m/s outdoors, 1.0 indoors, 0.3 near people; WALK 0.8 m/s; stairs 0.3 m/s along the slope (≈ 40–45 s per 12-riser flight); CRAWL 0.3 m/s</td><td>350 m by road in ≈ 3 min at 2 m/s leaves ≈ 1 min of the transit budget for stairs — kennel spacing in §7</td></tr>
+<tr><td>Ingress protection</td><td>IP54 body, IP65 sensor head and leg actuators, IP67 track pods, −10 to +45 °C</td><td>Pods see standing water and grit; Loudoun winters and gen-yard heat</td></tr>
+<tr><td>Stability</td><td>Static stability margin ≥ 80 mm in WALK on a 35° stair; CoM shifted aft-uphill by the body on ascent; roll-over detection and self-righting from either side</td><td>Stair rule: three pods on treads at all times in the static crawl gait</td></tr>
 <tr class="grp"><td colspan="3">Energy</td></tr>
-<tr><td>Battery</td><td>48 V LiFePO₄, 1.5 kWh, swappable, BMS with CAN reporting</td><td>LiFePO₄ chosen over NMC for thermal stability inside a facility that already worries about lithium fires</td></tr>
-<tr><td>Endurance</td><td>≥ 90 min drive, ≥ 4 h docked-and-reading; two sorties per charge</td><td>Nominal draw ≈ 400 W driving, ≈ 120 W docked</td></tr>
-<tr><td>Charging</td><td>Wireless resonant pad in the kennel, 300 W nominal (1 kW option), full in ≈ 3 h at 300 W</td><td>Tile recharge rate of 1.5 %/s is compressed for the demo; a 1 kW pad reaches ≈ 1 %/min</td></tr>
+<tr><td>Battery</td><td>48 V LiFePO₄, 2.0 kWh, swappable, BMS with CAN reporting</td><td>LiFePO₄ chosen over NMC for thermal stability inside a facility that already worries about lithium fires</td></tr>
+<tr><td>Endurance</td><td>≥ 75 min mixed sortie (≈ 80 % ROLL, 20 % WALK/stairs), ≥ 4 h kneeling-and-reading; two sorties per charge</td><td>Draw ≈ 450 W in ROLL, ≈ 900 W in WALK, 1.4 kW peak on stairs, ≈ 130 W kneeling</td></tr>
+<tr><td>Charging</td><td>Wireless resonant pad in the kennel, 1 kW; the cat KNEELs to bring the belly coil 40 mm above the pad; full in ≈ 2.2 h</td><td>Tile recharge rate of 1.5 %/s is compressed for the demo; 1 kW reaches ≈ 0.8 %/min on the 2 kWh pack</td></tr>
 <tr class="grp"><td colspan="3">Compute and software</td></tr>
 <tr><td>Edge computer</td><td>Jetson AGX Orin class (200–275 TOPS, 15–60 W) or successor; industrial variant for the −10 °C floor</td><td>Runs SLAM, Nav2, perception models and the checklist engine on the vehicle</td></tr>
 <tr><td>Software stack</td><td>ROS 2, Nav2, SLAM Toolbox / lidar-inertial odometry, behaviour-tree mission executive, containerised</td><td>Mission executive states mirror the tile: ready · out · dock · scan · back · charging</td></tr>
-<tr><td>Safety controller</td><td>Separate safety PLC / safety-rated controller wired to scanners, e-stops, bumpers and motor STO</td><td>Not on the Orin; PLd per ISO 13849-1</td></tr>
+<tr><td>Safety controller</td><td>Separate safety PLC / safety-rated controller wired to scanners, e-stops, bumpers, leg-joint STO and pod brakes</td><td>Not on the Orin; PLd per ISO 13849-1; a safe stop on stairs is "brake the pods, freeze the legs", not "cut power"</td></tr>
+<tr><td>Locomotion controller</td><td>Whole-body MPC for WALK/CRAWL gaits with a learned stair policy trained in simulation (blind climb with lidar-terrain priors), 1 kHz joint loop on a real-time leg controller</td><td>ETH-style RL stair policies for wheeled-legged robots are the reference</td></tr>
 <tr class="grp"><td colspan="3">Sensing</td></tr>
 <tr><td>3D lidar</td><td>32–128 channel spinning lidar, ≥ 100 m range on 80 % targets, on a mast that raises for the yard and lowers for doors</td><td>e.g. Ouster OS1 class</td></tr>
 <tr><td>Thermal</td><td>Radiometric LWIR 640 × 512, 12 µm, 60 Hz; 18° lens for switchgear/bushings at 3–10 m, 6° option for the yard</td><td>e.g. Boson+ 640R class; NDAA-compliant</td></tr>
@@ -405,6 +432,173 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <tr><td>Primary</td><td>Wi-Fi 6 on the OT/facilities SSID</td><td>Roams across the campus; images and audio</td></tr>
 <tr><td>Secondary</td><td>Private LTE / 5G (CBRS) or carrier</td><td>Survives a Wi-Fi core loss</td></tr>
 <tr><td>Tertiary</td><td>LoRa / 900 MHz to the kennel gateway, ≤ 2 kB messages</td><td>Enough for <code>BC_ASSESS</code> without attachments</td></tr>
+</table></div>
+<h3>Rev B mobility — the leg-track pod quadruped</h3>
+<p>Each leg is a three-joint limb (hip abduction, hip flexion, knee) ending in a continuously rotating ankle pivot that carries a small powered track pod. With the tracks running and the pods flat, the cat is a four-track vehicle with active suspension. With the track brakes on, each pod is a long rubber foot whose rounded nose can sit on a stair edge. With the legs folded and the body dropped, the front and rear pods on each side line up into one long track run and the cat becomes a low tracked stair-climber. One mechanism, three vehicles.</p>
+<figure>
+<svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three locomotion modes of the Rev B cat: ROLL on flat ground, WALK on stairs, CRAWL on stairs">
+  <g font-size="11" fill="#9fb6cc">
+    <!-- ROLL -->
+    <g transform="translate(20 20)">
+      <text x="0" y="0" fill="#3fd6ff">ROLL · road and halls · 2.0 m/s</text>
+      <line x1="0" y1="200" x2="240" y2="200" stroke="#243a52" stroke-width="2"/>
+      <rect x="40" y="110" width="160" height="40" rx="8" fill="#1d3148" stroke="#3fd6ff" stroke-width="1.5"/>
+      <rect x="60" y="86" width="100" height="24" rx="5" fill="#1d3148" stroke="#3fd6ff"/>
+      <g stroke="#3fd6ff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M60 150 L44 172 L60 188"/><path d="M180 150 L196 172 L180 188"/></g>
+      <g fill="#111f30" stroke="#4fd98a" stroke-width="2"><rect x="34" y="182" width="52" height="18" rx="9"/><rect x="154" y="182" width="52" height="18" rx="9"/></g>
+      <g stroke="#4fd98a" stroke-width="1.5"><line x1="60" y1="210" x2="80" y2="210"/><line x1="180" y1="210" x2="200" y2="210"/></g>
+      <text x="120" y="232" text-anchor="middle" font-size="9" fill="#5a7898">tracks drive · legs absorb kerbs and bumps</text>
+      <text x="120" y="248" text-anchor="middle" font-size="9" fill="#5a7898">≈ 450 W · belly 250 mm</text>
+    </g>
+    <!-- WALK on stairs -->
+    <g transform="translate(290 20)">
+      <text x="0" y="0" fill="#ffb340">WALK · stairs · tracks braked</text>
+      <path d="M0 200 L60 200 L60 176 L110 176 L110 152 L160 152 L160 128 L210 128 L210 104 L250 104" fill="none" stroke="#243a52" stroke-width="2"/>
+      <rect x="66" y="96" width="150" height="38" rx="8" fill="#1d3148" stroke="#ffb340" stroke-width="1.5" transform="rotate(-22 141 115)"/>
+      <g stroke="#ffb340" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M84 138 L64 168 L84 194"/><path d="M200 96 L214 116 L190 130"/><path d="M110 128 L96 148 L118 172" opacity=".55"/>
+      </g>
+      <g fill="#111f30" stroke="#4fd98a" stroke-width="2">
+        <rect x="60" y="190" width="48" height="16" rx="8" transform="rotate(-30 84 198)"/>
+        <rect x="166" y="120" width="48" height="16" rx="8" transform="rotate(-30 190 128)"/>
+        <rect x="94" y="164" width="48" height="16" rx="8" transform="rotate(-30 118 172)" opacity=".55"/>
+      </g>
+      <text x="125" y="232" text-anchor="middle" font-size="9" fill="#5a7898">static crawl gait · pod nose on the stair edge</text>
+      <text x="125" y="248" text-anchor="middle" font-size="9" fill="#5a7898">≈ 900 W · 3 pods on treads at all times</text>
+    </g>
+    <!-- CRAWL on stairs -->
+    <g transform="translate(560 20)">
+      <text x="0" y="0" fill="#b39cff">CRAWL · descent · continuous</text>
+      <path d="M0 200 L60 200 L60 176 L110 176 L110 152 L160 152 L160 128 L210 128 L210 104 L250 104" fill="none" stroke="#243a52" stroke-width="2"/>
+      <g transform="rotate(-25 130 150)">
+        <rect x="46" y="128" width="170" height="32" rx="7" fill="#1d3148" stroke="#b39cff" stroke-width="1.5"/>
+        <g stroke="#b39cff" stroke-width="5" fill="none" stroke-linecap="round"><path d="M70 160 L60 172"/><path d="M190 160 L200 172"/></g>
+        <rect x="30" y="170" width="200" height="16" rx="8" fill="#111f30" stroke="#4fd98a" stroke-width="2"/>
+        <line x1="130" y1="170" x2="130" y2="186" stroke="#4fd98a" stroke-width="1.5"/>
+      </g>
+      <text x="125" y="232" text-anchor="middle" font-size="9" fill="#5a7898">legs fold · one track run per side</text>
+      <text x="125" y="248" text-anchor="middle" font-size="9" fill="#5a7898">≈ 700 W · body 0.45 m · CoM lowest</text>
+    </g>
+  </g>
+  <g font-size="10" fill="#9fb6cc">
+    <rect x="20" y="284" width="780" height="40" rx="8" fill="none" stroke="#1e2d45"/>
+    <text x="36" y="301" fill="#3fd6ff">MODE RULES</text>
+    <text x="36" y="316">Mode changes only on level ground with the arm stowed · ascend in WALK, descend in CRAWL · a person on the stair pauses the climb · KNEEL to dock and charge.</text>
+  </g>
+</svg>
+<figcaption><b>Fig 2b</b>Locomotion modes. The same four leg-track pods roll, walk and crawl; the mission executive picks the mode from the map layer (road, hall, stair, yard) and the mode rules, and reports it in <code>BC_EVENT</code>.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Leg kinematic chain and track pod cutaway">
+  <!-- kinematic chain -->
+  <g transform="translate(30 30)" font-size="11" fill="#9fb6cc">
+    <text x="0" y="0" fill="#3fd6ff">LEG · KINEMATIC CHAIN · 5 ACTUATORS</text>
+    <rect x="20" y="30" width="140" height="40" rx="6" fill="#1d3148" stroke="#3fd6ff"/><text x="90" y="55" text-anchor="middle">body corner</text>
+    <g stroke="#3fd6ff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M90 70 L90 100 L160 170 L110 240"/></g>
+    <g fill="#0b1522" stroke="#3fd6ff" stroke-width="2"><circle cx="90" cy="70" r="9"/><circle cx="90" cy="100" r="9"/><circle cx="160" cy="170" r="9"/></g>
+    <g fill="#0b1522" stroke="#ffb340" stroke-width="2"><circle cx="110" cy="240" r="9"/></g>
+    <rect x="72" y="238" width="80" height="26" rx="13" fill="#111f30" stroke="#4fd98a" stroke-width="2" transform="rotate(-12 112 251)"/>
+    <g font-size="10">
+      <text x="110" y="74">HAA · hip abduction ±45°</text>
+      <text x="110" y="104">HFE · hip flexion −60° / +120°</text>
+      <text x="180" y="174">KFE · knee 0 / 150°</text>
+      <text x="170" y="240" fill="#ffb340">APV · ankle pivot · continuous</text>
+      <text x="170" y="256" fill="#4fd98a">TRK · track drive + brake</text>
+    </g>
+    <text x="0" y="296" font-size="10" fill="#5a7898">Quasi-direct-drive actuators, 48 V: 60 N·m peak</text>
+    <text x="0" y="310" font-size="10" fill="#5a7898">at hip and knee, 25 N·m at the ankle.</text>
+    <text x="0" y="324" font-size="10" fill="#5a7898">Leg 4.2 kg, pod 2.6 kg; joint encoders, ankle load cell;</text>
+    <text x="0" y="338" font-size="10" fill="#5a7898">one leg controller per leg on EtherCAT.</text>
+    <text x="0" y="352" font-size="10" fill="#5a7898">Continuous ankle rotation flips the pod nose-first for</text>
+    <text x="0" y="366" font-size="10" fill="#5a7898">stairs and flat for rolling without unwinding a cable.</text>
+  </g>
+  <!-- pod cutaway -->
+  <g transform="translate(440 30)" font-size="11" fill="#9fb6cc">
+    <text x="0" y="0" fill="#4fd98a">TRACK POD · SECTION · 320 × 120 × 90 mm</text>
+    <rect x="20" y="60" width="320" height="90" rx="45" fill="#111f30" stroke="#4fd98a" stroke-width="2.5"/>
+    <rect x="38" y="76" width="284" height="58" rx="29" fill="none" stroke="#4fd98a" stroke-width="1" stroke-dasharray="4 3"/>
+    <!-- lugs -->
+    <g fill="#4fd98a" opacity=".8"><rect x="60" y="150" width="14" height="8"/><rect x="100" y="150" width="14" height="8"/><rect x="140" y="150" width="14" height="8"/><rect x="180" y="150" width="14" height="8"/><rect x="220" y="150" width="14" height="8"/><rect x="260" y="150" width="14" height="8"/><rect x="300" y="150" width="14" height="8"/></g>
+    <!-- sprockets -->
+    <g fill="#0b1522" stroke="#3fd6ff" stroke-width="2"><circle cx="65" cy="105" r="26"/><circle cx="295" cy="105" r="26"/></g>
+    <g fill="#0b1522" stroke="#3fd6ff" stroke-width="1.2"><circle cx="150" cy="128" r="9"/><circle cx="210" cy="128" r="9"/></g>
+    <!-- drive motor + brake -->
+    <rect x="52" y="92" width="26" height="26" rx="4" fill="#1d3148" stroke="#b39cff"/>
+    <!-- ankle pivot boss -->
+    <circle cx="180" cy="80" r="14" fill="#0b1522" stroke="#ffb340" stroke-width="2"/>
+    <rect x="172" y="46" width="16" height="22" fill="#2a4460" stroke="#3fd6ff"/>
+    <!-- load cell -->
+    <rect x="164" y="94" width="32" height="10" rx="3" fill="#0b1522" stroke="#ff5a4e"/>
+    <g font-size="10">
+      <text x="24" y="185" fill="#3fd6ff">drive sprocket · in-hub motor + brake</text>
+      <text x="24" y="201" fill="#3fd6ff">idler + 2 bogie rollers · sealed IP67</text>
+      <text x="24" y="217" fill="#ffb340">ankle boss · slip ring for power and EtherCAT</text>
+      <text x="24" y="233" fill="#ff5a4e">3-axis load cell · foot contact and slip detection</text>
+      <text x="24" y="249" fill="#4fd98a">non-marking lugged rubber track · 60 mm nose radius</text>
+    </g>
+    <text x="0" y="282" font-size="10" fill="#5a7898">Nose radius ≈ half a stair-nosing height, so the pod</text>
+    <text x="0" y="296" font-size="10" fill="#5a7898">rides an edge without catching.</text>
+    <text x="0" y="310" font-size="10" fill="#5a7898">Shallow lugs leave epoxy and raised-floor tiles unmarked</text>
+    <text x="0" y="324" font-size="10" fill="#5a7898">and quiet the ride in halls.</text>
+    <text x="0" y="338" font-size="10" fill="#5a7898">Braked, the pod is a 320 mm foot; front and rear pods</text>
+    <text x="0" y="352" font-size="10" fill="#5a7898">on a side meet at 0.9 m stance to form the CRAWL run.</text>
+  </g>
+</svg>
+<figcaption><b>Fig 2c</b>Leg and pod. Five actuators per leg; the pod is the foot, the wheel and the track. The continuous ankle pivot is what lets one pod serve all three modes.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stair geometry envelope and pod placement on a stair">
+  <g font-size="11" fill="#9fb6cc">
+    <text x="20" y="24" fill="#3fd6ff">STAIR ENVELOPE · IBC 7 in / 11 in · POD PLACEMENT</text>
+    <!-- stair profile (scale 1 mm = 0.5 px): riser 178 → 89 px, tread 279 → 140 px -->
+    <path d="M40 280 L180 280 L180 191 L320 191 L320 102 L460 102 L460 13" fill="none" stroke="#5a7898" stroke-width="2"/>
+    <!-- dims -->
+    <g stroke="#ffb340" stroke-width="1" fill="none"><line x1="190" y1="191" x2="190" y2="280"/><line x1="186" y1="191" x2="194" y2="191"/><line x1="186" y1="280" x2="194" y2="280"/><line x1="180" y1="292" x2="320" y2="292"/><line x1="180" y1="288" x2="180" y2="296"/><line x1="320" y1="288" x2="320" y2="296"/></g>
+    <text x="40" y="236" font-size="10" fill="#ffb340">riser 178 (max 200 mm)</text>
+    <text x="250" y="310" text-anchor="middle" font-size="10" fill="#ffb340">tread 279 mm (min 250)</text>
+    <!-- pod on tread with nose over edge -->
+    <rect x="200" y="174" width="160" height="18" rx="9" fill="#111f30" stroke="#4fd98a" stroke-width="2"/>
+    <circle cx="280" cy="183" r="5" fill="#0b1522" stroke="#ffb340" stroke-width="1.5"/>
+    <text x="170" y="164" text-anchor="middle" font-size="10" fill="#4fd98a">pod 320 mm · 40 mm nose overhang</text>
+    <!-- pod on the upper tread -->
+    <rect x="340" y="85" width="160" height="18" rx="9" fill="#111f30" stroke="#4fd98a" stroke-width="2" opacity=".7"/>
+    <!-- CRAWL track run on the slope -->
+    <g transform="rotate(-32.5 330 191)" opacity=".85">
+      <rect x="300" y="150" width="240" height="16" rx="8" fill="none" stroke="#b39cff" stroke-width="2" stroke-dasharray="6 4"/>
+    </g>
+    <text x="540" y="60" font-size="10" fill="#b39cff">CRAWL run · 0.9 m contact spans ≥ 3 nosings</text>
+    <text x="540" y="76" font-size="10" fill="#b39cff">slope 32.5° on 7/11 · limit 35°</text>
+    <!-- CoM box -->
+    <rect x="530" y="120" width="280" height="150" rx="8" fill="none" stroke="#1e2d45"/>
+    <text x="546" y="140" fill="#3fd6ff">STABILITY RULES · WALK</text>
+    <g font-size="10">
+      <text x="546" y="160">· 3 pods on treads before the 4th lifts</text>
+      <text x="546" y="176">· CoM ≥ 80 mm inside the support triangle</text>
+      <text x="546" y="192">· body pitched to the slope · arm locked</text>
+      <text x="546" y="208">· ascend nose-first · descend in CRAWL</text>
+      <text x="546" y="224">· person on the flight → pause</text>
+      <text x="546" y="240">· slip on a load cell → freeze + brake</text>
+      <text x="546" y="256">· fall → self-right · re-plan or return</text>
+    </g>
+  </g>
+</svg>
+<figcaption><b>Fig 2d</b>Stair envelope. The pod length and nose radius are sized to a code stair; the static crawl gait keeps three feet planted, and descent defaults to the crawling track run because a continuous contact patch is the safest way down.</figcaption>
+</figure>
+<h3>Rev A wheeled base against Rev B</h3>
+<div class="tw"><table>
+<tr><th>Attribute</th><th>Rev A · wheeled skid-steer</th><th>Rev B · leg-track pod quadruped</th></tr>
+<tr><td>Road speed</td><td>1.5 m/s</td><td>2.0 m/s in ROLL</td></tr>
+<tr><td>Stairs</td><td>No; elevator or ramp only</td><td>Yes; 200 mm risers, ascend WALK, descend CRAWL</td></tr>
+<tr><td>Kerb / step</td><td>60 mm kerb cut</td><td>200 mm kerb, 400 mm gap</td></tr>
+<tr><td>Ramp / slope</td><td>8 %</td><td>30° ramp, 35° stair</td></tr>
+<tr><td>Rough ground</td><td>Compacted only</td><td>Gravel, debris, wet epoxy, ice in CRAWL</td></tr>
+<tr><td>Mass</td><td>≈ 65 kg</td><td>≈ 84 kg</td></tr>
+<tr><td>Actuators (mobility)</td><td>4 hub motors</td><td>20 (16 leg joints + 4 track drives)</td></tr>
+<tr><td>Endurance</td><td>≥ 90 min</td><td>≥ 75 min mixed, 2.0 kWh pack</td></tr>
+<tr><td>Docking stance</td><td>Parked on wheels, brakes on</td><td>KNEEL: legs splayed to a 1.1 m base and braked; the base does not move under the arm</td></tr>
+<tr><td>Self-righting</td><td>Not possible</td><td>Yes, either side</td></tr>
+<tr><td>Mobility hardware cost</td><td>≈ $12k</td><td>≈ $46k (frame, 4 legs, 4 pods, leg controllers)</td></tr>
+<tr><td>Reference platforms</td><td>Industrial AMR bases</td><td>Swiss-Mile wheeled ANYmal (roll + walk); WheTLHLoc, Titan X, Zero Carrier (leg-track hybrids)</td></tr>
 </table></div>
 </section>
 
@@ -487,6 +681,8 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 </svg>
 <figcaption><b>Fig 3</b>BC-PORT faceplate and probe head. Vision gets the head to within a few millimetres; guide cones, a compliant wrist and force control finish the last few. The gateway behind the plate is the physical guarantee that only reads are possible.</figcaption>
 </figure>
+<h3>Docking stance · Rev B</h3>
+<p>A legged base moves under an extended arm unless it is told not to. Before the probe head leaves its stow, the cat takes the KNEEL stance: legs splay to a 1.1 m base, the body drops to 0.5 m, all four pod brakes set and the leg joints hold position under the safety controller. The ankle load cells confirm four-pod contact, and the docking loop only starts when base motion measured by the IMU is below 1 mm over two seconds. The port height band of 0.9–1.2 m is unchanged because the arm shoulder sits at the same height in KNEEL as it did on the Rev A wheels.</p>
 <h3>Port placement rules</h3>
 <ul>
   <li>On the <strong>control section</strong> of the enclosure (Class 2 / SELV wiring only), never on a power section door.</li>
@@ -501,7 +697,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <!-- ═══════════════════════════ 7 ═══════════════════════════ -->
 <section id="s7">
 <h2><i>7</i>Kennel and energy</h2>
-<p>The kennel is the reason the fleet still works when the site is on generator, on battery, or dark. Each kennel is a weatherproof shelter with a roll-up door on the ring road, a wireless charge pad, a small ATS, a 6 h battery and a gateway radio. It is fed from the generator-backed distribution, so it is live within seconds of an outage, and bridges the gap if the generators fail to start — the exact scenario in demo outage <code>u2</code>.</p>
+<p>The kennel is the reason the fleet still works when the site is on generator, on battery, or dark. Each kennel is a weatherproof shelter with a roll-up door on the ring road, a wireless charge pad, a small ATS, a 6 h battery and a gateway radio. The Rev B cat kneels on the pad so the belly coil sits 40 mm above it, and the pad is 1 kW to charge the larger pack in about two hours. It is fed from the generator-backed distribution, so it is live within seconds of an outage, and bridges the gap if the generators fail to start — the exact scenario in demo outage <code>u2</code>.</p>
 <figure>
 <svg viewBox="0 0 820 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kennel electrical one-line diagram">
   <text x="20" y="24" font-size="11" fill="#3fd6ff">KENNEL ONE-LINE · TYPICAL OF 3</text>
@@ -723,7 +919,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <h2><i>11</i>Safety and compliance</h2>
 <p>The vehicle is a mobile manipulator working near people and energized equipment. Two bodies of rules apply: mobile-robot safety (people and vehicles on the road) and electrical safety (where the cat and the arm may go). The design treats the electrical rules as geometry: boundaries from the site's arc-flash study are loaded into the map as keep-out zones the planner cannot enter and the arm cannot reach into.</p>
 <div class="tw"><table>
-<tr><th>Rule</th><th>What it requires of BattleCat</th><th>How Rev A meets it</th></tr>
+<tr><th>Rule</th><th>What it requires of BattleCat</th><th>How Rev B meets it</th></tr>
 <tr><td>ANSI/A3 R15.08-1-2020 (R2026), Industrial mobile robots</td><td>Manufacturer-level safety requirements for an IMR Type C (mobile platform with manipulator): personnel detection, speed and separation, stopping distance, safe stop categories, information for use</td><td>Two PLd safety scanners covering 360°, safety controller, speed maps, documented stopping distances on wet asphalt at full mass</td></tr>
 <tr><td>ISO 3691-4, driverless industrial trucks</td><td>Redundant control, fault detection, independent monitoring, PLd for personnel detection per ISO 13849</td><td>Same safety chain; ISO 13849-1 PLd for detection, e-stop and speed limiting</td></tr>
 <tr><td>ISO 10218-1/-2 and ISO/TS 15066, robot arms and collaborative operation</td><td>Power-and-force limiting when people can reach the arm; safeguarding when they cannot</td><td>Cobot-class arm with PFL limits; arm motion only when the scanners report the 2 m zone clear; 3 kg tool</td></tr>
@@ -731,9 +927,11 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <tr><td>NFPA 70E arc-flash boundary</td><td>No presence inside the arc-flash boundary of energized gear without arc-rated protection</td><td>The cat is not PPE-rated; it never enters the arc-flash boundary of an open enclosure and reads MV gear by thermal and acoustic from outside it</td></tr>
 <tr><td>NFPA 855 / UL 9540A battery rooms</td><td>Hazard awareness in ESS and battery rooms</td><td>H₂ and smoke sensing; docking aborts on alarm; LiFePO₄ pack on the cat</td></tr>
 <tr><td>ASHRAE TC 9.9 thermal guidelines</td><td>Inlet temperature envelopes that define the u3 thresholds</td><td>A1 allowable ceiling used as the <code>bad</code> threshold for cold-aisle checks</td></tr>
+<tr><td>Legged and stair locomotion (R15.08 IMR Type C still applies; ISO 3691-4 has no stair clause, so stairs are treated as a hazard analysis item under ISO 12100)</td><td>No injury from a fall, a pinch at a leg joint or track, or a robot descending onto a person</td><td>Stairs only when scanners show the flight clear and a person entering pauses the climb; leg joints power-and-force limited to ISO/TS 15066 body-region values in WALK near people; track pinch guards; roll-over detection, controlled collapse to CRAWL posture, self-righting; audible and strobe warning on every mode change and stair entry</td></tr>
+<tr><td>Floor and stair loading</td><td>Point loads on raised floors and stair treads</td><td>84 kg over four 320 × 120 mm pods is ≈ 22 kg per pod on a 0.04 m² patch — well under raised-floor concentrated-load ratings; no metal edge touches the floor</td></tr>
 <tr><td>OT cyber (IEC 62443 zones/conduits; NIST 800-82)</td><td>No new path into the control network</td><td>Diagnostics VLAN behind a one-way gateway, read-only clients, signed firmware, per-read audit, radios air-gapped from OT</td></tr>
 </table></div>
-<div class="callout red"><b>Hard rules the executive enforces before any motion.</b> Scanner zones clear before arm motion · port LED not lockout · no H₂/smoke alarm on the asset · door switch closed · keep-out polygons loaded for the site version in use · battery ≥ 25 % before dispatch. Any failed pre-condition publishes a <code>BC_EVENT ev:"fault"</code> with the reason, and the phone's fleet card shows it.</div>
+<div class="callout red"><b>Hard rules the executive enforces before any motion.</b> Scanner zones clear before arm motion · port LED not lockout · no H₂/smoke alarm on the asset · door switch closed · keep-out polygons loaded for the site version in use · battery ≥ 25 % before dispatch · flight clear of people before a stair entry · arm stowed and locked before any mode change or stair · mode change only on level ground. Any failed pre-condition publishes a <code>BC_EVENT ev:"fault"</code> with the reason, and the phone's fleet card shows it.</div>
 </section>
 
 <!-- ═══════════════════════════ 12 ═══════════════════════════ -->
@@ -743,7 +941,8 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <div class="tw"><table>
 <tr><th>Phase</th><th>Scope</th><th>Exit test</th><th>Weeks</th></tr>
 <tr><td>0 · Bench</td><td>Probe head + BC-PORT on a bench with a genset controller simulator, a UPS network card and a VFD; arm on a cart; read-only gateway</td><td>100 mates in 100 attempts from a ±10 mm, ±5° start; every tile check for u1/u2/u3 read from a real controller; write attempt blocked at both layers</td><td>1–6</td></tr>
-<tr><td>1 · One cat, one kennel</td><td>Chassis, sensors, compute, safety chain; kennel K-S with pad and battery; ring-road autonomy day and night</td><td>50 dispatch-to-assessment sorties on the campus, ≥ 90 % under 8 min; kennel runs the cat for 6 h with the feeder pulled; R15.08 stopping-distance report</td><td>6–16</td></tr>
+<tr><td>0b · Mobility rig</td><td>One leg-track pod on a test stand, then the four-leg frame without the arm: joint tuning, ROLL/WALK/CRAWL mode changes, stair policy in simulation then on a 12-riser test stair</td><td>200 ascents and 200 descents on IBC 7/11 with zero falls; 50 mode changes ≤ 4 s; kerb, gap, 30° ramp and wet epoxy passed; self-righting from both sides</td><td>4–12</td></tr>
+<tr><td>1 · One cat, one kennel</td><td>Legs and pods on the Rev A body with sensors, compute and safety chain; kennel K-S with pad and battery; ring-road and stair autonomy day and night</td><td>50 dispatch-to-assessment sorties on the campus, ≥ 90 % under 8 min; kennel runs the cat for 6 h with the feeder pulled; R15.08 stopping-distance report</td><td>6–16</td></tr>
 <tr><td>2 · Fleet + SONAR</td><td>Three cats, three kennels, fleet controller publishing the real BC_EVENT/BC_ASSESS; tile patched to render live state; console audit</td><td>Drill Builder EXERCISE alert → cat sortie → assessment on the phone, the channel and the console with attachments; recall from both; hold-on-station on a P1</td><td>16–24</td></tr>
 <tr><td>3 · Site retrofit</td><td>BC-PORTs on the site's assessable assets; register maps and fault trees in the site library; operator training</td><td>Every listed asset assessed once by each cat; CMMS work orders raised from BC_ASSESS</td><td>24–30</td></tr>
 </table></div>
@@ -751,8 +950,10 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <p>Budgetary figures for a hand-built prototype from commercial parts; they are order-of-magnitude, not quotes. Reference point: a base Spot lists at about $74,500 and full enterprise inspection bundles reach $150,000; ANYmal is quoted around $150,000.</p>
 <div class="tw"><table>
 <tr><th>Item</th><th>Selection</th><th>Est. USD</th></tr>
-<tr><td>Chassis and drivetrain</td><td>Industrial skid-steer AMR base, 4 hub motors, IP54</td><td>12,000</td></tr>
-<tr><td>Battery</td><td>48 V 1.5 kWh LiFePO₄ with CAN BMS, ×2 (one spare)</td><td>3,000</td></tr>
+<tr><td>Frame</td><td>Machined aluminium body frame with four hip mounts, IP54</td><td>6,000</td></tr>
+<tr><td>Legs</td><td>4 × three-joint legs, quasi-direct-drive 48 V actuators, encoders, leg controllers on EtherCAT</td><td>28,000</td></tr>
+<tr><td>Track pods</td><td>4 × 320 mm pods: in-hub track drive and brake, continuous ankle pivot with slip ring, load cell, IP67</td><td>12,000</td></tr>
+<tr><td>Battery</td><td>48 V 2.0 kWh LiFePO₄ with CAN BMS, ×2 (one spare)</td><td>4,000</td></tr>
 <tr><td>Edge compute</td><td>Jetson AGX Orin Industrial carrier, NVMe, PoE switch</td><td>4,000</td></tr>
 <tr><td>Safety chain</td><td>2 safety scanners, safety controller, e-stops, wireless e-stop</td><td>9,000</td></tr>
 <tr><td>3D lidar</td><td>Ouster OS1-class, on a 0.4 m mast</td><td>8,000</td></tr>
@@ -763,20 +964,25 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <tr><td>Wrist and probe head</td><td>6-axis F/T sensor, compliant wrist, custom head, wrist camera</td><td>9,000</td></tr>
 <tr><td>Radios</td><td>Wi-Fi 6, LTE/5G module, LoRa</td><td>1,500</td></tr>
 <tr><td>Environmental sensors</td><td>T/RH, CO, H₂, smoke</td><td>800</td></tr>
-<tr><td>Wireless charging</td><td>1 kW-class transmitter + on-board receiver</td><td>6,000</td></tr>
-<tr class="grp"><td>Cat subtotal</td><td></td><td>≈ 102,000</td></tr>
+<tr><td>Wireless charging</td><td>1 kW transmitter + on-board belly receiver</td><td>6,000</td></tr>
+<tr class="grp"><td>Cat subtotal</td><td></td><td>≈ 137,000</td></tr>
 <tr><td>Kennel shell</td><td>Weatherproof enclosure, roll-up door, heater, light, concrete pad</td><td>9,000</td></tr>
 <tr><td>Kennel power</td><td>30 A feeder from gen-backed panel, small ATS, 5 kWh LiFePO₄ + inverter</td><td>11,000</td></tr>
 <tr><td>Kennel gateway</td><td>Industrial PC, LoRa gateway, Wi-Fi AP</td><td>3,000</td></tr>
 <tr class="grp"><td>Kennel subtotal</td><td></td><td>≈ 23,000</td></tr>
 <tr><td>BC-PORT retrofit</td><td>Faceplate, gateway, electrician — per asset</td><td>1,500</td></tr>
-<tr class="grp"><td>Three cats + three kennels + 40 ports</td><td></td><td>≈ 435,000 hardware, before integration labour</td></tr>
+<tr class="grp"><td>Three cats + three kennels + 40 ports</td><td></td><td>≈ 540,000 hardware, before integration labour (Rev A: ≈ 435,000)</td></tr>
 </table></div>
 <h3>Test cards that map to the tile's QA</h3>
 <p>The phone edition already has a Playwright QA discipline; the prototype adds physical test cards with the same names so a drill result reads the same on the bench and in the field.</p>
 <ul>
   <li><code>bc.dispatch.nearest</code> — three cats ready, alert at each target; the cat with the shortest ring-road distance rolls; log the choice.</li>
-  <li><code>bc.transit.budget</code> — 20 sorties per target from each kennel, day and night, wet and dry; 90th percentile ≤ 4 min.</li>
+  <li><code>bc.transit.budget</code> — 20 sorties per target from each kennel, day and night, wet and dry; 90th percentile ≤ 4 min including the roof stair for u3.</li>
+  <li><code>bc.stairs.ascend</code> / <code>bc.stairs.descend</code> — 12-riser IBC 7/11 flight, 50 runs each with the arm and probe head fitted, dry and wet; zero falls, ≤ 45 s per flight, no tread marking.</li>
+  <li><code>bc.terrain.envelope</code> — 200 mm kerb, 400 mm gap, 30° ramp, loose gravel, wet epoxy, raised-floor tile edge; each passed in the mode the executive picks unaided.</li>
+  <li><code>bc.mode.switch</code> — 50 ROLL↔WALK↔CRAWL changes on level ground, ≤ 4 s each, arm-stow interlock proven by attempting one with the arm out.</li>
+  <li><code>bc.selfright</code> — cat laid on each side on grass and on epoxy; upright and ready within 20 s, BC_EVENT ev:"fault" then ev:"enroute" published.</li>
+  <li><code>bc.dock.stance</code> — 100 mates in KNEEL with the arm at full reach; IMU base motion &lt; 1 mm during insertion; mate force unchanged from Rev A.</li>
   <li><code>bc.dock.first_time</code> — 100 mates per port from the autonomy approach pose; ≥ 98 % first-attempt, 100 % within one retry, peak force ≤ 15 N.</li>
   <li><code>bc.readonly.assert</code> — inject a write function code from the head; gateway drops it, head logs a fault, assessment continues with that check marked missing.</li>
   <li><code>bc.boundary.keepout</code> — place an energized-part keep-out polygon across the approach; planner refuses; arm refuses; <code>BC_EVENT ev:"fault"</code> published.</li>
@@ -790,14 +996,17 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
 <section id="s13">
 <h2><i>13</i>Risks and open questions</h2>
 <div class="tw"><table>
-<tr><th>Risk / question</th><th>Effect</th><th>Position in Rev A</th></tr>
+<tr><th>Risk / question</th><th>Effect</th><th>Position in Rev B</th></tr>
 <tr><td>Operators may refuse any physical connection to their controllers</td><td>The docking mission collapses to stand-off sensing only</td><td>The read-only gateway and per-read audit are the answer; a stand-off-only mode is retained and its confidence is capped at 70, so the value of the port is visible in the number</td></tr>
-<tr><td>Roof-mounted CRAHs and mezzanine gear</td><td>u3 as drawn is unreachable by a ground vehicle</td><td>Elevator-capable cat; ground-level CRAH port in the mechanical gallery; tethered-drone payload in Rev B</td></tr>
-<tr><td>Stairs-only halls</td><td>Wheeled base cannot reach</td><td>Legged platform variant (Spot / ANYmal class) with the same probe head; higher cost, lower payload, same wire schema</td></tr>
+<tr><td>Roof-mounted CRAHs, mezzanines and stairs-only halls</td><td>Were out of reach for the Rev A wheels</td><td>Closed by Rev B mobility; the ground-level CRAH port is kept only for locked roof hatches</td></tr>
+<tr><td>Twenty mobility actuators instead of four</td><td>More to tune, more to fail, more to maintain</td><td>Quasi-direct-drive actuators shared across hip and knee (one part number); a pod or leg swaps as a module in under an hour; a cat with one failed leg limps home in ROLL on three pods</td></tr>
+<tr><td>Track marking and noise on hall floors</td><td>Operators will not accept marks on epoxy or damaged tile edges</td><td>Non-marking compound, shallow lugs, ROLL only at ≤ 1 m/s indoors; a floor-marking test is a Phase 0b exit criterion</td></tr>
+<tr><td>Fall on a stair with the arm fitted</td><td>Damage to the arm and probe head; a person below</td><td>Descent in CRAWL by default; arm locked in stow with a mechanical latch on stairs; flight cleared of people first; self-righting proven before Phase 1</td></tr>
+<tr><td>Heavier vehicle</td><td>84 kg on raised floors and in lifts; harder to lift by hand</td><td>Inside the 100 kg assumption; four-pod contact spreads the load; a wheeled dolly mode (legs folded, pods rolling) for manual recovery</td></tr>
 <tr><td>Register maps drift with controller firmware</td><td>Wrong reads look like good reads</td><td>Versioned maps; the cat refuses to read with a map that does not match the controller's reported firmware; confidence cap at 50 on a stale map</td></tr>
-<tr><td>Wet or icy ring road</td><td>Stopping distance and traction</td><td>Speed map by surface state from the kennel's weather sensor; tyres and stopping-distance tests at each speed tier</td></tr>
+<tr><td>Wet or icy ring road</td><td>Stopping distance and traction</td><td>Speed map by surface state from the kennel's weather sensor; track-compound and stopping-distance tests at each ROLL speed tier; CRAWL on ice</td></tr>
 <tr><td>Fleet of one sortie at a time (tile policy)</td><td>Two simultaneous P1s queue</td><td>Hardware supports concurrency; the tile guard becomes a console policy switch</td></tr>
-<tr><td>Acoustic imaging modules are handheld products today</td><td>Integration cost and size</td><td>Rev A uses a repackaged handheld array; a purpose-built module is a Rev B item</td></tr>
+<tr><td>Acoustic imaging modules are handheld products today</td><td>Integration cost and size</td><td>Rev B still uses a repackaged handheld array; a purpose-built module is a Rev C item</td></tr>
 <tr><td>Naming</td><td>Public sources call the demo site fictional; the kennel and cat names are product names</td><td>Keep BattleCat, K-N/E/S, BC-n as the product vocabulary; the Navy edition can adopt the same fleet later under the DoD sector</td></tr>
 </table></div>
 <h3>Open questions for the next review</h3>
@@ -806,6 +1015,7 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <li>Is a fourth kennel at the service entrance funded in the pilot, or is the west side covered by a longer transit budget?</li>
   <li>Which CMMS / DCIM receives the work order, and does it want the evidence attachments or only the verdict?</li>
   <li>Should hold-on-station be the default for every P1, or opt-in from the phone?</li>
+  <li>Is the pilot operator willing to let a legged vehicle use the hall stairs, or only the roof-access and yard stairs?</li>
 </ol>
 </section>
 
@@ -831,10 +1041,16 @@ pre .k{color:var(--cyan)}pre .s{color:var(--green)}pre .c{color:var(--ink3)}
   <li>WiBotic — 300 W (TR-300 / OC-262) and 1 kW wireless charging for AMRs, GaN transmitters, ~85 % end-to-end efficiency; 1 kW product sheet. wibotic.com, eenewseurope.com, therobotreport.com</li>
   <li>Fluke — ii910 precision acoustic imager, 2–100 kHz, partial discharge and leak detection (now succeeded by ii905/ii915). fluke.com and resellers</li>
   <li>Teledyne FLIR — Boson / Boson+ LWIR cores (640 × 512, 12 µm, radiometric, NDAA-compliant, ~600 mW). oem.flir.com; Freefly Boson+ 640R module listing</li>
+  <li>New Atlas / IEEE Spectrum — Swiss-Mile wheeled-legged ANYmal: rolls at up to 22 km/h, locks its wheels to walk stairs, legs flex as suspension off kerbs; commercialisation of ETH Zurich Robotic Systems Lab work. newatlas.com, spectrum.ieee.org</li>
+  <li>Bruzzone et al. — WheTLHLoc, a wheel-track-leg hybrid locomotion robot with stair climbing (MDPI Machines 2021; step and stair climbing validation, J. Mech. Robot. 2024). mdpi.com</li>
+  <li>MDPI Robotics 2024 — tracked stair-climbing robot design with innovative suspension; review of L/W/T hybrids including Titan X (leg-track quadruped whose belts double as knee transmission and tracks) and Zero Carrier (leg-chain-wheel stair climber). mdpi.com</li>
+  <li>Lai et al. — stair-climbing strategy of a leg-wheel transformable robot using visual feedback and varying contact points, IEEE Access, Jan 2026. ieeexplore.ieee.org</li>
+  <li>Chamorro et al. — reinforcement learning for blind stair climbing with legged and wheeled-legged robots, arXiv 2402.06143 (2024).</li>
+  <li>USPTO 4,977,971 — hybrid robotic vehicle: track assemblies on articulated legs held parallel to the stair slope with the body levelled from an inclinometer.</li>
   <li>Ouster — OS1 datasheet rev 7 (2026): 170 m range at &gt;90 % detection on 80 % reflectivity in 100 klx sunlight. ouster.com</li>
   <li>NVIDIA — Jetson AGX Orin (up to 275 TOPS, 15–60 W; Industrial 248 TOPS, 15–75 W) and platform overview; ROS 2 / Nav2 / Isaac ROS deployments on Orin. nvidia.com, developer.nvidia.com</li>
 </ol>
-<div class="foot">BC-ENG-001 · Rev A · 20 Sep 2026 · SONAR-mobile Data Center edition · prepared from cmdr/datacenter.html (BATTLECAT module) and public sources · demo site and assets are fictional</div>
+<div class="foot">BC-ENG-001 · Rev B · 22 Sep 2026 · mobility revision of Rev A · SONAR-mobile Data Center edition · prepared from cmdr/datacenter.html (BATTLECAT module) and public sources · demo site and assets are fictional</div>
 </section>
 
 </main>

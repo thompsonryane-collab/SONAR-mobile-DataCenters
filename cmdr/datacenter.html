@@ -538,6 +538,7 @@ body.onhome .homebtn{display:none}
 #p-bceng .hd .t{flex:1;min-width:0}
 #p-bceng .hd .t b{display:block;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #p-bceng .hd .t small{display:block;font-family:"Share Tech Mono",Menlo,monospace;font-size:9.5px;letter-spacing:1.2px;color:#b39cff;text-transform:uppercase;margin-top:1px}
+#p-bceng .hd #bceng-revbtn{border-color:rgba(63,214,255,.55);color:#3fd6ff;padding:0 10px}
 #p-bceng .hd .full{flex:none;height:34px;padding:0 12px;border-radius:17px;border:1px solid rgba(179,156,255,.6);color:#b39cff;background:transparent;font-family:"Share Tech Mono",Menlo,monospace;font-size:10px;letter-spacing:1px}
 #p-bceng .chips{flex:none;display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-bottom:1px solid var(--line)}
 #p-bceng .chips::-webkit-scrollbar{display:none}
@@ -1047,7 +1048,7 @@ body.locked #app{visibility:visible}
         <button onclick="openImpact()"><div class="ic c-violet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><div class="l" id="tl-impact">Mission impact</div></button>
         <button onclick="go('crews')" id="tile-crews"><span class="nl amber" id="hl-crews"></span><div class="ic" style="background:linear-gradient(160deg,#ffcf6b,#c8791a)"><svg viewBox="0 0 24 24"><path d="M3 17h2l1-6h12l1 6h2"/><path d="M8 11V9a4 4 0 0 1 8 0v2"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/><path d="M11 5h2"/></svg></div><div class="l">On-call</div></button>
         <button onclick="go('battlecat')" id="tile-bc"><span class="nl bc" id="hl-bc">3 RDY</span><div class="ic c-bc"><svg viewBox="0 0 24 24"><path d="M5 20V5l4 4h6l4-4v15z"/><path d="M9 13.5h.01M15 13.5h.01"/><path d="M12 15.5l-1.3 1.6h2.6z"/><path d="M13 2.5l-1.6 3h2.2L12 8.5"/></svg></div><div class="l">BattleCat</div></button>
-        <button onclick="openBcEng()" id="tile-bceng"><span class="nl eng" id="hl-bceng">REV A</span><div class="ic c-eng"><svg viewBox="0 0 24 24"><path d="M5 20V5l4 4h6l4-4v15z"/><path d="M9 13.5h.01M15 13.5h.01"/><path d="M12 15.5l-1.3 1.6h2.6z"/><circle cx="19" cy="5" r="2.5"/><path d="M19 2.5v1M19 6.5v1M16.5 5h1M20.5 5h1"/></svg></div><div class="l">BattleCat Build</div></button>
+        <button onclick="openBcEng()" id="tile-bceng"><span class="nl eng" id="hl-bceng">REV B</span><div class="ic c-eng"><svg viewBox="0 0 24 24"><path d="M5 20V5l4 4h6l4-4v15z"/><path d="M9 13.5h.01M15 13.5h.01"/><path d="M12 15.5l-1.3 1.6h2.6z"/><circle cx="19" cy="5" r="2.5"/><path d="M19 2.5v1M19 6.5v1M16.5 5h1M20.5 5h1"/></svg></div><div class="l">BattleCat Build</div></button>
         <button onclick="go('blackstart')" id="tile-bs"><div class="ic c-ink"><svg viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M7 6.5a8 8 0 1 0 10 0"/></svg></div><div class="l">Black start</div></button>
         <button onclick="openMap()" id="tile-map"><span class="nl" id="hl-map"></span><div class="ic c-green" style="background:linear-gradient(160deg,#5fd98a,#1f7a4c)"><svg viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></div><div class="l">Live map</div></button>
         <button onclick="callEOC()"><div class="ic c-red"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div><div class="l" id="tl-eoc">Call EOC</div></button>
@@ -1138,7 +1139,7 @@ body.locked #app{visibility:visible}
 
   <!-- BATTLECAT ENGINEERING · report viewer -->
   <div id="p-bceng" role="dialog" aria-label="BattleCat Build — engineering report">
-    <div class="hd"><button class="back" onclick="closeBcEng()" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="t"><b>BattleCat Build</b><small>BC-ENG-001 · Rev A · engineering report</small></div><button class="full" onclick="bcEngFull()">OPEN FULL</button></div>
+    <div class="hd"><button class="back" onclick="closeBcEng()" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="t"><b>BattleCat Build</b><small id="bceng-revline">BC-ENG-001 · Rev B · leg-track</small></div><button class="full" id="bceng-revbtn" onclick="bcEngRev()" title="Switch revision">REV A</button><button class="full" onclick="bcEngFull()">OPEN FULL</button></div>
     <div class="chips" id="bceng-chips"><button onclick="bcEngGo('s1',this)">Summary</button><button onclick="bcEngGo('s2',this)">Commitments</button><button onclick="bcEngGo('s3',this)">CONOPS</button><button onclick="bcEngGo('s4',this)">Capabilities</button><button onclick="bcEngGo('s5',this)">Vehicle</button><button onclick="bcEngGo('s6',this)">Docking · BC-PORT</button><button onclick="bcEngGo('s7',this)">Kennel & energy</button><button onclick="bcEngGo('s8',this)">Sensing</button><button onclick="bcEngGo('s9',this)">Assessment logic</button><button onclick="bcEngGo('s10',this)">SONAR wire schema</button><button onclick="bcEngGo('s11',this)">Safety</button><button onclick="bcEngGo('s12',this)">Prototype & BOM</button><button onclick="bcEngGo('s13',this)">Risks</button><button onclick="bcEngGo('s14',this)">Sources</button></div>
     <div class="body"><iframe id="bceng-frame" title="BattleCat engineering report"></iframe><div class="src" id="bceng-src"></div></div>
   </div>
@@ -3210,8 +3211,8 @@ window.SRADropZone=(function(){
         tip:function(){return 'Try it: tap DEPLOY on an outage and watch the sortie on the embedded campus map.';},
         tryIt:function(){go('battlecat');var o=(n(outages)||[])[0];if(o)BATTLECAT.deploy(o.id,o.name);}},
       {id:'bceng',g:'Assess',t:'BattleCat Build — engineering report',sel:"openBcEng()",open:function(){openBcEng();},
-        d:function(){return 'The prototype engineering report behind the tile — BC-ENG-001 Rev A: what the tile commits to, the vehicle, the BC-PORT diagnostic docking, the kennel one-line, the SONAR wire schema, safety, and the build plan with a bill of materials. Section chips jump inside the report; OPEN FULL launches it in the browser.';},
-        tip:function(){return 'Read Docking and Safety first — they are what a facilities director will ask about.';}},
+        d:function(){return 'The prototype engineering report behind the tile — BC-ENG-001 Rev B: the cat now rides four legs that end in powered track pods (ROLL on the ring road, WALK the stairs, CRAWL the rough, KNEEL to dock), with the vehicle, the BC-PORT diagnostic docking, the kennel one-line, the SONAR wire schema, safety, and the build plan with a bill of materials carried over from Rev A. Section chips jump inside the report; the REV button swaps to the wheeled Rev A; OPEN FULL launches it in the browser.';},
+        tip:function(){return 'Read Vehicle (the three locomotion modes and the stair envelope), then Docking and Safety — they are what a facilities director will ask about.';}},
       {id:'blackstart',g:'Assess',t:'Black start drill',sel:"go('blackstart')",open:function(){go('blackstart');},
         d:function(){var b=n(function(){return BLACKSTART._st();})||{phase:-1};return 'The annual pull-the-plug drill: open the utility tie, UPS ride-through, black-start the dead generator bus, cooling first, then IT tiers, then resync. The <b>cooling clock</b> — cold aisle rising toward 27°C — is the real limit, not the UPS. Drill state: <b>'+(b.phase<0?'planned':b.phase>=5?'complete':'step '+(b.phase+1)+' of 6')+'</b>.';},
         tip:function(){return 'Try it: Auto-run the sequence, then answer the Director load-shed decision at T2.';},
@@ -4112,26 +4113,36 @@ window.SRADropZone=(function(){
   window.SRABus.subscribe(function(env){if(env.type==='DROP'&&!$('p-drop').classList.contains('on')&&!DZM){S.unreadDrop=(S.unreadDrop||0)+1;save();renderBadges();toast('Drop zone · '+(env.payload&&env.payload.name||'new item'),'from '+(env.from||'peer').toUpperCase(),'amber');}});
   function dzScenario(pl,source){var d=window.SRADropZone.fromScenario(pl,{source:source});return d;}
   /* BattleCat Engineering report · probe every known home of the report, then load; never show a raw 404 */
-  var BCENG={url:'',tried:[],busy:false,loaded:false,hash:'',
+  var BCENG={url:'',tried:[],busy:false,loaded:false,hash:'',rev:'b',
+    revs:{b:{label:'Rev B',line:'BC-ENG-001 · Rev B · leg-track',badge:'REV B',local:'battlecat-build-revb.html',pages:'https://thompsonryane-collab.github.io/sonar-mobile-dc/cmdr/battlecat-build-revb.html',pdf:'https://thompsonryane-collab.github.io/sonar-mobile-dc/cmdr/BC-ENG-001_RevB_BattleCat_Engineering_Report.pdf'},
+          a:{label:'Rev A',line:'BC-ENG-001 · Rev A · wheeled',badge:'REV A',local:'battlecat-build.html',pages:'https://thompsonryane-collab.github.io/sonar-mobile-dc/cmdr/battlecat-build.html',pdf:'https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat/BC-ENG-001_BattleCat_Engineering_Report.pdf'}},
     pages:['https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat-engineering/','https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat/',
            'https://thompsonryane-collab.github.io/ie-SRS/docs/battlecat-engineering/','https://thompsonryane-collab.github.io/ie-SRS/docs/battlecat/'],
-    pdf:'https://thompsonryane-collab.github.io/sonar-mobile-dc/docs/battlecat/BC-ENG-001_BattleCat_Engineering_Report.pdf'};
+    get pdf(){return this.revs[this.rev].pdf;}};
+  window.BCENG=BCENG; /* the missing-report card's Try-the-PDF button reads BCENG.pdf from an inline handler */
   /* order: the copy shipped in this folder (cmdr/battlecat-build.html) → docs/ copies → Pages copies */
-  function bcEngCandidates(){var c=[];if(location.protocol!=='file:'){c.push('battlecat-build.html','../docs/battlecat-engineering/index.html','../docs/battlecat/index.html','docs/battlecat-engineering/index.html','docs/battlecat/index.html');}
-    c.push('https://thompsonryane-collab.github.io/sonar-mobile-dc/cmdr/battlecat-build.html','https://thompsonryane-collab.github.io/ie-SRS/cmdr/battlecat-build.html');
+  function bcEngCandidates(){var c=[],R=BCENG.revs,want=BCENG.rev,other=want==='b'?'a':'b';
+    if(location.protocol!=='file:')c.push(R[want].local);c.push(R[want].pages);
+    if(location.protocol!=='file:'){c.push(R[other].local);if(other==='a')c.push('../docs/battlecat-engineering/index.html','../docs/battlecat/index.html','docs/battlecat-engineering/index.html','docs/battlecat/index.html');}
+    c.push(R[other].pages,'https://thompsonryane-collab.github.io/ie-SRS/cmdr/battlecat-build.html');
     BCENG.pages.forEach(function(u){c.push(u+'index.html');});return c;}
+  function bcEngPaintRev(){var R=BCENG.revs[BCENG.rev],o=BCENG.revs[BCENG.rev==='b'?'a':'b'];var l=$('bceng-revline'),b=$('bceng-revbtn'),h=$('hl-bceng');
+    if(l)l.textContent=R.line;if(b)b.textContent=o.badge;if(h)h.textContent=R.badge;}
+  window.bcEngRev=function(){BCENG.rev=BCENG.rev==='b'?'a':'b';bcEngPaintRev();BCENG.loaded=false;BCENG.url='';BCENG.tried=[];
+    var card=$('bceng-missing');if(card)card.style.display='none';$('bceng-src').textContent='LOOKING FOR '+BCENG.revs[BCENG.rev].label.toUpperCase()+'…';openBcEng();};
   function bcEngProbe(list,i,done){if(i>=list.length){done('');return;}var u=list[i];BCENG.tried.push(u);
     try{fetch(u,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){if(/id=["']s1["']/.test(t)&&/BC-ENG-001|BattleCat/i.test(t))done(u);else bcEngProbe(list,i+1,done);}).catch(function(){bcEngProbe(list,i+1,done);});}
     catch(e){bcEngProbe(list,i+1,done);}}
   function bcEngMissing(){var b=$('p-bceng').querySelector('.body');var f=$('bceng-frame');f.style.display='none';
     var card=$('bceng-missing');if(!card){card=document.createElement('div');card.id='bceng-missing';b.appendChild(card);}
     card.innerHTML='<div class="bcm"><div class="bcm-t">Report not on this site yet</div>'+
-      '<div class="bcm-s">The BattleCat engineering report (BC-ENG-001) is not published beside this app, and none of the fallback locations answered. Upload <code>battlecat-build.html</code> into the same <code>cmdr/</code> folder as this app, commit to main, wait for Pages to finish, then tap Retry.</div>'+
+      '<div class="bcm-s">The BattleCat engineering report (BC-ENG-001) is not published beside this app, and none of the fallback locations answered. Upload <code>battlecat-build-revb.html</code> (and <code>battlecat-build.html</code> for Rev A) into the same <code>cmdr/</code> folder as this app, commit to main, wait for Pages to finish, then tap Retry.</div>'+
       '<div class="bcm-l">'+BCENG.tried.map(function(u){return '<div>✕ '+esc(u.replace('https://thompsonryane-collab.github.io/',''))+'</div>';}).join('')+'</div>'+
       '<div class="bcm-b"><button class="btn pri" onclick="bcEngRetry()">Retry</button><button class="btn" onclick="window.open(BCENG.pdf,\'sonar-battlecat-pdf\')">Try the PDF</button></div></div>';
     card.style.display='';$('bceng-src').textContent='NOT FOUND · '+BCENG.tried.length+' locations checked';}
   function bcEngShow(u){var f=$('bceng-frame');var card=$('bceng-missing');if(card)card.style.display='none';f.style.display='';BCENG.url=u;BCENG.loaded=true;
-    var local=u.indexOf('http')!==0;$('bceng-src').textContent=(local?'LOCAL COPY · ':'GITHUB PAGES · ')+(local?'cmdr/':'')+u.replace('https://thompsonryane-collab.github.io/','').replace(/^\.\.\//,'').replace(/index\.html$/,'');
+    var local=u.indexOf('http')!==0;var isB=/revb/i.test(u);$('bceng-src').textContent=(isB?'REV B · ':'REV A · ')+(local?'LOCAL COPY · ':'GITHUB PAGES · ')+(local?'cmdr/':'')+u.replace('https://thompsonryane-collab.github.io/','').replace(/^\.\.\//,'').replace(/index\.html$/,'');
+    if((isB?'b':'a')!==BCENG.rev){BCENG.rev=isB?'b':'a';bcEngPaintRev();}
     f.onload=function(){if(BCENG.hash)bcEngGo(BCENG.hash.slice(1));};f.src=u+(BCENG.hash||'');}
   window.bcEngRetry=function(){BCENG.loaded=false;BCENG.url='';BCENG.tried=[];$('bceng-src').textContent='LOOKING FOR THE REPORT…';openBcEng();};
   window.openBcEng=function(){var p=$('p-bceng');p.classList.add('on');if(BCENG.loaded||BCENG.busy)return;BCENG.busy=true;BCENG.tried=[];
@@ -4142,7 +4153,7 @@ window.SRADropZone=(function(){
     if(!BCENG.url)return;
     try{var d=f.contentDocument,el=d&&d.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});return;}}catch(e){}
     try{f.contentWindow.location.replace(BCENG.url+'#'+id);}catch(e){f.src=BCENG.url+'#'+id;}};
-  window.bcEngFull=function(){var u=BCENG.url||BCENG.pages[0];if(u.indexOf('http')!==0){try{u=new URL(u,location.href).href;}catch(e){}}window.open(u+(BCENG.hash||''),'sonar-battlecat-engineering');};
+  window.bcEngFull=function(){var u=BCENG.url||BCENG.revs[BCENG.rev].pages;if(u.indexOf('http')!==0){try{u=new URL(u,location.href).href;}catch(e){}}window.open(u+(BCENG.hash||''),'sonar-battlecat-engineering');};
   window.openBuilder=function(){$('p-builder').classList.add('on');};
   window.closeBuilder=function(){$('p-builder').classList.remove('on');};
   function builderRelease(pl){if(!pl)return;var wos=Array.isArray(pl.warningOrders)?pl.warningOrders:[];var stamp=String(Date.now()).slice(-4),n=0;
